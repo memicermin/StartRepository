@@ -11,7 +11,12 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   javaJpa,
+  filters,
   "mysql" % "mysql-connector-java" % "5.1.18",
   "org.avaje" % "ebean" % "2.7.3",
-  "javax.persistence" % "persistence-api" % "1.0.2"
+  "javax.persistence" % "persistence-api" % "1.0.2",
+  "com.cloudinary" % "cloudinary" % "1.0.14"
+
+
 )
+routesGenerator := InjectedRoutesGenerator

@@ -14,4 +14,7 @@ public class RentACar extends Model {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public Long id;
+
+
+
 }

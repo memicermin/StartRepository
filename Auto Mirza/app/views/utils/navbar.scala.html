@@ -1,24 +1,51 @@
 @()
-<div class="navbar-xs">
-    <div class="navbar-primary">
-        <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-           <a class="navbar-brand" href="#">Brand</a>
-            </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">Registracija</a> </li>
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/search.css")">
 
+<nav class="navbar navbar-webmaster">
+    <div class="">
+        <div class="navbar-header">
 
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </nav>
+            @*
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            *@
+
+            <a class="navbar-brand" href="#">Auto Mirza</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="active"><a href="#">@resources.Titles.RENT_A_CAR<span class="sr-only">(current)</span></a></li>
+
+                <li class="active"><a href="@routes.SaleController.allProductsForSale()">@resources.Titles.SALE <span class="sr-only">(current)</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@resources.Titles.SERVICE <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">@resources.Titles.MECHANICAL_SERVICES</a></li>
+                        <li><a href="#">@resources.Titles.TOWING_SERVICE</a></li>
+                    </ul>
+                </li>
+                <li><a href="/">Log in</a></li>
+                <li><a href="@routes.SaleController.newSale()">add sale</a></li>
+            </ul>
+            @*
+            <form class="navbar-form navbar-right search-form" role="search">
+            <input type="text" class="form-control" placeholder="Search" />
+            </form>
+            *@
+
+            <form action="" class="search-form navbar-form navbar-right">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" name="search" id="search">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </form>
+
+        </div>
     </div>
-</div>
+
+</nav>
