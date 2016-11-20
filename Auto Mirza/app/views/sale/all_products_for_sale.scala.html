@@ -22,9 +22,10 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                                @if(product.getImages(product.getId) != null){
+                                @if(product.haveImage(product.getId)){
+                                    <a href="@routes.SaleController.openProduct(product.getId)">
                                     <img src="@product.getFirstImage(product.getId).image_url" class="img-rounded" alt="Cinque Terre" width="210" height="210">
-
+                                    </a>
                                 }else{
                                     <img src="http://placehold.it/210x210" class="img-rounded" alt="Cinque Terre" width="210" height="210">
 
@@ -49,10 +50,9 @@
                         *@
                     </div>
                     <div class="col-md-8">
-                        <div class="product-title">@product.getBrand @product.getType @product.getYear</div>
-
+                        <div class="product-title">@product.getBrand.getBrand @product.getType @product.getYear</div>
                         <hr>
-                        <div class="product-price">KM @product.getPrice</div>
+                        <div class="product-price">@product.getPrice KM</div>
                     </div>
                 </div>
                 <hr>

@@ -16,8 +16,10 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import resources.FieldNames;
 import views.html.admin_view.add_sale;
 import views.html.sale.all_products_for_sale;
+import views.html.sale.open_product;
 
 import java.io.File;
 import java.util.List;
@@ -33,6 +35,11 @@ public class SaleController extends Controller {
 
     public Result allProductsForSale(){
         return ok(all_products_for_sale.render(Sale.getAllProductForSale()));
+    }
+
+    public Result openProduct(Long id){
+
+        return ok(open_product.render(Sale.getSaleById(id)));
     }
 
     public Result newSale() {
@@ -51,11 +58,18 @@ public class SaleController extends Controller {
 
         Sale sale = new Sale();
         sale.setAvilable(true);
-        sale.setBrand(Brand.findBrandById(Long.parseLong(dynamicForm.get("brand"))));
-        sale.setDetails(dynamicForm.get("details"));
-        sale.setPrice(Double.parseDouble(dynamicForm.get("price")));
-        sale.setType(dynamicForm.get("type"));
-        sale.setYear(Integer.parseInt(dynamicForm.get("year")));
+        sale.setBrand(Brand.findBrandById(Long.parseLong(dynamicForm.get(FieldNames.BRAND))));
+        sale.setDetails(dynamicForm.get(FieldNames.DETAILS));
+        sale.setPrice(Double.parseDouble(dynamicForm.get(FieldNames.PRICE)));
+        sale.setType(dynamicForm.get(FieldNames.TYPE));
+        sale.setYear(Integer.parseInt(dynamicForm.get(FieldNames.YEAR)));
+        sale.setBodyType(dynamicForm.get(FieldNames.BODY_TYPE));
+        sale.setColor(dynamicForm.get(FieldNames.COLOR));
+        sale.setMeileage(Integer.parseInt(dynamicForm.get(FieldNames.MILEAGE)));
+        sale.setMotorVolume(dynamicForm.get(FieldNames.MOTOR_VOLUME));
+        sale.setTypeOfFuel(dynamicForm.get(FieldNames.TYPE_OF_FUEL));
+        sale.setTransmission(dynamicForm.get(FieldNames.TRANSMISSION));
+        sale.setMotorPower(Integer.parseInt(dynamicForm.get(FieldNames.MOTOR_POWER)));
         sale.save();
 
 
@@ -64,7 +78,7 @@ public class SaleController extends Controller {
         Logger.info("1.---" + fileParts.toString());
 
 
-        Logger.info("2.---" + dynamicForm.get("images"));
+        Logger.info("2.---" + dynamicForm.get(FieldNames.IMAGES));
         Logger.info("3.---" + body.toString());
 
 

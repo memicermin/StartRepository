@@ -1,12 +1,6 @@
 package models;
 
-
 import com.avaje.ebean.Model;
-import com.google.inject.Inject;
-import play.data.DynamicForm;
-import play.data.Form;
-import play.data.FormFactory;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,9 +12,7 @@ import java.util.List;
 @Table(name = "brand")
 public class Brand extends Model {
 
-    public static Finder<Long, Brand> find = new Finder<Long, Brand>(Brand.class);
-
-
+    public static Finder<Long, Brand> find = new Finder<>(Brand.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,19 +31,20 @@ public class Brand extends Model {
 
     public Brand() {
     }
-
+    public Long getId() {
+        return id;
+    }
 
     public String getBrand() {
         return brand;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setBrand(String brand) {
         this.brand = brand;
     }
+
+
+
 
     public static Brand findBrandById(Long id){
         return find.byId(id);
