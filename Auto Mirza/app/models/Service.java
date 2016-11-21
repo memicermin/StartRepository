@@ -2,8 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Enver on 11/8/2016.
@@ -14,5 +13,10 @@ import javax.persistence.Table;
 public class Service extends Model {
 
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", insertable = false)
+    private Long id;
 
 }

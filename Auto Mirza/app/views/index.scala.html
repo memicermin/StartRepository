@@ -1,40 +1,35 @@
 @*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
-
+* This template takes a single argument, a String containing a
+* message to display.
+*@
+@(message: String, titles: List[ReclaimTitle])
 @*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
 @index_main("Welcome to Auto Mirza") {
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Wrapper for slides -->
-        <div class="carousel-inner">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/ind.css")">
 
+        <div class="row">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <div class="titles-row">
+                <div class="carousel-inner">
 
-            <div class="item active">
-                @*
-
-                <img src="http://placehold.it/1200x400/16a085/ffffff&text=About Us">
-                    *@
-                <h1>Najbolji servis</h1>
+                    <div class="item active">
+                        <h1 class="titles-text-color titles-font"><strong>@ReclaimTitle.getFirstReclaimTitle</strong></h1>
+                    </div>
+                    @for(reclamTitle <- titles) {
+                        <div class="item">
+                            @*
+                            <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Projects">
+                            *@
+                        <h1 class="titles-text-color titles-font"><strong>@reclamTitle.getTitle</strong></h1>
+                        </div>
+                    }
+                </div>
             </div>
-
-
-                <!-- End Item -->
-            <div class="item">
-                @*
-                <img src="http://placehold.it/1200x400/e67e22/ffffff&text=Projects">
-                    *@
-                <h1>Najbolji automobili</h1>
-            </div>
-                <!-- End Item -->
-
         </div>
-
     </div>
 }

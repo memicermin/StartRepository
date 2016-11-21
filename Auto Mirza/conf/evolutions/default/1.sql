@@ -19,6 +19,12 @@ create table image (
   constraint pk_image primary key (id)
 );
 
+create table reclaim_title (
+  id                            bigint auto_increment not null,
+  title                         varchar(255),
+  constraint pk_reclaim_title primary key (id)
+);
+
 create table rent_a_car (
   id                            bigint auto_increment not null,
   constraint pk_rent_a_car primary key (id)
@@ -43,9 +49,28 @@ create table sale (
 );
 
 create table service (
+  id                            bigint auto_increment not null,
+  constraint pk_service primary key (id)
 );
 
 create table user (
+  id                            bigint auto_increment not null,
+  username                      varchar(50),
+  email                         varchar(100),
+  password                      varchar(100),
+  first_name                    varchar(100),
+  last_name                     varchar(100),
+  birth_date                    varchar(255),
+  gender                        integer(1),
+  location                      varchar(150),
+  phone_number                  varchar(15),
+  create_date                   datetime,
+  update_date                   datetime(6),
+  verification                  integer,
+  user_level                    integer,
+  token                         varchar(255),
+  constraint uq_user_email unique (email),
+  constraint pk_user primary key (id)
 );
 
 alter table image add constraint fk_image_rent_a_car_id foreign key (rent_a_car_id) references rent_a_car (id) on delete restrict on update restrict;
@@ -72,6 +97,8 @@ drop index ix_sale_brand_id on sale;
 drop table if exists brand;
 
 drop table if exists image;
+
+drop table if exists reclaim_title;
 
 drop table if exists rent_a_car;
 

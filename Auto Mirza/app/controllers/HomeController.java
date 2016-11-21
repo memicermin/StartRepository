@@ -1,5 +1,6 @@
 package controllers;
 
+import models.ReclaimTitle;
 import models.RentACar;
 import play.mvc.*;
 
@@ -18,14 +19,19 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(index.render("Your new application is ready."));
+
+
+        return ok(index.render("Your new application is ready.", ReclaimTitle.getOtherTitles()));
     }
 
-
+/*
     public Result newRent() {
         RentACar rac = new RentACar();
         rac.save();
         return index();
 
     }
+    */
+
+
 }
