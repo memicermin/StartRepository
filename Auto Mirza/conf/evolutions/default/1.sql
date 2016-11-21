@@ -16,6 +16,7 @@ create table image (
   image_url                     varchar(255),
   rent_a_car_id                 bigint,
   sale_id                       bigint,
+  background_active             integer,
   constraint pk_image primary key (id)
 );
 

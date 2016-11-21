@@ -16,10 +16,13 @@
             *@
 
             <a class="navbar-brand" href="/">Auto Mirza</a>
+            @if(Image.getFind.findRowCount() == 0){
+                <a class="navbar-brand" href="@helpers.FillDatabase.setConfigure()">SET DEf</a>
+            }
             @if(currentUser != null){
                 <a class="navbar-brand" href="/">@currentUser.getUsername</a>
             }
-            @if(currentUser != null && currentUser.getUserLevel ==1){
+            @if(currentUser != null && currentUser.getUserLevel == 1){
                 <a class="navbar-brand" href="@routes.AdminController.admin()">admin</a>
             }
         </div>

@@ -6,7 +6,9 @@ import com.cloudinary.*;
 import javax.persistence.*;
 import java.io.File;
 import java.io.*;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Enver on 11/8/2016.
@@ -44,6 +46,9 @@ public class Image extends Model {
     @ManyToOne
     private Sale sale;
 
+    @Column(name = "background_active")
+    private int backgroundActive;
+
     public Image(RentACar rentACar, Sale sale) {
         this.rentACar = rentACar;
         this.sale = sale;
@@ -76,6 +81,14 @@ public class Image extends Model {
         return find;
     }
 
+    public int getBackgroundActive() {
+        return backgroundActive;
+    }
+
+    public void setBackgroundActive(int backgroundActive) {
+        this.backgroundActive = backgroundActive;
+    }
+
     /**
      * Constructor
      */
@@ -91,11 +104,11 @@ public class Image extends Model {
     /**
      * Method that return image after uploading it on cloudinary
      */
-    public static Image create(File image, Long id) {
+    public static Image create(File image, Long id, int option) {
         Map result;
         try {
             result = cloudinary.uploader().upload(image, null);
-            return create(result, id);
+            return create(result, id, option);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,16 +118,26 @@ public class Image extends Model {
     /**
      * Uploading new image for selected product and saving its path with product
      */
-    public static Image create(Map uploadResult, Long id) {
+    public static Image create(Map uploadResult, Long id, int option) {
         Image img = new Image();
         img.public_id = (String) uploadResult.get("public_id");
         img.image_url = (String) uploadResult.get("url");
         img.secret_image_url = (String) uploadResult.get("secure_url");
-        //  Product product = Product.getProductById(id);
-        //  img.product = product;
 
-        Sale sale = Sale.getSaleById(id);
-        img.sale = sale;
+        if(option < 0){
+            if(Image.find.findRowCount() == 0){
+                img.setBackgroundActive(2);
+            }else{
+                img.setBackgroundActive(1);
+            }
+        }else if(option > 0){
+
+        }else if(option == 0){
+            Sale sale = Sale.getSaleById(id);
+            img.sale = sale;
+        }
+
+
         img.save();
         return img;
     }
@@ -134,6 +157,17 @@ public class Image extends Model {
                 .generate(public_id);
 
         return url;
+    }
+
+    public static List<Image> getImagesForBackground(){
+        List<Image> images = find.where().eq("background_active", 1).findList();
+        images.add(find.where().eq("background_active", 2).findUnique());
+        return images;
+    }
+
+    public static String getBackground(){
+        Image background = find.where().eq("background_active", 2).findUnique();
+        return background.image_url;
     }
 
 }
