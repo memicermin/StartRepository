@@ -162,13 +162,23 @@ public class Image extends Model {
     public static List<Image> getImagesForBackground() {
         List<Image> images;
         images = find.where().eq("background_active", 1).findList();
-        images.add(find.where().eq("background_active", 2).findUnique());
+        Image image = find.where().eq("background_active", 2).findUnique();
+        if(image != null){
+            images.add(image);
+        }
         return images;
     }
 
     public static String getBackground() {
         Image background = find.where().eq("background_active", 2).findUnique();
-        return background.image_url;
+
+        if(background != null){
+            return background.image_url;
+        }else{
+            return "/assets/images/passat-b6.jpg";
+        }
+
     }
+
 
 }

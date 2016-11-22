@@ -28,14 +28,25 @@
     @*
     <body background="@Image.getImageForBackground">
 
-    <body background='@Image.getBackground()'>
+
+
+    @if(Image.getBackground() != null){
         *@
+
+
+        <body background='@Image.getBackground()'>
+            @utils.navbar()
+            @utils.flashMessages()
+            @content
+        </body>
+
+   @*
         <body background='/assets/images/passat-b6.jpg'>
+            @utils.navbar()
+            @utils.flashMessages()
+            @content
+        </body>
 
+   *@
 
-        @utils.navbar()
-        @utils.flashMessages()
-        @content
-
-    </body>
 </html>

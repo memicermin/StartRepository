@@ -16,7 +16,9 @@ libraryDependencies ++= Seq(
   "org.avaje" % "ebean" % "2.7.3",
   "javax.persistence" % "persistence-api" % "1.0.2",
   "com.cloudinary" % "cloudinary" % "1.0.14"
-
+  /*,
+  "org.apache.spark" %% "spark-mllib" % "1.4.0"
+*/
 
 )
 routesGenerator := InjectedRoutesGenerator

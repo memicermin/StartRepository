@@ -44,7 +44,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
     }
 
@@ -57,7 +57,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
     }
 
@@ -73,7 +73,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
     }
 
@@ -87,7 +87,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
     }
 
     public Result saveReclaimTitle(){
@@ -101,7 +101,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
 
     }
@@ -117,7 +117,7 @@ public class AdminController extends Controller {
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
     }
 
@@ -125,11 +125,13 @@ public class AdminController extends Controller {
         if(currentUser != null){
             if(currentUser.getUserLevel() == 1){
                 return ok(add_background_image.render(Image.getImagesForBackground()));
+               // return ok(add_background_image.render(Image.getFind().all()));
+
             }
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
-        return redirect(routes.UserController.singUp());
+        return redirect("sing-up-...");
 
     }
 }

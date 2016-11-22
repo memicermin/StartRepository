@@ -18,7 +18,7 @@ public class FillDatabase {
     //    setDefBacgroundImages();
         setDefaultUsers();
     }
-/*
+
     public static void setDefBacgroundImages() {
         Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
 
@@ -39,7 +39,7 @@ public class FillDatabase {
         im4.save();
 
     }
-*/
+
     public static void setDefaultUsers() {
         User u1 = new User();
         u1.setEmail("enver.memic80@gmail.com");

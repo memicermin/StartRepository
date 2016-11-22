@@ -18,9 +18,11 @@
             <a class="navbar-brand" href="/">Auto Mirza</a>
 
             @if(User.find.findRowCount() == 0){
-                <a class="navbar-brand" href="@helpers.FillDatabase.setConfigure()">SET DEf</a>
+                <a class="navbar-brand" href="@helpers.FillDatabase.setDefaultUsers()">Set def. user</a>
             }
-
+            @if(Image.getFind.findRowCount() == 0){
+                <a class="navbar-brand" href="@helpers.FillDatabase.setDefBacgroundImages()">Set def. img</a>
+            }
             @if(currentUser != null){
                 <a class="navbar-brand" href="/">@currentUser.getUsername</a>
             }
