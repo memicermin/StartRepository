@@ -18,7 +18,7 @@ import java.util.Random;
 @Table
 public class Image extends Model {
 
-    private static Finder<String, Image> find = new Finder<>(Image.class);
+    private static Model.Finder<String,Image> find = new Model.Finder<>(Image.class);
 
     public static Cloudinary cloudinary;
 

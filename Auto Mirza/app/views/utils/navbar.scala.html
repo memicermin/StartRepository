@@ -6,26 +6,20 @@
     <div class="">
         <div class="navbar-header">
 
-            @*
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            </button>
-            *@
-
             <a class="navbar-brand" href="/">Auto Mirza</a>
-
+            @*
             @if(User.find.findRowCount() == 0){
-                <a class="navbar-brand" href="@helpers.FillDatabase.setDefaultUsers()">Set def. user</a>
+                <li><a href="@helpers.FillDatabase.setDefaultUsers()">Set def. user</a></li>
             }
+
             @if(Image.getFind.findRowCount() == 0){
-                <a class="navbar-brand" href="@helpers.FillDatabase.setDefBacgroundImages()">Set def. img</a>
+                <li></li><a href="@helpers.FillDatabase.setDefBacgroundImages()">Set def. img</a>
             }
+            *@
             @if(currentUser != null){
                 <a class="navbar-brand" href="/">@currentUser.getUsername</a>
             }
+
             @if(currentUser != null && currentUser.getUserLevel == 1){
                 <a class="navbar-brand" href="@routes.AdminController.admin()">admin</a>
             }

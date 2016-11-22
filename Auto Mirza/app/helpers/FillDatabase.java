@@ -14,13 +14,12 @@ import java.io.File;
  */
 public class FillDatabase {
 
-    public static void setConfigure(){
-    //    setDefBacgroundImages();
-        setDefaultUsers();
-    }
-
     public static void setDefBacgroundImages() {
         Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
+
+        File file4 = new File("public\\images\\vito-6.jpg");
+        Image im4 = Image.create(file4, null, -1);
+        im4.save();
 
         File file1 = new File("public\\images\\passat-b6.jpg");
         Image im1 = Image.create(file1, null, -1);
@@ -34,9 +33,7 @@ public class FillDatabase {
         Image im3 = Image.create(file3, null, -1);
         im3.save();
 
-        File file4 = new File("public\\images\\vito-6.jpg");
-        Image im4 = Image.create(file4, null, -1);
-        im4.save();
+
 
     }
 
