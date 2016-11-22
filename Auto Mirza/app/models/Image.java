@@ -116,7 +116,7 @@ public class Image extends Model {
     }
 
     /**
-     * Uploading new image for selected product and saving its path with product
+     * Uploading new image and saving its path with product
      */
     public static Image create(Map uploadResult, Long id, int option) {
         Image img = new Image();
@@ -124,15 +124,15 @@ public class Image extends Model {
         img.image_url = (String) uploadResult.get("url");
         img.secret_image_url = (String) uploadResult.get("secure_url");
 
-        if(option < 0){
-            if(Image.find.findRowCount() == 0){
+        if (option < 0) {
+            if (Image.find.findRowCount() == 0) {
                 img.setBackgroundActive(2);
-            }else{
+            } else {
                 img.setBackgroundActive(1);
             }
-        }else if(option > 0){
+        } else if (option > 0) {
 
-        }else if(option == 0){
+        } else if (option == 0) {
             Sale sale = Sale.getSaleById(id);
             img.sale = sale;
         }
@@ -159,13 +159,14 @@ public class Image extends Model {
         return url;
     }
 
-    public static List<Image> getImagesForBackground(){
-        List<Image> images = find.where().eq("background_active", 1).findList();
+    public static List<Image> getImagesForBackground() {
+        List<Image> images;
+        images = find.where().eq("background_active", 1).findList();
         images.add(find.where().eq("background_active", 2).findUnique());
         return images;
     }
 
-    public static String getBackground(){
+    public static String getBackground() {
         Image background = find.where().eq("background_active", 2).findUnique();
         return background.image_url;
     }
