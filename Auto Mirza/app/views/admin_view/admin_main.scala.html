@@ -15,6 +15,7 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery.dataTables.min.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/nav.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/admin_main.css")">
 
 
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.jpg")">
@@ -27,13 +28,15 @@
 
 
   </head>
+@*
+  <body background="@Image.getTestBackground()">
+    *@
+  <body background="@Image.getTestBackground" class="admin-main-body">
 
-  <body>
 
-
-    @utils.navbar()
     @utils.admin_navbar()
     @utils.flashMessages()
     @content
   </body>
+
 </html>

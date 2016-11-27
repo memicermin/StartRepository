@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.cloudinary.*;
+import controllers.AdminController;
 
 import javax.persistence.*;
 import java.io.File;
@@ -49,6 +50,11 @@ public class Image extends Model {
     @Column(name = "background_active")
     private int backgroundActive;
 
+    @Column(name = "using_type")
+    private int usingType;
+
+
+
     public Image(RentACar rentACar, Sale sale) {
         this.rentACar = rentACar;
         this.sale = sale;
@@ -89,6 +95,14 @@ public class Image extends Model {
         this.backgroundActive = backgroundActive;
     }
 
+    public int getUsingType() {
+        return usingType;
+    }
+
+    public void setUsingType(int usingType) {
+        this.usingType = usingType;
+    }
+
     /**
      * Constructor
      */
@@ -104,11 +118,11 @@ public class Image extends Model {
     /**
      * Method that return image after uploading it on cloudinary
      */
-    public static Image create(File image, Long id, int option) {
+    public static Image create(File image, Long id, int usingType) {
         Map result;
         try {
             result = cloudinary.uploader().upload(image, null);
-            return create(result, id, option);
+            return create(result, id, usingType);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,23 +132,25 @@ public class Image extends Model {
     /**
      * Uploading new image and saving its path with product
      */
-    public static Image create(Map uploadResult, Long id, int option) {
+    public static Image create(Map uploadResult, Long id, int usingType) {
         Image img = new Image();
         img.public_id = (String) uploadResult.get("public_id");
         img.image_url = (String) uploadResult.get("url");
         img.secret_image_url = (String) uploadResult.get("secure_url");
 
-        if (option < 0) {
+        if (usingType < 0) {
             if (Image.find.findRowCount() == 0) {
                 img.setBackgroundActive(2);
             } else {
                 img.setBackgroundActive(1);
             }
-        } else if (option > 0) {
+            img.usingType = -1;
+        } else if (usingType > 0) {
 
-        } else if (option == 0) {
+        } else if (usingType == 0) {
             Sale sale = Sale.getSaleById(id);
             img.sale = sale;
+            img.usingType = 0;
         }
 
 
@@ -160,18 +176,11 @@ public class Image extends Model {
     }
 
     public static List<Image> getImagesForBackground() {
-        List<Image> images;
-        images = find.where().eq("background_active", 1).findList();
-        Image image = find.where().eq("background_active", 2).findUnique();
-        if(image != null){
-            images.add(image);
-        }
-        return images;
+        return find.where().eq("using_type", -1).findList();
     }
 
     public static String getBackground() {
         Image background = find.where().eq("background_active", 2).findUnique();
-
         if(background != null){
             return background.image_url;
         }else{
@@ -180,5 +189,32 @@ public class Image extends Model {
 
     }
 
+    public static String getTestBackground(){
+        Image testBackground = find.where().eq("background_active", 3).findUnique();
+        if(testBackground != null){
+            return testBackground.image_url;
+        }else{
+          //  return "/assets/images/passat-b6.jpg";
+            return "";
+        }
+    }
+
+    public static void setTestImage(Long id){
+        /*
+        Image image = find.byId(id + "");
+
+        image.setBackgroundActive(3);
+        image.update();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        image.setBackgroundActive(1);
+            image.update();
+            */
+        AdminController.redirect("/background");
+    }
 
 }

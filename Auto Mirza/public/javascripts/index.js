@@ -1,10 +1,14 @@
 /**
  * Created by Enver on 11/20/2016.
  */
+
+
 $(document).ready(function () {
     $('#myCarousel').carousel({
-        interval: 4000
+        interval: 3000
     });
+
+
 
     var clickEvent = false;
     $('#myCarousel').on('click', '.nav a', function () {
@@ -24,3 +28,4 @@ $(document).ready(function () {
         clickEvent = false;
     });
 });
+

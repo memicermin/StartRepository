@@ -25,6 +25,9 @@
  */
 
 
+
+
+/**
 if ( typeof Object.create !== 'function' ) {
     Object.create = function( obj ) {
         function F() {};
@@ -334,6 +337,9 @@ if ( typeof Object.create !== 'function' ) {
             }
             /*-------------------END THE ZOOM WINDOW AND LENS----------------------------------*/
             //touch events
+
+/**
+
             self.$elem.bind('touchmove', function(e){
                 e.preventDefault();
                 var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
@@ -1072,6 +1078,9 @@ if ( typeof Object.create !== 'function' ) {
 
                                      }
                                      */
+
+//===============================================
+/**
                                     self.changeBgSize = false;
                                 }
 
@@ -1788,3 +1797,4 @@ if ( typeof Object.create !== 'function' ) {
     };
 
 })( jQuery, window, document );
+*/

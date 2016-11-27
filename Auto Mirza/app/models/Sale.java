@@ -46,7 +46,7 @@ public class Sale extends Model {
     private String typeOfFuel;
 
     private String transmission;
-
+    @Column(length = 1500)
     private String details;
 
     private Boolean isAvilable;

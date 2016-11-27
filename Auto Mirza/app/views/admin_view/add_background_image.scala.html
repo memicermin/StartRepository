@@ -1,39 +1,55 @@
-@(images: List[Image])
+@(images: List[Image], form: Form[Image])
 @admin_view.admin_main("New Background") {
     <div class="container">
         <div class="row">
 
             <div class="col-md-4">
 
-                @if(images != null){
-                    @for(img <- images) {
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="@img.image_url" class="img-rounded" alt="Cinque Terre" width="160" height="130">
-                            </div>
-                            @if(img.getBackgroundActive() == 1) {
-                                <div class="col-md-2"><a href="#"><i class="glyphicon glyphicon-trash"></i></a></div>
-                                <div class="col-md-2"><a href="#"><i class="glyphicon glyphicon-plus"></i></a></div>
-                                <div class="col-md-1"><a href="#"><i class="glyphicon glyphicon-edit"></i></a></div>
-                            }
-                            @if(img.getBackgroundActive == 2) {
-
-                            }
+            @if(images != null) {
+                @for(img <- images) {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="@img.image_url" class="img-rounded" alt="Cinque Terre" width="160" height="130">
                         </div>
-                        <br>
+                        @if(img.getBackgroundActive() == 1) {
+                            <div class="col-md-2"><a href="@routes.AdminController.deleteBackgroundImage(img.getId)"><i class="glyphicon glyphicon-trash"></i></a></div>
+                            <div class="col-md-2"><a href="@routes.AdminController.changeBackground(img.getId())"><i class="glyphicon glyphicon-pushpin"></i></a></div>
+                            <div class="col-md-1"><a href="@routes.AdminController.testBackground(img.getId())"><i class="glyphicon glyphicon-edit"></i></a></div>
+                        }
+                        @if(img.getBackgroundActive == 2) {
+                            <div class="col-md-5"><h4>Background</h4></div>
+                        }
+                    </div>
+                    <br>
                     }
-                }
+            }
 
             </div>
 
             <div class="col-md-4">
 
             </div>
+            <form role="form" action="@routes.AdminController.addBackgroundImages()" method="post" enctype="multipart/form-data">
 
-            <div class="col-md-4">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4>Add a photos</h4></div>
+                        <div class="panel-body">
+                            <p>Click <strong>Add a photo</strong>
+                                and select the photos you want to upload. </p>
+                            <div class="form-group">
+                                @*
+                                <input type="file" class="form-control" name="images" accept="image/*" id="upload-img" multiple/>
+                                *@
+                                <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
 
-            </div>
+                            </div>
+                                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Add</button>
+                        </div>
 
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 }

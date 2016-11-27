@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Image;
 import models.ReclaimTitle;
 import models.RentACar;
 import play.mvc.*;
@@ -21,7 +22,7 @@ public class HomeController extends Controller {
     public Result index() {
 
 
-        return ok(index.render("Your new application is ready.", ReclaimTitle.getOtherTitles()));
+        return ok(index.render("Your new application is ready.", ReclaimTitle.getOtherTitles(), Image.getImagesForBackground()));
     }
 
 /*

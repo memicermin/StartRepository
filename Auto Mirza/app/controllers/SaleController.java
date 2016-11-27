@@ -36,7 +36,20 @@ public class SaleController extends Controller {
     FormFactory formFactory;
 
     public Result allProductsForSale() {
-        return ok(all_products_for_sale.render(Sale.getAllProductForSale()));
+        List<Sale> sales = Sale.getAllProductForSale();
+        /*
+        for(int i = 0; i < sales.size(); i++){
+            List<Image> images = sales.get(i).getImages();
+            for(int j = 0; j < images.size();j++){
+                Image img = images.get(j);
+                img.getSize(200,200);
+                images.add(j, img);
+            }
+
+
+        }
+        */
+        return ok(all_products_for_sale.render(sales));
     }
 
     public Result openProduct(Long id) {

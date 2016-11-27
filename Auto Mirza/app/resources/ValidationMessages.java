@@ -13,4 +13,9 @@ public class ValidationMessages {
 
     public static final String NAME_MIN = "Three (3) letters is minimum for name and surname.";
     public static final String NAME_MAX = "Forty (40) letters is maximum for name and surname.";
+
+    public static final String USERNAME_MIN = "Three (3) letters is minimum for username.";
+    public static final String USERNAME_MAX = "Forty (40) letters is maximum for username.";
+
+
 }

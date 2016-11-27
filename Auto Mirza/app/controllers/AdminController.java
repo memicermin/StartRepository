@@ -21,7 +21,8 @@ import views.html.admin_view.add_brand;
 import views.html.admin_view.add_reclaim_titles;
 import views.html.admin_view.admin;
 
-
+import java.io.File;
+import java.util.List;
 
 
 /**
@@ -124,8 +125,7 @@ public class AdminController extends Controller {
     public Result addBacground(){
         if(currentUser != null){
             if(currentUser.getUserLevel() == 1){
-                return ok(add_background_image.render(Image.getImagesForBackground()));
-               // return ok(add_background_image.render(Image.getFind().all()));
+                return ok(add_background_image.render(Image.getImagesForBackground(), formFactory.form(Image.class)));
 
             }
         }
@@ -134,4 +134,111 @@ public class AdminController extends Controller {
         return redirect("sing-up-...");
 
     }
+
+    public Result testBackground(Long id){
+        if(currentUser != null){
+            if(currentUser.getUserLevel() == 1){
+                Image.setTestImage(id);
+                return ok(add_background_image.render(Image.getImagesForBackground(), formFactory.form(Image.class)));
+
+            }
+        }
+        currentUser.setUserLevel(-1);
+        currentUser.update();
+        return redirect("sing-up-...");
+    }
+
+    public Result addBackgroundImages(){
+        if(currentUser != null){
+            if(currentUser.getUserLevel() == 1){
+                Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
+
+                Http.MultipartFormData body = request().body().asMultipartFormData();
+                List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
+                Logger.info("1.---" + fileParts.toString());
+
+
+               // Logger.info("2.---" + dynamicForm.get(FieldNames.IMAGES));
+                Logger.info("3.---" + body.toString());
+
+
+                if (fileParts != null) {
+                    for (Http.MultipartFormData.FilePart filePart : fileParts) {
+                        try {
+
+
+                            File file = (File) filePart.getFile();
+
+                            Image image = Image.create(file, null, -1);
+
+                            image.save();
+
+
+                        } catch (RuntimeException re) {
+                            Logger.info("Imamo pad " + new DateTime().toString() + " -> " + filePart.getFile().toString());
+                        }
+                    }
+                }
+                return ok(add_background_image.render(Image.getImagesForBackground(), formFactory.form(Image.class)));
+
+            }
+        }
+        currentUser.setUserLevel(-1);
+        currentUser.update();
+        return redirect("sing-up-...");
+    }
+
+    public Result changeBackground(Long id){
+        if(currentUser != null){
+            if(currentUser.getUserLevel() == 1){
+                List<Image> backgroundImages = Image.getFind().where().eq("using_type", -1).findList();
+                if(backgroundImages != null){
+                    for(Image i : backgroundImages){
+                        if(i.getBackgroundActive() == 2){
+                            i.setBackgroundActive(1);
+                            i.update();
+                        }
+                    }
+                }
+                Image nextBackground = Image.getFind().byId(id +"");
+                if(nextBackground != null){
+                    nextBackground.setBackgroundActive(2);
+                    nextBackground.update();
+                }
+                return ok(add_background_image.render(Image.getImagesForBackground(), formFactory.form(Image.class)));
+
+            }
+        }
+        currentUser.setUserLevel(-1);
+        currentUser.update();
+        return redirect("sing-up-...");
+    }
+
+    public Result deleteBackgroundImage(Long id){
+        if(currentUser != null){
+            if(currentUser.getUserLevel() == 1){
+                Image.getFind().byId(id + "").delete();
+                return ok(add_background_image.render(Image.getImagesForBackground(), formFactory.form(Image.class)));
+
+            }
+        }
+        currentUser.setUserLevel(-1);
+        currentUser.update();
+        return redirect("sing-up-...");
+    }
+/*
+    public Result deleteBackgroundImage(Long id){
+        if(currentUser != null){
+            if(currentUser.getUserLevel() == 1){
+                <!-- -Todo- -->
+
+            }
+        }
+        currentUser.setUserLevel(-1);
+        currentUser.update();
+        return redirect("sing-up-...");
+    }
+
+ */
+
 }

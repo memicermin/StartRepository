@@ -17,6 +17,7 @@ create table image (
   rent_a_car_id                 bigint,
   sale_id                       bigint,
   background_active             integer,
+  using_type                    integer,
   constraint pk_image primary key (id)
 );
 
@@ -44,7 +45,7 @@ create table sale (
   motor_power                   integer,
   type_of_fuel                  varchar(255),
   transmission                  varchar(255),
-  details                       varchar(255),
+  details                       varchar(1500),
   is_avilable                   tinyint(1) default 0,
   constraint pk_sale primary key (id)
 );
