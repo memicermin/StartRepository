@@ -5,6 +5,11 @@
 
     <div class="container">
         <div class="row">
+            @if(product.getAction != false){
+                <div class="col-md-2">
+                    <img src="assets\images\akcija.jpg">
+                </div>
+            }
             <div class="col-md-2">
                 <h3>@product.getBrand.getBrand</h3>
             </div>
