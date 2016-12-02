@@ -47,6 +47,8 @@ create table sale (
   transmission                  varchar(255),
   details                       varchar(1500),
   is_avilable                   tinyint(1) default 0,
+  action                        tinyint(1) default 0,
+  old_price                     double,
   constraint pk_sale primary key (id)
 );
 

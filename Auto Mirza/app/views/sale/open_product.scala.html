@@ -1,8 +1,6 @@
 @(product: Sale)
 @main("") {
-
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/open_product.css")">
-
     <script src="@routes.Assets.versioned("javascripts/open_product.js")" type="text/javascript"></script>
 
     <div class="container">
@@ -11,7 +9,11 @@
                 <h3>@product.getBrand.getBrand</h3>
             </div>
             <div class="col-md-3">
-                <h3>@product.getPrice <strong> KM</strong></h3>
+                @if(helpers.SessionHelper.isAdmin(ctx)){
+                    <a href="@routes.AdminController.editProduct(product.getId())"><h3>@product.getPrice<strong> KM</strong></h3></a>
+                }else{
+                    <h3>@product.getPrice<strong> KM</strong></h3>
+                }
             </div>
             <div class="col-md-3"></div>
             <div class="col-md-4"></div>
@@ -24,16 +26,20 @@
                         <div class='carousel-inner'>
 
                             <div class='item active'>
-                                <img src='@product.getFirstImage(product.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getId).image_url" width="400" height="400"/>
+                                @if(Sale.hasImage(product.getId)){
+                                    <img src='@product.getFirstImage(product.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getId).image_url" width="400" height="400"/>
+                                }else{
+                                    <img src="http://placehold.it/400x400" width="400" height="400">
+                                }
                             </div>
-
-                            @for(image <- product.getOtherImages(product.getId)) {
-                                <div class='item' id="item">
-                                    <a href="" onclick="getImage()"><img src='@image.image_url' alt="Cinque Terre" id="" data-zoom-image="@image.image_url" width="400" height="400"/></a>
-                                </div>
+                            @if(Sale.hasImage(product.getId)){
+                                @for(image <- product.getOtherImages(product.getId)) {
+                                    <div class='item' id="item">
+                                        <a href="" onclick="getImage()"><img src='@image.image_url' alt="Cinque Terre" id="" data-zoom-image="@image.image_url" width="400" height="400"/></a>
+                                    </div>
+                                }
                             }
                         </div>
-
                             <!-- sag sol -->
                         <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
                             <span class='glyphicon glyphicon-chevron-left'></span>
@@ -103,7 +109,7 @@
                     <label for=tab1>@resources.Placeholders.DETAILS</label>
                     <div id=tab-content1 class=tab-content>
                         <p>
-                           @product.getDetails
+                        @product.getDetails
                         </p>
                     </div>
                 </li>
@@ -114,24 +120,19 @@
                         <p>
                             Ovo jos ne radi??? . . .
                         </p>
-
                     </div>
-
                 </li>
-
             </ul>
-
             <br style=clear:both;>
         </div>
     </div>
     <script>
          $("#zoom_05").elevateZoom({ zoomType    : "inner", cursor: "crosshair" });
-         </script>
+    </script>
     <script type="text/javascript">
-
         $(document).ready(function() {
          $(".mCustomScrollbar").mCustomScrollbar({axis:"x"});
         });
-        </script>
+    </script>
 }
 

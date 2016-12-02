@@ -11,7 +11,12 @@ GET         /message                         @controllers.AsyncController.messag
 
 GET         /admin+add+sale                  @controllers.SaleController.newSale()
 POST        /admin_new_sale                  @controllers.SaleController.saveSale()
-
+GET         /all+products                    @controllers.SaleController.allProductsForSale()
+GET         /product...                      @controllers.SaleController.openProduct(id: Long)
+POST        /upd...                          @controllers.SaleController.updateSale(id: Long)
+GET         /add-act...                      @controllers.SaleController.addAction(id: Long)
+POST        /save-action...                  @controllers.SaleController.saveAction(id: Long)
+GET         /add-img...                      @controllers.SaleController.addImages(id: Long)
 
 GET         /admin_new_brand                 @controllers.AdminController.newBrand()
 POST        /brand                           @controllers.AdminController.saveBrand()
@@ -24,9 +29,8 @@ GET         /test-background                 @controllers.AdminController.testBa
 GET         /change-background               @controllers.AdminController.changeBackground(id: Long)
 GET         /del-background-image            @controllers.AdminController.deleteBackgroundImage(id: Long)
 POST        /add+backgroung+images...        @controllers.AdminController.addBackgroundImages()
+GET         /edit-pr                         @controllers.AdminController.editProduct(id: Long)
 
-GET         /all+products                    @controllers.SaleController.allProductsForSale()
-GET         /product...                      @controllers.SaleController.openProduct(id: Long)
 
 GET         /user+login...                   @controllers.UserController.login()
 GET         /user+register...                @controllers.UserController.register()

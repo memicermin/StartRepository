@@ -170,7 +170,7 @@ public class Image extends Model {
 
         String url = cloudinary.url().format("jpg")
                 .transformation(new Transformation().width(width).height(height).crop("fill"))
-                .generate(public_id);
+                .generate(image_url);
 
         return url;
     }

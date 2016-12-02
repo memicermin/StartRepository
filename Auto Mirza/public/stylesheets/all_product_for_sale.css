@@ -1,0 +1,41 @@
+.car{
+    background: #888888;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 32%;
+    height: 275px;
+}
+.car-head{
+    background: #a8c0da;
+    height: 42px;
+}
+.car-image{
+    padding: 5px 0px 0px 5px;
+}
+.price{
+    padding-left: 10%;
+}
+.h-price{
+    color: orangered;
+}
+.car-footer{
+   margin-top: -55px;
+    padding-bottom: 0px;
+}
+.img{
+    height: 210px;
+    width: 98%;
+}
+/*
+.car:before{
+    zoom: 125%;
+}.img:before{
+    zoom: 125%;
+}
+*/
+.brand{
+  margin-left: 7px;
+}
+.type{
+    margin-right: 7px;
+}

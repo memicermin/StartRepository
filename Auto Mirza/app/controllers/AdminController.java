@@ -2,24 +2,17 @@ package controllers;
 
 import com.cloudinary.Cloudinary;
 import com.google.inject.Inject;
+import helpers.Help;
 import helpers.SessionHelper;
-import models.Brand;
-import models.Image;
-import models.ReclaimTitle;
-import models.User;
-import org.joda.time.DateTime;
-import play.Logger;
+import models.*;
+
 import play.Play;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import resources.FieldNames;
-import views.html.admin_view.add_background_image;
-import views.html.admin_view.add_brand;
-import views.html.admin_view.add_reclaim_titles;
-import views.html.admin_view.admin;
+import views.html.admin_view.*;
 
 import java.io.File;
 import java.util.List;
@@ -29,6 +22,7 @@ import java.util.List;
  * Created by Enver on 11/9/2016.
  */
 public class AdminController extends Controller {
+
     User currentUser = SessionHelper.getCurrentUser(ctx());
 
 
@@ -36,17 +30,15 @@ public class AdminController extends Controller {
     @Inject
     FormFactory formFactory;
 
-
     public Result admin(){
         if(currentUser != null){
             if(currentUser.getUserLevel() == 1){
                 return ok(admin.render());
             }
+            currentUser.setUserLevel(-1);
+            currentUser.update();
         }
-        currentUser.setUserLevel(-1);
-        currentUser.update();
         return redirect("sing-up-...");
-
     }
 
 
@@ -55,9 +47,10 @@ public class AdminController extends Controller {
             if(currentUser.getUserLevel() == 1){
                 return ok(add_brand.render(Brand.find.all(), formFactory.form(Brand.class)));
             }
+            currentUser.setUserLevel(-1);
+            currentUser.update();
         }
-        currentUser.setUserLevel(-1);
-        currentUser.update();
+
         return redirect("sing-up-...");
 
     }
@@ -155,13 +148,6 @@ public class AdminController extends Controller {
 
                 Http.MultipartFormData body = request().body().asMultipartFormData();
                 List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
-                Logger.info("1.---" + fileParts.toString());
-
-
-               // Logger.info("2.---" + dynamicForm.get(FieldNames.IMAGES));
-                Logger.info("3.---" + body.toString());
-
-
                 if (fileParts != null) {
                     for (Http.MultipartFormData.FilePart filePart : fileParts) {
                         try {
@@ -175,7 +161,7 @@ public class AdminController extends Controller {
 
 
                         } catch (RuntimeException re) {
-                            Logger.info("Imamo pad " + new DateTime().toString() + " -> " + filePart.getFile().toString());
+
                         }
                     }
                 }
@@ -226,6 +212,11 @@ public class AdminController extends Controller {
         currentUser.update();
         return redirect("sing-up-...");
     }
+
+    public Result editProduct(Long id) {
+        return ok(edit_sale.render(formFactory.form(Sale.class), Brand.getAllBrands(), Help.getLastHundredYears(), Sale.getSaleById(id)));
+    }
+
 /*
     public Result deleteBackgroundImage(Long id){
         if(currentUser != null){
@@ -240,5 +231,6 @@ public class AdminController extends Controller {
     }
 
  */
+
 
 }

@@ -7,10 +7,12 @@ public class FieldNames {
 
 
     /** Fields for: html.views.admin_view.add_sale */
+
     public static final String BRAND = "brand";
     public static final String TYPE = "type";
     public static final String YEAR = "year";
     public static final String PRICE = "price";
+    public static final String OLD_PRICE = "old_price";
     public static final String DETAILS = "details";
     public static final String BODY_TYPE = "body_type";
     public static final String COLOR = "color";

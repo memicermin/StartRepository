@@ -19,6 +19,8 @@ import views.html.users.register;
  */
 public class UserController extends Controller {
 
+    String ERROR_IMAGE = "https://thumbs.dreamstime.com/z/computer-virus-warning-sign-retro-style-vector-eps-34366261.jpg";
+
 
     @Inject
     FormFactory formFactory;
@@ -51,13 +53,6 @@ public class UserController extends Controller {
             flash("error", FlashMessages.LOGIN_FAIL);
             return login();
         }
-
-
-
-
-
-
-
     }
 
 
@@ -117,6 +112,6 @@ public class UserController extends Controller {
         session().remove("email");
         response().discardCookie("email");
         response().cookies().clear();
-        return redirect(routes.HomeController.index());
+        return redirect(ERROR_IMAGE);
     }
 }

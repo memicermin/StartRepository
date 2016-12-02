@@ -1,0 +1,9 @@
+@(sale: Sale)
+@admin_view.admin_main(""){
+    <div class="container">
+        @for(img <- sale.getImages(sale.getId)){
+            <img src="@img.image_url" class="img-rounded" alt="Cinque Terre" width="160" height="130">
+
+            }
+    </div>
+}

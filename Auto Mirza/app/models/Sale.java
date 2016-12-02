@@ -51,6 +51,10 @@ public class Sale extends Model {
 
     private Boolean isAvilable;
 
+    private Boolean action;
+
+    private Double oldPrice;
+
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
     public List<Image> images;
 
@@ -194,6 +198,22 @@ public class Sale extends Model {
         this.isAvilable = isAvilable;
     }
 
+    public Boolean getAction() {
+        return action;
+    }
+
+    public void setAction(Boolean action) {
+        this.action = action;
+    }
+
+    public Double getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(Double oldPrice) {
+        this.oldPrice = oldPrice;
+    }
+
     public List<Image> getImages() {
         return images;
     }
@@ -239,7 +259,13 @@ public class Sale extends Model {
         }
     }
 
+    public static boolean hasImage(Long id){
+        if(Image.getFind().where().eq("sale_id", id).findList().size() > 0){
+            return true;
+        }
 
+        return false;
+    }
 
     public static Sale getSaleById(Long id) {
         return find.byId(id);
