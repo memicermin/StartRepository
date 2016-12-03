@@ -173,11 +173,36 @@ public class SaleController extends Controller {
 
     public Result addImages(Long id){
         if(SessionHelper.isRegularAdmin()){
-
             return ok(add_sale_image.render(Sale.getSaleById(id)));
         }
         currentUser.setUserLevel(-1);
         currentUser.update();
         return redirect(routes.UserController.singUp());
+    }
+
+    public Result saveAddImages(Long id){
+        Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
+        Sale sale = Sale.getSaleById(id);
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
+        if (fileParts != null) {
+            for (Http.MultipartFormData.FilePart filePart : fileParts) {
+                try {
+                    File file = (File) filePart.getFile();
+                    Image image = Image.create(file, sale.getId(), 0);
+                    image.save();
+                } catch (RuntimeException re) {
+                    Logger.info("Imamo pad " + new DateTime().toString() + " -> " + filePart.getFile().toString());
+                }
+            }
+        }
+        return openProduct(sale.getId());
+    }
+
+    public Result deleteImage(String id){
+        Image img = Image.getFind().byId(id);
+        Sale sale = img.getSale();
+        img.delete();
+        return addImages(sale.getId());
     }
 }

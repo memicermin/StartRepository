@@ -1,9 +1,39 @@
 @(sale: Sale)
-@admin_view.admin_main(""){
-    <div class="container">
-        @for(img <- sale.getImages(sale.getId)){
-            <img src="@img.image_url" class="img-rounded" alt="Cinque Terre" width="160" height="130">
+@admin_view.admin_main("") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/add_sale_image.css")">
 
-            }
+    <div class="container">
+        <div class="row">
+        @for(img <- sale.getImages(sale.getId)) {
+            <div class="col-lg-2 img-preview">
+                <div class="row">
+                    <img src="@img.image_url" class="img-rounded" alt="Cinque Terre" width="160" height="130">
+                </div>
+                <div class="row trash-img">
+                    <div class="col-lg-1 col-lg-offset-8">
+                    <a href="@routes.SaleController.deleteImage(img.getId() + "")"><i class="glyphicon glyphicon-trash"></i></a>
+                </div>
+                </div>
+            </div>
+
+        }
+        </div>
+        <hr>
+        <form role="form" action="@routes.SaleController.saveAddImages(sale.getId)" method="post" enctype="multipart/form-data">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Add a photos</h4></div>
+                    <div class="panel-body">
+                        <p>Click <strong>Add a photo</strong>
+                            and select the photos you want to upload. </p>
+                        <div class="form-group">
+                            <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
+                        </div>
+                    </div>
+                </div>
+                <a href="@routes.AdminController.editProduct(sale.getId)" class="btn btn-danger">Cancel</a>
+                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Add</button>
+            </div>
+        </form>
     </div>
 }

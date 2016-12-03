@@ -17,6 +17,8 @@ POST        /upd...                          @controllers.SaleController.updateS
 GET         /add-act...                      @controllers.SaleController.addAction(id: Long)
 POST        /save-action...                  @controllers.SaleController.saveAction(id: Long)
 GET         /add-img...                      @controllers.SaleController.addImages(id: Long)
+POST        /add-imgs...                     @controllers.SaleController.saveAddImages(id: Long)
+GET         /del-img...                      @controllers.SaleController.deleteImage(id: String)
 
 GET         /admin_new_brand                 @controllers.AdminController.newBrand()
 POST        /brand                           @controllers.AdminController.saveBrand()

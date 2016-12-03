@@ -1,4 +1,14 @@
+.product-old-price{
+    text-decoration: line-through;
+    color: blue;
+}
+.product-price{
+    text-decoration: none;
+    color: orangered;
+    text-decoration-color: orangered;
+}
 
+/*--------------------------------*/
 .carousel-inner {
     position: relative;
     width: 100%;

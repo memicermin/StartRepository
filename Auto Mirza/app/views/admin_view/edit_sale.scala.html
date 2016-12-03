@@ -1,5 +1,6 @@
 @(form: Form[Sale], brands: List[Brand], years: List[Integer], sale: Sale)
 @admin_view.admin_main("Edit sale") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/edit_sale.css")">
     <div class="container">
         <form role="form" action="@routes.SaleController.updateSale(sale.getId())" method="post" enctype="multipart/form-data">
             <div class="row">
@@ -57,16 +58,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <a href="@routes.SaleController.addAction(sale.getId())" class="btn btn-warning">Add Action</a>
-                        <a href="@routes.SaleController.addImages(sale.getId)" class="btn btn-danger">Add Images</a>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-8">
                 <div class="row">
-                    <button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
+                    <a href="@routes.SaleController.openProduct(sale.getId)" class="btn btn-danger">Cancel</a>
+                    <a href="@routes.SaleController.addAction(sale.getId())" class="btn btn-warning">Add Action</a>
+                    <a href="@routes.SaleController.addImages(sale.getId)" class="btn btn-warning">Add Images</a>
+                    <button type="submit" id="submit" name="submit" class="btn btn-success navbar-right button-update">Update</button>
                 </div>
             </div>
         </form>

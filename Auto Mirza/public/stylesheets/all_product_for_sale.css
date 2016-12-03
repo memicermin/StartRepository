@@ -12,14 +12,38 @@
 .car-image{
     padding: 5px 0px 0px 5px;
 }
-.price{
-    padding-left: 10%;
+.action{
+    margin-left: -29.5px;
+    margin-top: -215px;
 }
-.h-price{
+.action-price{
+    padding-left: 1%;
+}
+.action-h-price{
+    font-style: italic;
     color: orangered;
 }
+.action-old-price{
+    padding: 5px 5px 5px 5px;
+    background: #B0BED9;
+    margin-right: 25px;
+    color: magenta;
+    text-decoration: line-through;
+}
+.action-car-footer{
+    margin-top: 160px;
+    margin-left: 30px;
+    padding-bottom: 0px;
+}
+.price{
+    padding-left: 5%;
+}
+.h-price{
+    font-style: italic;
+    color: crimson;
+}
 .car-footer{
-   margin-top: -55px;
+    margin-top: -55px;
     padding-bottom: 0px;
 }
 .img{

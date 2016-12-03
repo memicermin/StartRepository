@@ -15,18 +15,40 @@
                             <h4>@product.getType</h4>
                         </div>
                     </div>
+
                     <div class="car-image">
-                        @if(Sale.hasImage(product.getId)){
-                            <img id="img-sale" onmouseover="" onmouseout="" src="@product.getFirstImage(product.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
-                        }else{
-                            <img src="http://placehold.it/310x210">
+                    @if(Sale.hasImage(product.getId)) {
+                        <img id="img-sale" onmouseover="" onmouseout="" src="@product.getFirstImage(product.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                    } else {
+                        <img src="http://placehold.it/310x210">
                         }
                     </div>
-                    <div class="car-footer">
-                        <div class="price">
-                            <h3 class="h-price"> <strong> @product.getPrice Km</strong></h3>
+                    @if(product.getAction == true) {
+                        <div class="action">
+                            <div class="col-lg-4">
+                                <img src="assets\images\badge_akcija.png">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <h4 class="navbar-right action-old-price"><strong>@product.getOldPrice Km</strong></h4>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="action-car-footer">
+                            <div class="action-price">
+                                <div class="row">
+                                    <h3 class="action-h-price"> <strong> @product.getPrice Km</strong></h3>
+                                </div>
+                            </div>
+                        </div>
+                    } else {
+                        <div class="car-footer">
+                            <div class="price">
+                                <h3 class="h-price"> <strong> @product.getPrice Km</strong></h3>
+                            </div>
+                        </div>
+                    }
+
                 </div>
             </a>
 
