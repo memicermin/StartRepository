@@ -9,7 +9,7 @@ create table brand (
   constraint pk_brand primary key (id)
 );
 
-create table automobil (
+create table car (
   id                            bigint auto_increment not null,
   brand_id                      bigint,
   price_id                      bigint,
@@ -23,7 +23,7 @@ create table automobil (
   type_of_fuel                  varchar(255),
   transmission                  varchar(255),
   details                       varchar(1500),
-  constraint pk_automobil primary key (id)
+  constraint pk_car primary key (id)
 );
 
 create table car_parts (
@@ -66,13 +66,13 @@ create table user (
   constraint pk_user primary key (id)
 );
 
-alter table automobil add constraint fk_automobil_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
-create index ix_automobil_brand_id on automobil (brand_id);
+alter table car add constraint fk_car_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
+create index ix_car_brand_id on car (brand_id);
 
-alter table automobil add constraint fk_automobil_price_id foreign key (price_id) references price (id) on delete restrict on update restrict;
-create index ix_automobil_price_id on automobil (price_id);
+alter table car add constraint fk_car_price_id foreign key (price_id) references price (id) on delete restrict on update restrict;
+create index ix_car_price_id on car (price_id);
 
-alter table product add constraint fk_product_car_id foreign key (car_id) references automobil (id) on delete restrict on update restrict;
+alter table product add constraint fk_product_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
 create index ix_product_car_id on product (car_id);
 
 alter table product add constraint fk_product_car_parts_id foreign key (car_parts_id) references car_parts (id) on delete restrict on update restrict;
@@ -90,11 +90,11 @@ create index ix_sale_admin_id on sale (admin_id);
 
 # --- !Downs
 
-alter table automobil drop foreign key fk_automobil_brand_id;
-drop index ix_automobil_brand_id on automobil;
+alter table car drop foreign key fk_car_brand_id;
+drop index ix_car_brand_id on car;
 
-alter table automobil drop foreign key fk_automobil_price_id;
-drop index ix_automobil_price_id on automobil;
+alter table car drop foreign key fk_car_price_id;
+drop index ix_car_price_id on car;
 
 alter table product drop foreign key fk_product_car_id;
 drop index ix_product_car_id on product;
@@ -113,7 +113,7 @@ drop index ix_sale_admin_id on sale;
 
 drop table if exists brand;
 
-drop table if exists automobil;
+drop table if exists car;
 
 drop table if exists car_parts;
 

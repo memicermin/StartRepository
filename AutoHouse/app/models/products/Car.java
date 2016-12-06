@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by Enver on 12/6/2016.
  */
 @Entity
-@Table(name = "automobil")
+@Table(name = "car")
 public class Car extends Model{
 
     @Id
