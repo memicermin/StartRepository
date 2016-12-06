@@ -1,6 +1,7 @@
 package models.products;
 
 import com.avaje.ebean.Model;
+import models.Price;
 
 import javax.persistence.*;
 
@@ -30,5 +31,10 @@ public class Product extends Model {
     @JoinColumn(name = "car_tires_id", referencedColumnName = "id")
     @Column(name = "car_tires")
     private CarTires carTires;
+
+    @ManyToOne
+    @JoinColumn(name = "price_id", referencedColumnName = "id")
+    @Column(name = "price")
+    private Price price;
 
 }

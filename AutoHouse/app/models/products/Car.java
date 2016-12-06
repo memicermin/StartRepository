@@ -23,10 +23,6 @@ public class Car extends Model{
     @Column(name = "brand")
     private Brand brand;
 
-    @ManyToOne
-    @JoinColumn(name = "price_id", referencedColumnName = "id")
-    @Column(name = "price")
-    private Price price;
 
     private String type;
 

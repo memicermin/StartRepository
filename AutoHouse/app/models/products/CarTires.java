@@ -1,6 +1,7 @@
 package models.products;
 
 import com.avaje.ebean.Model;
+import models.Brand;
 
 import javax.persistence.*;
 
@@ -16,4 +17,10 @@ public class CarTires extends Model{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public Long id;
+
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    @Column(name = "brand")
+    private Brand brand;
 }

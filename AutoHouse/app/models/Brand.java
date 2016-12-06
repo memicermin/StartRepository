@@ -17,9 +17,13 @@ public class Brand extends Model{
     @Column(name = "id")
     public Long id;
 
-
     @Column(name = "brand")
     private String brand;
+
+    @Column(name = "part_of_product")
+    private short partOfProduct;
+
+
 
 
 
