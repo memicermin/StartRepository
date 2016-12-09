@@ -12,10 +12,7 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User extends Model{
 
-
-
     public static Finder<Long, User> find = new Finder<>(User.class);
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,10 +55,10 @@ public class User extends Model{
     @Column(name = "verification")
     private Integer verification;
 
-    @Column(name = "user_level")
-    private Integer userLevel;
+    @Column(name = "login_count")
+    private Integer loginCount;
 
+    @Column(name = "token")
     private String token;
-
 
 }

@@ -37,4 +37,14 @@ public class Product extends Model {
     @Column(name = "price")
     private Price price;
 
+    @ManyToOne
+    @JoinColumn(name = "rent_a_car_id", referencedColumnName = "id")
+    @Column(name = "rent_a_car")
+    private RentACar rentACar;
+
+    @ManyToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @Column(name = "service")
+    private Service service;
+
 }
