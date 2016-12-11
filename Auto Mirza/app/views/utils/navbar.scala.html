@@ -8,14 +8,14 @@
         <div class="navbar-header">
 
             <a class="navbar-brand" href="/">Auto House</a>
-            @*
+            @**@
             @if(User.find.findRowCount() == 0){
             <li><a href="@helpers.FillDatabase.setDefaultUsers()">Set def. user</a></li>
             }
             @if(Image.getFind.findRowCount() == 0){
             <li></li><a href="@helpers.FillDatabase.setDefBacgroundImages()">Set def. img</a>
             }
-            *@
+
 
             @if(currentUser != null) {
                 <a class="navbar-brand" href="/">@currentUser.getUsername</a>

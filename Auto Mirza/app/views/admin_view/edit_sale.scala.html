@@ -1,5 +1,5 @@
 @(form: Form[Sale], brands: List[Brand], years: List[Integer], sale: Sale)
-@admin_view.admin_main("Edit sale") {
+@admin_view.admin_main("Edit " + sale.getType) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/edit_sale.css")">
     <div class="container">
         <form role="form" action="@routes.SaleController.updateSale(sale.getId())" method="post" enctype="multipart/form-data">

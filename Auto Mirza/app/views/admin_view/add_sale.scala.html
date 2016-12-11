@@ -1,7 +1,7 @@
 @(form: Form[Sale], brands: List[Brand], years: List[Integer])
 
 
-@admin_view.admin_main("Welcome to Auto Mirza") {
+@admin_view.admin_main("New Car") {
 
     <div class="container">
         <form role="form" action="@routes.SaleController.saveSale()" method="post" enctype="multipart/form-data">
