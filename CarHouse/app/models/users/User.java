@@ -2,7 +2,7 @@ package models.users;
 
 import com.avaje.ebean.Model;
 import helpers.DateTimeHelper;
-import resources.patterns.DateTimePatterns;
+import resources.patterns_form.DateTimePatterns;
 import javax.persistence.*;
 
 /**
@@ -47,7 +47,7 @@ public class User extends Model {
     private String phoneNumber;
 
     @Column(name = "create_date", updatable = false, columnDefinition = "datetime")
-    private String creationDate = DateTimeHelper.getCurrentFormattedDateTime(DateTimePatterns.DAY_DATE_TIME);
+    private String creationDate= DateTimeHelper.getCurrentFormattedDateTime(DateTimePatterns.DAY_DATE_TIME);
 
     @Column(name = "update_date")
     private String updateDate;
