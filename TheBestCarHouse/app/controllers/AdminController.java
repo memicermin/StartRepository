@@ -7,6 +7,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.admin.admin_page;
 import views.html.admin.interlopers;
+import views.html.admin.user.user;
 import views.html.admin.user_list;
 
 /**
@@ -25,7 +26,9 @@ public class AdminController extends Controller {
         return ok(user_list.render(User.find.all(), "All users"));
     }
 
-    
+    public Result user(Long id){
+        return ok(user.render(User.findById(id)));
+    }
 
     public Result getInterlopers() {
         return ok(interlopers.render(User.getInterlopers(), "Interlopers"));

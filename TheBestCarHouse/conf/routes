@@ -18,6 +18,7 @@ POST        /registeruser            @controllers.RegisterController.registerUse
 
 GET         /admin                   @controllers.AdminController.adminPage()
 GET         /admin/allUsers          @controllers.AdminController.allUsers()
+GET         /admin/user/             @controllers.AdminController.user(id: Long)
 GET         /interlopers             @controllers.AdminController.getInterlopers()
 GET         /admdelinterloper        @controllers.AdminController.deleteInterloper(id: Long)
 
