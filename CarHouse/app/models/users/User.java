@@ -2,21 +2,28 @@ package models.users;
 
 import com.avaje.ebean.Model;
 import helpers.DateTimeHelper;
+import helpers.MD5Hash;
+import helpers.SessionHelper;
+import models.users.help_models.UserForRegister;
+import play.Logger;
+import play.mvc.Http;
 import resources.patterns_form.DateTimePatterns;
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * Created by Enver on 12/12/2016.
  */
 
 @Entity
-@Table
+@Table(name = "user")
 public class User extends Model {
 
     public static Finder<Long, User> find = new Finder<>(User.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "username", length = 50)
@@ -46,8 +53,8 @@ public class User extends Model {
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
-    @Column(name = "create_date", updatable = false, columnDefinition = "datetime")
-    private String creationDate= DateTimeHelper.getCurrentFormattedDateTime(DateTimePatterns.DAY_DATE_TIME);
+    @Column(name = "create_date", updatable = false)
+    private String creationDate;
 
     @Column(name = "update_date")
     private String updateDate;
@@ -156,8 +163,8 @@ public class User extends Model {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationDate() {
+        creationDate = DateTimeHelper.getCurrentFormattedDateTime(DateTimePatterns.DAY_DATE_TIME);
     }
 
     public String getUpdateDate() {
@@ -206,5 +213,50 @@ public class User extends Model {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+
+     // METHODS
+
+
+    public static User findByEmail(String email) {
+        return find.where().eq("email", email).findUnique();
+    }
+
+    public static User findById(Long id) {
+        return find.byId(id);
+    }
+
+    public static User currentUser() {
+        User user = SessionHelper.getCurrentUser(Http.Context.current());
+        return user;
+    }
+
+    public static User createNewUser(UserForRegister userForRegister) {
+        if (userForRegister != null) {
+            try {
+                User user = new User();
+                user.userLevel = -1;
+                user.loginCount = -1;
+                user.verification = -1;
+                user.premiumUser = -1;
+                user.token = UUID.randomUUID().toString();
+                user.username = userForRegister.getUsername();
+                user.email = userForRegister.getEmail();
+                user.password = MD5Hash.getEncriptedPasswordMD5(userForRegister.getPassword());
+                user.firstName = userForRegister.getFirstName();
+                user.lastName = userForRegister.getLastName();
+                user.birthDate = userForRegister.getBirthDate();
+                user.phoneNumber = userForRegister.getPhoneNumber();
+                user.gender = userForRegister.getGender();
+                user.location = userForRegister.getLocation();
+                user.setCreationDate();
+                user.save();
+                return user;
+            } catch (PersistenceException e) {
+                return null;
+            }
+        }
+        return null;
     }
 }

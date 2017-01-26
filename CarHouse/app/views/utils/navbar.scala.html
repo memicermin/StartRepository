@@ -1,0 +1,18 @@
+@import helpers.SessionHelper
+@import models.users.User
+@()(implicit currentUser: User = SessionHelper.getCurrentUser(ctx()))
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/search.css")">
+
+<nav class="navbar navbar-webmaster">
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Library</a></li>
+        @if(currentUser != null){
+            <li><a href="#">@currentUser.getUsername</a></li>
+            <li><a href="@user_controller.routes.LoginRegisterController.singUp()">Sing out</a></li>
+        }else{
+            <li><a href="/login">Sing up</a></li>
+        }
+    </ol>
+</nav>

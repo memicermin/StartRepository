@@ -1,0 +1,48 @@
+@import users.User
+<div class="main-place">
+    <a href="/" class="item-name">Home</a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.LoginController.singUp()" class="item-name">Sing Up</a>
+</div>
+
+<div class="main-place">
+    <a href="#" class="item-name">Messages</a>
+
+</div>
+
+<div class="main-place">
+    <a href="/admin/allUsers" class="item-name">Users</a>
+</div>
+
+<div class="main-place">
+    <a href="#" class="item-name">Products</a>
+
+</div>
+
+<div class="main-place">
+
+</div>
+
+<div class="main-place">
+
+</div>
+
+<div class="main-place">
+
+</div>
+
+<div class="main-place">
+
+</div>
+
+<div class="main-place">
+    <div class=""><a href="@routes.AdminController.getInterlopers()" class="item-name">
+        @if(User.getInterlopers.size() > 0) {
+            <span class="badge">@User.getInterlopers.size()</span>
+        }
+        Interlopers</a>
+    </div>
+
+</div>

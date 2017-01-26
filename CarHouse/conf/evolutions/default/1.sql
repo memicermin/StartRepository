@@ -3,12 +3,6 @@
 
 # --- !Ups
 
-create table global_model (
-  id                            bigint auto_increment not null,
-  name                          varchar(255),
-  constraint pk_global_model primary key (id)
-);
-
 create table user (
   id                            bigint auto_increment not null,
   username                      varchar(50),
@@ -20,7 +14,7 @@ create table user (
   gender                        integer(1),
   location                      varchar(150),
   phone_number                  varchar(15),
-  create_date                   datetime,
+  create_date                   varchar(255),
   update_date                   varchar(255),
   verification                  integer,
   user_level                    integer,
@@ -33,8 +27,6 @@ create table user (
 
 
 # --- !Downs
-
-drop table if exists global_model;
 
 drop table if exists user;
 

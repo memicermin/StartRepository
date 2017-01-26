@@ -1,0 +1,35 @@
+@import models.users.User
+@(interlopers: List[User], message: String)
+@admin.admin(message) {
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Username</th>
+                    <th>Attempt</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for(interloper <- interlopers) {
+                <tr>
+                    <td>@interloper.getId</td>
+                    <td>@interloper.getFirstName</td>
+                    <td>@interloper.getLastName</td>
+                    <td>@interloper.getUsername</td>
+                    <td>@interloper.getUserLevel</td>
+                    <td>
+                        <div class="row">
+                            <a href="@routes.AdminController.deleteInterloper(interloper.getId)" class="col-lg-4"><i class = "glyphicon glyphicon-trash"></i></a>
+                            <a href="#"><i class = "glyphicon glyphicon-edit"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

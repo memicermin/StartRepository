@@ -1,0 +1,36 @@
+@import models.users.User
+@(users: List[User], message: String)
+@admin.admin(message){
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Token</th>
+          <th>Cr Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          @for(user <- users){
+            <tr>
+              <td>@user.getId</td>
+              <td>@user.getUsername</td>
+              <td>@user.getEmail</td>
+              <td>@user.getToken</td>
+              <td>@user.getCreationDate.substring(5, 15)</td>
+              <td>
+                <div class="row">
+                  <a href="#" class="col-lg-1"><i class = "glyphicon glyphicon-trash"></i></a>
+                  <a href="#" class="col-lg-offset-2"><i class = "glyphicon glyphicon-edit"></i></a>
+                </div>
+              </td>
+            </tr>
+          }
+      </tbody>
+    </table>
+  </div>
+}

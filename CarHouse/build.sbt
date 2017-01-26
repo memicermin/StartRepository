@@ -16,6 +16,7 @@ libraryDependencies ++= Seq(
   filters,
   "mysql" % "mysql-connector-java" % "5.1.18",
   "org.avaje" % "ebean" % "2.7.3",
+  "org.apache.commons" % "commons-email" % "1.3.3",
   "javax.persistence" % "persistence-api" % "1.0.2",
   "com.cloudinary" % "cloudinary" % "1.0.14"
   /*,
