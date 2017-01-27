@@ -6,6 +6,7 @@ import helpers.HAT36N579;
 import helpers.MD5Hash;
 import models.users.help_user_models.UserForLogin;
 import models.users.help_user_models.UserForRegister;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.List;
@@ -286,28 +287,51 @@ public class User extends Model {
         return null;
     }
 
-    public static List<User> getInterlopers(){
+    public static List<User> getInterlopers() {
         return find.where().gt("active", 0).where().gt("guest", 0).findList();
     }
 
+    public static void penalizeUser(Long id) {
+        User user = findById(id);
+        if (user.getUserLevel() >= 0) {
+            user.setPremiumUser(-1);
+            user.setUserLevel(-1);
+        } else if (user.getUserLevel() >= -4 && user.getUserLevel() <= -1) {
+            user.setUserLevel(user.getUserLevel() - 1);
+        } else if (user.getUserLevel() < -4) {
+            user.setActive(0);
+            user.setVerification(-1);
+            user.setUserLevel(user.getUserLevel() - 1);
+            try{
+                user.setPremiumUser((Integer.parseInt(("- " + DateTimeHelper.getCurrentDateFormated("ddMMyyHHmm")))));
+
+            }catch (NumberFormatException e){
+                System.out.println(DateTimeHelper.getCurrentDateFormated("dd.MM.yyyy - HH:mm") + " user " + user.getEmail() + " is set in inactive, but Atribute PREMIUM USER has ERROR");
+            }
+        }
+        if (user.getGuest() < 1 && user.getUserLevel() < -2) {
+            user.setGuest(1);
+        }
+        user.update();
+    }
 }
 
 /**
-eq(...) = equals
-ne(...) = not equals
-ieq(...) = case insensitve equals
-between(...) = between
-gt(...) = greater than
-ge(...) = greater than or equals
-lt(...) = less than or equals
-le(...) = less than or equals
-isNull(...) = is null
-isNotNull(...) = is not null
-like(...) = like
-startsWith(...) = string starts with
-endswith(...) = string ends with
-contains(...) = string conains
-in(...) = in a subquery, collection or array
-exists(...) = at least one row exists in a subquery
-notExists(...) = no row exists in a subquery
+ * eq(...) = equals
+ * ne(...) = not equals
+ * ieq(...) = case insensitve equals
+ * between(...) = between
+ * gt(...) = greater than
+ * ge(...) = greater than or equals
+ * lt(...) = less than or equals
+ * le(...) = less than or equals
+ * isNull(...) = is null
+ * isNotNull(...) = is not null
+ * like(...) = like
+ * startsWith(...) = string starts with
+ * endswith(...) = string ends with
+ * contains(...) = string conains
+ * in(...) = in a subquery, collection or array
+ * exists(...) = at least one row exists in a subquery
+ * notExists(...) = no row exists in a subquery
  */

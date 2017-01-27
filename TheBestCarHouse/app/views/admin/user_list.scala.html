@@ -1,36 +1,49 @@
 @import models.users.User
 @(users: List[User], message: String)
-@admin.admin(message){
-
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Token</th>
-          <th>Cr Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-          @for(user <- users){
-            <tr>
-              <td>@user.getId</td>
-              <td>@user.getUsername</td>
-              <td>@user.getEmail</td>
-              <td>@user.getToken</td>
-              <td>@user.getCreationDate.substring(5, 15)</td>
-              <td>
+    @admin.admin(message) {
+        <div class="col-md-offset-1">
+            <div>
                 <div class="row">
-                  <a href="#" class="col-lg-1"><i class = "glyphicon glyphicon-trash"></i></a>
-                  <a href="@routes.AdminController.user(user.getId)" class="col-lg-offset-2"><i class = "glyphicon glyphicon-edit"></i></a>
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <a href="@routes.AdminController.getUnverifiedUsers()" class="col-lg-2">Unverified</a>
+                            <a href="@routes.AdminController.getPremiumUsers()" class="col-lg-2">Premium</a>
+                            <a href="@routes.AdminController.getBlockedUsers()" class="col-lg-2">Blocked</a>
+                            <a href="@routes.AdminController.getBlockBlockUsers()" class="col-lg-2">BlockBlock</a>
+                        </div>
+                    </div>
                 </div>
-              </td>
-            </tr>
-          }
-      </tbody>
-    </table>
-  </div>
-}
+            </div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Token</th>
+                        <th>Cr Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(user <- users) {
+                    <tr>
+                        <td>@user.getId</td>
+                        <td>@user.getUsername</td>
+                        <td>@user.getEmail</td>
+                        <td>@user.getToken</td>
+                        <td>@user.getCreationDate.substring(5, 15)</td>
+                        <td>
+                            <div class="row">
+                                <a href="#" class="col-lg-1"><i class = "glyphicon glyphicon-trash"></i></a>
+                                <a href="@routes.AdminController.user(user.getId)" class="col-lg-offset-2"><i class = "glyphicon glyphicon-edit"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }

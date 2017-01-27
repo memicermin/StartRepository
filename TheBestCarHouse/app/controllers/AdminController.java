@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.inject.Inject;
+import helpers.Admin;
 import helpers.HAT36N579;
 import helpers.SessionHelper;
 import models.users.User;
@@ -9,6 +10,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.admin_page;
 import views.html.admin.interlopers;
 import views.html.admin.user.edit_user;
@@ -25,6 +27,7 @@ public class AdminController extends Controller {
     @Inject
     FormFactory formFactory;
 
+    @Security.Authenticated(Admin.class)
     public Result adminPage() {
         if (admin()) {
             return ok(admin_page.render("Hello"));
@@ -113,6 +116,23 @@ public class AdminController extends Controller {
         }
         User.findById(id).delete();
         return redirect("/admin");
+    }
+
+    public Result getBlockedUsers(){
+        return ok(user_list.render(User.find.where().eq("active", 0).findList(), "Blocked users"));
+    }
+
+    public Result getBlockBlockUsers(){
+        return ok(user_list.render(User.find.where().lt("active", 0).findList(), "Blocked users"));
+    }
+
+    public Result getUnverifiedUsers(){
+        return ok(user_list.render(User.find.where().lt("verification", 0).findList(), "Unverified"));
+    }
+
+    @Security.Authenticated(Admin.class)
+    public Result getPremiumUsers(){
+        return ok(user_list.render(User.find.where().ge("premium_user", 10).findList(), "Premium"));
     }
 
     // Help methods
