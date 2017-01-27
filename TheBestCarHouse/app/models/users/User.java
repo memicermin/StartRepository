@@ -287,10 +287,11 @@ public class User extends Model {
     }
 
     public static List<User> getInterlopers(){
-        return find.where().lt("active", 1).where().gt("guest", 0).findList();
+        return find.where().gt("active", 0).where().gt("guest", 0).findList();
     }
 
 }
+
 /**
 eq(...) = equals
 ne(...) = not equals
