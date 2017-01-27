@@ -73,6 +73,9 @@ public class User extends Model {
     @Column(name = "guest")
     private int guest;
 
+    @Column(name = "active")
+    private Integer active;
+
     @Column(name = "token")
     private String token;
 
@@ -214,6 +217,14 @@ public class User extends Model {
         this.guest = guest;
     }
 
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
     public String getToken() {
         return token;
     }
@@ -252,6 +263,7 @@ public class User extends Model {
             user.loginCount = 0;
             user.premiumUser = 0;
             user.guest = 0;
+            user.active = 1;
             user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
 
             user.save();
@@ -275,6 +287,26 @@ public class User extends Model {
     }
 
     public static List<User> getInterlopers(){
-        return find.where().lt("user_level", -5).findList();
+        return find.where().lt("active", 1).where().gt("guest", 0).findList();
     }
+
 }
+/**
+eq(...) = equals
+ne(...) = not equals
+ieq(...) = case insensitve equals
+between(...) = between
+gt(...) = greater than
+ge(...) = greater than or equals
+lt(...) = less than or equals
+le(...) = less than or equals
+isNull(...) = is null
+isNotNull(...) = is not null
+like(...) = like
+startsWith(...) = string starts with
+endswith(...) = string ends with
+contains(...) = string conains
+in(...) = in a subquery, collection or array
+exists(...) = at least one row exists in a subquery
+notExists(...) = no row exists in a subquery
+ */

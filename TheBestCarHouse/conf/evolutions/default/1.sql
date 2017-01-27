@@ -27,6 +27,7 @@ create table user (
   login_count                   integer,
   premium_user                  integer,
   guest                         integer,
+  active                        integer,
   token                         varchar(255),
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id)

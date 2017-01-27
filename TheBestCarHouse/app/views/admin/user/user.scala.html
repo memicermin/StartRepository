@@ -12,14 +12,14 @@
                     <div class="row">
                         <div class="col-md-3 col-lg-3 " align="center">
                             @if(user.getGender == 1) {
-                                <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive img-circle" title="" alt="">
+                                <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive" title="" alt="">
                             }
                             @if(user.getGender == 2) {
-                                <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-circle img-responsive">
+                                <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-responsive">
 
                             }
                             @if(user.getGender == 3) {
-                                <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-circle img-responsive">
+                                <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-responsive">
                                 }
                         </div>
                         <div class=" col-md-9 col-lg-9 ">
@@ -42,6 +42,14 @@
                                         <td>@user.getCreationDate</td>
                                     </tr>
                                     <tr>
+                                        <td>Location</td>
+                                        <td>@user.getLocation</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone Number</td>
+                                        <td>@user.getPhoneNumber</td>
+                                    </tr>
+                                    <tr>
                                         <td>Update Date</td>
                                         <td>@user.getUpdateDate</td>
                                     </tr>
@@ -50,25 +58,36 @@
                                         <td>@user.getLoginCount</td>
                                     </tr>
                                     <tr>
-                                        <td>Location</td>
-                                        <td>@user.getLocation</td>
+                                        <td>Verification</td>
+                                        <td>
+                                            @if(user.getVerification == 0) {
+                                                <a type="" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-remove"></i></a>
+                                            }
+                                            @if(user.getVerification > 0) {
+                                                <a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                            }
+                                            @if(user.getVerification < 0){
+                                                <a type="" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                            }
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>Phone Number</td>
-                                        <td>@user.getPhoneNumber</td>
+                                        <td>Premium User</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Level</td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <a href="#" class="btn btn-primary">My Sales Performance</a>
-                            <a href="#" class="btn btn-primary">Team Sales Performance</a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                     <span class="pull-right">
-                        <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="@routes.AdminController.editUser(user.getId)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                         <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                     </span>
                 </div>

@@ -19,7 +19,7 @@ public class SessionHelper {
 
     public static boolean admin(User user){
         if(user != null){
-            if(user.getUserLevel()<1){
+            if(user.getUserLevel() == 1001){
                 return false;
             }
             if(user.getGuest()>-1){

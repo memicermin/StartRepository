@@ -10,7 +10,7 @@
                     <th>Lastname</th>
                     <th>Username</th>
                     <th>Attempt</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,7 @@
                     <td>@interloper.getUserLevel</td>
                     <td>
                         <div class="row">
-                            <a href="@routes.AdminController.deleteInterloper(interloper.getId)" class="col-lg-4"><i class = "glyphicon glyphicon-trash"></i></a>
-                            <a href="#"><i class = "glyphicon glyphicon-edit"></i></a>
+                            <a href="@routes.AdminController.user(interloper.getId)"><i class="glyphicon glyphicon-edit"></i></a>
                         </div>
                     </td>
                 </tr>

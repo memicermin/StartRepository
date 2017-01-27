@@ -39,7 +39,11 @@ public class LoginController extends Controller {
         User user = User.getUserForLogin(userForLogin);
 
         if (user != null) {
-            if(user.getUserLevel() < -5){
+            if(user.getActive() < 0){
+                flash("Your account is deleted");
+                return singUp();
+            }
+            if(user.getUserLevel() < -5 || user.getActive() == 0){
                 flash("error", "You are blocked");
                 return redirect(ERROR_IMAGE);
             }
