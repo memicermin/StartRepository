@@ -80,6 +80,9 @@ public class User extends Model {
     @Column(name = "token")
     private String token;
 
+    @Column(name = "notes", length = 4000)
+    private String notes;
+
     /**
      * Constructor
      */
@@ -234,6 +237,13 @@ public class User extends Model {
         this.token = token;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public static User findByEmail(String email) {
         return find.where().eq("email", email).findUnique();
@@ -266,7 +276,7 @@ public class User extends Model {
             user.guest = 0;
             user.active = 1;
             user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
-
+            user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.save();
 
             return user;
@@ -302,12 +312,7 @@ public class User extends Model {
             user.setActive(0);
             user.setVerification(-1);
             user.setUserLevel(user.getUserLevel() - 1);
-            try{
-                user.setPremiumUser((Integer.parseInt(("- " + DateTimeHelper.getCurrentDateFormated("ddMMyyHHmm")))));
-
-            }catch (NumberFormatException e){
-                System.out.println(DateTimeHelper.getCurrentDateFormated("dd.MM.yyyy - HH:mm") + " user " + user.getEmail() + " is set in inactive, but Atribute PREMIUM USER has ERROR");
-            }
+            user.setNotes(user.getNotes() + " \nBlocked by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + ";");
         }
         if (user.getGuest() < 1 && user.getUserLevel() < -2) {
             user.setGuest(1);

@@ -28,12 +28,13 @@ public static void setdefaultSettings(){
         u1.setCreationDate(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u1.setUpdateDate("0");
         u1.setVerification(1);
-        u1.setUserLevel(1);
+        u1.setUserLevel(1001);
         u1.setLoginCount(0);
         u1.setPremiumUser(0);
         u1.setGuest(-1);
         u1.setActive(1);
         u1.setToken(UUID.randomUUID().toString());
+        u1.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u1.save();
         User u2 = new User();
         u2.setUsername("ermin");
@@ -54,6 +55,7 @@ public static void setdefaultSettings(){
         u2.setGuest(0);
         u2.setActive(1);
         u2.setToken(UUID.randomUUID().toString());
+        u2.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u2.save();
         User u3 = new User();
         u3.setUsername("tidza");
@@ -74,6 +76,7 @@ public static void setdefaultSettings(){
         u3.setGuest(0);
         u3.setActive(1);
         u3.setToken(UUID.randomUUID().toString());
+        u3.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u3.save();
         User u4 = new User();
         u4.setUsername("erver");
@@ -94,6 +97,7 @@ public static void setdefaultSettings(){
         u4.setGuest(0);
         u4.setActive(0);
         u4.setToken(UUID.randomUUID().toString());
+        u4.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u4.save();
         User u5 = new User();
         u5.setUsername("mitko");
@@ -114,6 +118,7 @@ public static void setdefaultSettings(){
         u5.setGuest(0);
         u5.setActive(1);
         u5.setToken(UUID.randomUUID().toString());
+        u5.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u5.save();
     }
 

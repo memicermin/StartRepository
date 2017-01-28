@@ -10,7 +10,6 @@ public class HAT36N579 {
     public static String getHat36(String string){
         Random rnd = new Random();
         int num = rnd.nextInt(90)+10;
-        System.out.println(num);
         String s = "";
         if(pr_n(num)){
             num ++;

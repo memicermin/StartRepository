@@ -137,7 +137,8 @@
                                                 <div class="col-lg-6">
                                                     <p class="text-success"></p>
                                                     <p class="text-warning"></p>
-                                                    <p class="text-danger">Num 1 meens the user is <strong>interlopers</strong></p>
+                                                    <p class="text-danger">Num 1 meens the user is <strong>
+                                                        interlopers</strong></p>
                                                 </div>
                                             </div>
                                             <hr>
@@ -149,9 +150,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="text-success"></p>
                                                     <p class="text-warning"></p>
-                                                    <p class="text-danger"></p></div>
+                                                    @if(user.getToken.contains(" ")) {
+                                                        <p class="text-danger">
+                                                            If token has a Date Format. It is the date of the Block
+                                                        </p>
+                                                    }
+                                                    <p class="text-success"></p>
+                                                </div>
                                             </div>
                                             <hr>
                                             <div class="row">
@@ -170,12 +176,45 @@
 
 
                                             <br>
-                                            <div class="form-group">
-                                                <button id="signupSubmit" type="submit" class="btn btn-success btn-block">
-                                                    Completed User Settings</button>
-                                            </div>
+                                            @if(user.getActive > 0) {
+                                                <div class="form-group">
+                                                    <button id="signupSubmit" type="submit" class="btn btn-success btn-block">
+                                                        Completed User Settings</button>
+                                                </div>
+                                            }
+                                            @if(user.getActive == 0) {
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <a href="@routes.AdminController.activateUser(user.getId)">
+                                                                <button type="button" class="btn btn-warning btn-block">
+                                                                    Activate @user.getUsername
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <a href="#">
+                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                    Delete @user.getUsername
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="edit-body">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <p>@user.getNotes</p>
                                 </div>
                             </div>
                         </div>

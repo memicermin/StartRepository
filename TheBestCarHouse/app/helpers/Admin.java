@@ -17,8 +17,7 @@ public class Admin extends Security.Authenticator {
         if(!context.session().containsKey("email")){
             return null;
         }
-        String email = context.session().get("email");
-        User user = User.findByEmail(email);
+        User user = SessionHelper.getCurrentUser(context);
         if(SessionHelper.admin(user)){
             return user.getEmail();
         }
@@ -33,6 +32,6 @@ public class Admin extends Security.Authenticator {
                 User.penalizeUser(user.getId());
             }
         }
-        return redirect(routes.LoginController.login());
+        return redirect(routes.LoginController.singUp());
     }
 }
