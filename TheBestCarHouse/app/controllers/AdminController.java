@@ -44,7 +44,6 @@ public class AdminController extends Controller {
         return ok(edit_user.render(User.findById(id), formFactory.form(User.class)));
     }
 
-
     public Result updateUser(Long id) {
         DynamicForm dynamicForm = formFactory.form().bindFromRequest();
         User user = User.findById(id);
@@ -105,6 +104,44 @@ public class AdminController extends Controller {
     public Result getBlockBlockUsers() {
         return ok(user_list.render(User.find.where().lt("active", 0).findList(), "Blocked users"));
     }
+
+
+    public Result blockUser(Long id) {
+        User user = User.findById(id);
+        user.setNotes(user.getNotes() + " \nBlock admin: " +
+                SessionHelper.getCurrentUser(ctx()).getUsername() + " " +
+                DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + " Level: " +
+                user.getUserLevel() + " Premium: " +
+                user.getPremiumUser() + " Login: " +
+                user.getLoginCount() + ";");
+        user.setActive(0);
+        user.setVerification(-1);
+        user.setGuest(1);
+        user.setUserLevel(-1);
+        user.setPremiumUser(0);
+        user.setLoginCount(0);
+        user.update();
+        return user(user.getId());
+    }
+
+    public Result blockBlockUser(Long id) {
+        User user = User.findById(id);
+        user.setNotes(user.getNotes() + " \nBlockBlock admin: " +
+                SessionHelper.getCurrentUser(ctx()).getUsername() + " " +
+                DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + " Level: " +
+                user.getUserLevel() + " Premium: " +
+                user.getPremiumUser() + " Login: " +
+                user.getLoginCount() + ";");
+        user.setActive(-1);
+        user.setVerification(-1);
+        user.setGuest(1);
+        user.setUserLevel(-1);
+        user.setPremiumUser(-1);
+        user.setLoginCount(0);
+        user.update();
+        return user(user.getId());
+    }
+
 
     public Result activateUser(Long id) {
 

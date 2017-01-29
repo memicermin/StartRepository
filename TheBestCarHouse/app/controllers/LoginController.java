@@ -9,6 +9,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import resources.FlashMessages;
+import views.html.error.error_login;
 import views.html.user_control.login;
 
 /**
@@ -26,6 +27,10 @@ public class LoginController extends Controller {
         return ok(login.render(formFactory.form(UserForLogin.class)));
     }
 
+    public Result loginErr(){
+        return ok(error_login.render());
+    }
+
     public Result loginUser(){
         DynamicForm dynamicForm = formFactory.form().bindFromRequest();
         dynamicForm.bindFromRequest(request());
@@ -35,17 +40,16 @@ public class LoginController extends Controller {
         UserForLogin userForLogin = new UserForLogin();
         userForLogin.setEmail(dynamicForm.get("email"));
         userForLogin.setPassword(dynamicForm.get("password"));
-
         User user = User.getUserForLogin(userForLogin);
 
         if (user != null) {
             if(user.getActive() < 0){
-                flash("Your account is deleted");
-                return singUp();
+                clear();
+                return loginErr();
             }
-            if(user.getUserLevel() < -5 || user.getActive() == 0){
-                flash("error", "You are blocked");
-                return redirect(ERROR_IMAGE);
+            if(user.getActive() == 0){
+                clear();
+                return loginErr();
             }
             createSession(user);
             user.setLoginCount(user.getLoginCount() + 1);
@@ -61,6 +65,13 @@ public class LoginController extends Controller {
     public static void createSession(User user) {
         session().clear();
         session().put("email", user.getEmail());
+    }
+
+    public static void clear(){
+        session().clear();
+        session().remove("email");
+        response().discardCookie("email");
+        response().cookies().clear();
     }
 
     public Result singUp() {

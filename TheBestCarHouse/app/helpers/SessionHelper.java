@@ -33,4 +33,14 @@ public class SessionHelper {
        return false;
    }
 
+    public static boolean user(User user){
+        if(user != null){
+            if(user.getActive() != 1){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
