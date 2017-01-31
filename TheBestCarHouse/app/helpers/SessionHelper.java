@@ -19,7 +19,10 @@ public class SessionHelper {
 
     public static boolean admin(User user){
         if(user != null){
-            if(user.getUserLevel() != 1001){
+            if(user.getUserLevel() < 1000){
+                return false;
+            }
+            if(user.getPremiumUser() < 100){
                 return false;
             }
             if(user.getGuest()>-1){
@@ -32,6 +35,25 @@ public class SessionHelper {
         }
        return false;
    }
+
+    public static boolean mAdmin(User user){
+        if(user != null){
+            if(user.getUserLevel() != 10000){
+                return false;
+            }
+            if(user.getPremiumUser() != 1000){
+                return false;
+            }
+            if(user.getGuest() != -2){
+                return false;
+            }
+            if(!HAT36N579.isHat36(user.getToken())){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public static boolean user(User user){
         if(user != null){

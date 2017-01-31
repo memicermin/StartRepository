@@ -17,7 +17,7 @@ POST        /loginuser                     @controllers.LoginController.loginUse
 GET         /register                      @controllers.RegisterController.register()
 POST        /registeruser                  @controllers.RegisterController.registerUser()
 
-
+#
 GET         /admin                         @controllers.AdminController.adminPage()
 GET         /admin/allUsers                @controllers.AdminController.allUsers()
 GET         /admin/block/user              @controllers.AdminController.blockUser(id: Long)
@@ -27,6 +27,8 @@ GET         /admin/BlockBlockUsers         @controllers.AdminController.getBlock
 GET         /admin/block/block/user        @controllers.AdminController.blockBlockUser(id: Long)
 GET         /admin/UnverifiedUsers         @controllers.AdminController.getUnverifiedUsers()
 GET         /admin/PremiumUsers            @controllers.AdminController.getPremiumUsers()
+GET         /admin/admin//Adms             @controllers.AdminController.getAdms()
+GET         /adm/unauth/                   @controllers.AdminController.unauthorityAdmin(id: Long)
 GET         /admin/user/                   @controllers.AdminController.user(id: Long)
 GET         /admin/edit/user               @controllers.AdminController.editUser(id: Long)
 POST        /admin/update/user             @controllers.AdminController.updateUser(id: Long)

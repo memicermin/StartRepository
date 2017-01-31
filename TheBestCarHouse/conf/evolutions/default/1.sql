@@ -29,7 +29,7 @@ create table user (
   guest                         integer,
   active                        integer,
   token                         varchar(255),
-  notes                         varchar(4000),
+  notes                         varchar(25000),
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id)
 );

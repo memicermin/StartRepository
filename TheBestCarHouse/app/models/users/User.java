@@ -1,6 +1,7 @@
 package models.users;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.validation.Length;
 import helpers.DateTimeHelper;
 import helpers.HAT36N579;
 import helpers.MD5Hash;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Table(name = "user")
 public class User extends Model {
 
+    public static final int MAX_NOTES_LENGTH = 25000;
     public static Model.Finder<Long, User> find = new Finder<>(User.class);
 
     @Id
@@ -80,7 +82,8 @@ public class User extends Model {
     @Column(name = "token")
     private String token;
 
-    @Column(name = "notes", length = 4000)
+    @Column(name = "notes", length = MAX_NOTES_LENGTH)
+
     private String notes;
 
     /**
@@ -303,6 +306,7 @@ public class User extends Model {
 
     public static void penalizeUser(Long id) {
         User user = findById(id);
+        User.adminUpdateNotes(id, " \nBlocked by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + ";");
         if (user.getUserLevel() >= 0) {
             user.setPremiumUser(-1);
             user.setUserLevel(-1);
@@ -312,12 +316,55 @@ public class User extends Model {
             user.setActive(0);
             user.setVerification(-1);
             user.setUserLevel(user.getUserLevel() - 1);
-            user.setNotes(user.getNotes() + " \nBlocked by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + ";");
         }
         if (user.getGuest() < 1 && user.getUserLevel() < -2) {
             user.setGuest(1);
         }
         user.update();
+    }
+
+    public static String userUpdateToString(Long id) {
+        User user = findById(id);
+        return "User{" +
+                "id=" + id +
+                ", username='" + user.username + '\'' +
+                ", email='" + user.email + '\'' +
+                ", firstName='" + user.firstName + '\'' +
+                ", lastName='" + user.lastName + '\'' +
+                ", birthDate='" + user.birthDate + '\'' +
+                ", gender=" + user.gender +
+                ", location='" + user.location + '\'' +
+                ", phoneNumber='" + user.phoneNumber + '\'' +
+                ", creationDate='" + user.creationDate + '\'' +
+                ", updateDate='" + user.updateDate + '\'' +
+                '}';
+    }
+
+    public static boolean adminUpdateNotes(Long id, String message) {
+        User user = findById(id);
+        try {
+            String exData = "__________" + message + "User{" +
+                    "id=" + id +
+                    ", verification=" + user.verification +
+                    ", userLevel=" + user.userLevel +
+                    ", loginCount=" + user.loginCount +
+                    ", premiumUser=" + user.premiumUser +
+                    ", guest=" + user.guest +
+                    ", active=" + user.active +
+                    ", token='" + user.token + '\'' +
+                    '}' + " " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
+            String data = user.notes + exData;
+            if (data.length() < MAX_NOTES_LENGTH) {
+                user.setNotes(data);
+            } else {
+                user.setNotes(data.substring(data.length() - MAX_NOTES_LENGTH, data.length()));
+            }
+            user.update();
+            return true;
+        } catch (Exception e) {
+            System.err.print(e.toString());
+            return false;
+        }
     }
 }
 

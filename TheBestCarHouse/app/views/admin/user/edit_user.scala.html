@@ -1,4 +1,7 @@
 @import models.users.User
+@import helpers.SessionHelper
+@import helpers.HAT36N579
+@import java.util.UUID
 @(user: User, form: Form[User])
 @admin.admin(user.getFirstName) {
     <script src="@routes.Assets.versioned("javascripts/my_js/admin/user/edit_user.js")" type="text/javascript"></script>
@@ -91,7 +94,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Level</label>
-                                                        <input id="" type="number" class="form-control" name="user_level" value="@user.getUserLevel" required>
+                                                        @if(SessionHelper.mAdmin(user)){
+                                                            <input id="" type="number" class="form-control" name="user_level" value="1000" required>
+                                                        }else{
+                                                            <input id="" type="number" class="form-control" name="user_level" value="@user.getUserLevel" required>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -118,7 +125,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Premium</label>
-                                                        <input id="" type="number" class="form-control" name="premium_user" value="@user.getPremiumUser" required>
+                                                        @if(SessionHelper.mAdmin(user)){
+                                                            <input id="" type="number" class="form-control" name="premium_user" value="100" required>
+                                                        }else{
+                                                            <input id="" type="number" class="form-control" name="premium_user" value="@user.getPremiumUser" required>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -131,7 +142,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Guest</label>
-                                                        <input id="" type="number" class="form-control" name="guest" value="@user.getGuest" required>
+                                                        @if(SessionHelper.mAdmin(user)){
+                                                            <input id="" type="number" class="form-control" name="guest" value="-1" required>
+                                                        }else{
+                                                            <input id="" type="number" class="form-control" name="guest" value="@user.getGuest" required>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -146,7 +161,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Token</label>
-                                                        <input id="" type="text" maxlength="36" class="form-control" name="token" value="@user.getToken" required>
+                                                        @if(SessionHelper.mAdmin(user)){
+                                                            <input id="" type="text" maxlength="36" class="form-control" name="token" value="@HAT36N579.getHat36(UUID.randomUUID().toString)" required>
+                                                        }else{
+                                                            <input id="" type="text" maxlength="36" class="form-control" name="token" value="@user.getToken" required>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -173,36 +192,36 @@
                                                     <p class="text-danger">Number -1 means the user is blocked blocked</p>
                                                 </div>
                                             </div>
-
-
                                             <br>
-                                            @if(user.getActive > 0) {
-                                                <div class="form-group">
-                                                    <button id="signupSubmit" type="submit" class="btn btn-success btn-block">
-                                                        Completed User Settings</button>
-                                                </div>
-                                            }
-                                            @if(user.getActive == 0) {
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <a href="@routes.AdminController.activateUser(user.getId)">
-                                                                <button type="button" class="btn btn-warning btn-block">
-                                                                    Activate @user.getUsername
-                                                                </button>
-                                                            </a>
+                                            @if(!SessionHelper.mAdmin(user)) {
+                                                @if(user.getActive > 0) {
+                                                    <div class="form-group">
+                                                        <button id="signupSubmit" type="submit" class="btn btn-success btn-block">
+                                                            Completed User Settings</button>
+                                                    </div>
+                                                }
+                                                @if(user.getActive == 0) {
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <a href="@routes.AdminController.activateUser(user.getId)">
+                                                                    <button type="button" class="btn btn-warning btn-block">
+                                                                        Activate @user.getUsername
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <a href="#">
+                                                                    <button type="button" class="btn btn-danger btn-block">
+                                                                        Delete @user.getUsername
+                                                                    </button>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <a href="#">
-                                                                <button type="button" class="btn btn-danger btn-block">
-                                                                    Delete @user.getUsername
-                                                                </button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                }
                                             }
                                         </div>
                                     </form>
