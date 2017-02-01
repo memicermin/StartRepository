@@ -311,7 +311,7 @@ public class User extends Model {
             user.setPremiumUser(-1);
             user.setUserLevel(-1);
         } else if (user.getUserLevel() >= -4 && user.getUserLevel() <= -1) {
-            user.setUserLevel(user.getUserLevel() - 1);
+            user.setUserLevel(user.getUserLevel()-1);
         } else if (user.getUserLevel() < -4) {
             user.setActive(0);
             user.setVerification(-1);
