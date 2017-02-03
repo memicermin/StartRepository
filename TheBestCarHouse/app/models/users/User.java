@@ -7,6 +7,7 @@ import helpers.HAT36N579;
 import helpers.MD5Hash;
 import models.users.help_user_models.UserForLogin;
 import models.users.help_user_models.UserForRegister;
+import notifiers.Emails;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -277,11 +278,11 @@ public class User extends Model {
             user.loginCount = 0;
             user.premiumUser = 0;
             user.guest = 0;
-            user.active = 1;
+            user.active = 0;
             user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.save();
-
+            Emails.sendTokenForVerify(user.getEmail(), user.getToken());
             return user;
         } catch (PersistenceException e) {
             return null;

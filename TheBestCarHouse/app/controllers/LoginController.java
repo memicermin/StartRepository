@@ -11,13 +11,14 @@ import play.mvc.Result;
 import resources.FlashMessages;
 import views.html.error.error_login;
 import views.html.user_control.login;
+import views.html.user_control.verify_email;
 
 /**
  * Created by Enver on 1/22/2017.
  */
 public class LoginController extends Controller {
 
-   public static final String ERROR_IMAGE = "https://thumbs.dreamstime.com/z/computer-virus-warning-sign-retro-style-vector-eps-34366261.jpg";
+//   public static final String ERROR_IMAGE = "https://thumbs.dreamstime.com/z/computer-virus-warning-sign-retro-style-vector-eps-34366261.jpg";
 
 
     @Inject
@@ -48,8 +49,7 @@ public class LoginController extends Controller {
                 return loginErr();
             }
             if(user.getActive() == 0){
-                clear();
-                return loginErr();
+                return ok(verify_email.render(user, formFactory.form(User.class)));
             }
             createSession(user);
             user.setLoginCount(user.getLoginCount() + 1);

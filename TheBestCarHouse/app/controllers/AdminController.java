@@ -5,6 +5,7 @@ import helpers.Admin;
 import helpers.HAT36N579;
 import helpers.SessionHelper;
 import models.users.User;
+import notifiers.Emails;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -86,6 +87,7 @@ public class AdminController extends Controller {
         user.setPremiumUser(0);
         user.setLoginCount(0);
         user.update();
+        Emails.sendtest(user.getEmail(), "You are activate");
         return user(user.getId());
     }
 
@@ -113,6 +115,7 @@ public class AdminController extends Controller {
         user.setLoginCount(0);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
+        Emails.sendtest(user.getEmail(), "You are activate");
         return user(user.getId());
     }
 

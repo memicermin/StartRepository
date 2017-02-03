@@ -53,12 +53,7 @@ public class RegisterController extends Controller {
 
         User temp = User.createNewUser(userForRegister);
         if (temp != null) {
-
-            LoginController.createSession(temp);
-            flash("success", FlashMessages.REGISTRATION_SUCCESS);
             return redirect("/");
-
-
         }
         flash("error", FlashMessages.REGISTRATION_FAIL);
         return ok();
