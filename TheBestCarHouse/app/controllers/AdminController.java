@@ -230,8 +230,4 @@ public class AdminController extends Controller {
         return redirect("/admin");
     }
 
-    public Result sendMessage(){
-        Emails.sendEmailMessage("enver.memic80@gmail.com", "Proba");
-        return redirect("/admin");
-    }
 }

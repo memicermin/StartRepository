@@ -289,12 +289,11 @@ public class User extends Model {
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.lastLogin = "0";
             user.save();
-            Emails.sendTokenForVerify(user.getEmail(), user.getToken());
+            Emails.confirmToken(user.getEmail(), user.getToken());
             return user;
         } catch (PersistenceException e) {
             return null;
         }
-
     }
 
     public static User getUserForLogin(UserForLogin userForLogin) {

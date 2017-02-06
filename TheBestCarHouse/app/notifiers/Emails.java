@@ -11,48 +11,48 @@ import play.Configuration;
  */
 public class Emails {
 
-    public static void sendTokenForVerify(String email, String token) {
-        try {
-            HtmlEmail mail = new HtmlEmail();
-            mail.setSubject("Welcome to our Car House");
-            mail.setFrom("House <carhouse.thebestcar@gmail.com>");
-            mail.addTo("Contact <carhouse.thebestcar@gmail.com>");
-            mail.addTo(email);
-            mail.setMsg("Thank you for the register in our Auto House, \nThis code must be used when the first application to confirm your email. \n" + token + "\n");
-            mail.setHostName("smtp.gmail.com");
-            mail.setStartTLSEnabled(true);
-            mail.setSSLOnConnect(true);
-            mail.setAuthenticator(new DefaultAuthenticator(
-                    Configuration.reference().getString("EMAIL_USERNAME_ENV"),
-                    Configuration.reference().getString("EMAIL_PASSWORD_ENV")
-            ));
-            mail.send();
-        } catch (EmailException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void sendTokenForVerify(String email, String token, String message) {
-        try {
-            HtmlEmail mail = new HtmlEmail();
-
-            mail.setSubject("Welcome to our Car House");
-            mail.setFrom("House <carhouse.thebestcar@gmail.com>");
-            mail.addTo("Contact <carhouse.thebestcar@gmail.com>");
-            mail.addTo(email);
-            mail.setMsg(message +"\n" + token);
-            mail.setHostName("smtp.gmail.com");
-            mail.setStartTLSEnabled(true);
-            mail.setSSLOnConnect(true);
-            mail.setAuthenticator(new DefaultAuthenticator(
-                    Configuration.reference().getString("EMAIL_USERNAME_ENV"),
-                    Configuration.reference().getString("EMAIL_PASSWORD_ENV")
-            ));
-            mail.send();
-        } catch (EmailException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void sendTokenForVerify(String email, String token) {
+//        try {
+//            HtmlEmail mail = new HtmlEmail();
+//            mail.setSubject("Welcome to our Car House");
+//            mail.setFrom("House <carhouse.thebestcar@gmail.com>");
+//            mail.addTo("Contact <carhouse.thebestcar@gmail.com>");
+//            mail.addTo(email);
+//            mail.setMsg("Thank you for the register in our Auto House, \nThis code must be used when the first application to confirm your email. \n" + token + "\n");
+//            mail.setHostName("smtp.gmail.com");
+//            mail.setStartTLSEnabled(true);
+//            mail.setSSLOnConnect(true);
+//            mail.setAuthenticator(new DefaultAuthenticator(
+//                    Configuration.reference().getString("EMAIL_USERNAME_ENV"),
+//                    Configuration.reference().getString("EMAIL_PASSWORD_ENV")
+//            ));
+//            mail.send();
+//        } catch (EmailException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void sendTokenForVerify(String email, String token, String message) {
+//        try {
+//            HtmlEmail mail = new HtmlEmail();
+//
+//            mail.setSubject("Welcome to our Car House");
+//            mail.setFrom("House <carhouse.thebestcar@gmail.com>");
+//            mail.addTo("Contact <carhouse.thebestcar@gmail.com>");
+//            mail.addTo(email);
+//            mail.setMsg(message +"\n" + token);
+//            mail.setHostName("smtp.gmail.com");
+//            mail.setStartTLSEnabled(true);
+//            mail.setSSLOnConnect(true);
+//            mail.setAuthenticator(new DefaultAuthenticator(
+//                    Configuration.reference().getString("EMAIL_USERNAME_ENV"),
+//                    Configuration.reference().getString("EMAIL_PASSWORD_ENV")
+//            ));
+//            mail.send();
+//        } catch (EmailException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void confirmToken(String email, String token){
         try {
@@ -77,26 +77,4 @@ public class Emails {
         }
     }
 
-    public static void sendEmailMessage(String email, String message) {
-        try {
-            HtmlEmail mail = new HtmlEmail();
-
-            mail.setSubject("Welcome to our Car House");
-            mail.setFrom("House <carhouse.thebestcar@gmail.com>");
-            mail.addTo("Contact <carhouse.thebestcar@gmail.com>");
-            mail.addTo(email);
-            mail.setMsg(message);
-            mail.setHtmlMsg("<html><body><p>Paragraph</p><a href=\"https://www.google.ba\">AAAAAAAAA</a></body></html>");
-            mail.setHostName("smtp.gmail.com");
-            mail.setStartTLSEnabled(true);
-            mail.setSSLOnConnect(true);
-            mail.setAuthenticator(new DefaultAuthenticator(
-                    Configuration.reference().getString("EMAIL_USERNAME_ENV"),
-                    Configuration.reference().getString("EMAIL_PASSWORD_ENV")
-            ));
-            mail.send();
-        } catch (EmailException e) {
-            e.printStackTrace();
-        }
-    }
 }
