@@ -3,39 +3,41 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                              @controllers.HomeController.index
+GET         /                                       @controllers.HomeController.index
 # An example controller showing how to use dependency injection
-GET         /count                         @controllers.CountController.count
+GET         /count                                  @controllers.CountController.count
 # An example controller showing how to write asynchronous code
-GET         /message                       @controllers.AsyncController.message
+GET         /message                                @controllers.AsyncController.message
 
-GET         /singUp                        @controllers.LoginController.singUp()
-GET         /login                         @controllers.LoginController.login()
-GET         /errlog                        @controllers.LoginController.loginErr()
+GET         /singUp                                 @controllers.LoginController.singUp()
+GET         /login                                  @controllers.RegisterController.login()
+GET         /errlog                                 @controllers.RegisterController.loginErr()
 
-POST        /loginuser                     @controllers.LoginController.loginUser()
-#GET /verifingemail @controllers.LoginController.
-GET         /register                      @controllers.RegisterController.register()
-POST        /registeruser                  @controllers.RegisterController.registerUser()
+POST        /loginuser                              @controllers.LoginController.loginUser()
+GET         /verifyemail                            @controllers.LoginController.verifyEmail(id: Long)
+POST        /activateuser                           @controllers.LoginController.activateUser(id: Long)
+GET         /register                               @controllers.RegisterController.register()
+POST        /registeruser                           @controllers.RegisterController.registerUser()
 
 #
-GET         /admin                         @controllers.AdminController.adminPage()
-GET         /admin/allUsers                @controllers.AdminController.allUsers()
-GET         /admin/block/user              @controllers.AdminController.blockUser(id: Long)
-GET         /admin/BlockedUsers            @controllers.AdminController.getBlockedUsers()
-GET         /admin/activiting/user         @controllers.AdminController.activateUser(id: Long)
-GET         /admin/BlockBlockUsers         @controllers.AdminController.getBlockBlockUsers()
-GET         /admin/block/block/user        @controllers.AdminController.blockBlockUser(id: Long)
-GET         /admin/UnverifiedUsers         @controllers.AdminController.getUnverifiedUsers()
-GET         /admin/PremiumUsers            @controllers.AdminController.getPremiumUsers()
-GET         /admin/admin//Adms             @controllers.AdminController.getAdms()
-GET         /adm/unauth/                   @controllers.AdminController.unauthorityAdmin(id: Long)
-GET         /admin/user/                   @controllers.AdminController.user(id: Long)
-GET         /admin/edit/user               @controllers.AdminController.editUser(id: Long)
-POST        /admin/update/user             @controllers.AdminController.updateUser(id: Long)
-GET         /interlopers                   @controllers.AdminController.getInterlopers()
-GET         /admdelinterloper              @controllers.AdminController.deleteInterloper(id: Long)
+GET         /admin                                  @controllers.AdminController.adminPage()
+GET         /admin/allUsers                         @controllers.AdminController.allUsers()
+GET         /admin/block/user                       @controllers.AdminController.blockUser(id: Long)
+GET         /admin/BlockedUsers                     @controllers.AdminController.getBlockedUsers()
+GET         /admin/deblocking/user                  @controllers.AdminController.deblockUser(id: Long)
+GET         /admin/completly/activiting/user        @controllers.AdminController.activateUser(id: Long)
+GET         /admin/BlockBlockUsers                  @controllers.AdminController.getBlockBlockUsers()
+GET         /admin/block/block/user                 @controllers.AdminController.blockBlockUser(id: Long)
+GET         /admin/unverified/user/                 @controllers.AdminController.unverifiedUser(id: Long)
+GET         /admin/UnverifiedUsers                  @controllers.AdminController.getUnverifiedUsers()
+GET         /admin/PremiumUsers                     @controllers.AdminController.getPremiumUsers()
+GET         /admin/admin//Adms                      @controllers.AdminController.getAdms()
+GET         /adm/unauth/                            @controllers.AdminController.unauthorityAdmin(id: Long)
+GET         /admin/user/                            @controllers.AdminController.user(id: Long)
+GET         /admin/edit/user                        @controllers.AdminController.editUser(id: Long)
+POST        /admin/update/user                      @controllers.AdminController.updateUser(id: Long)
+GET         /admdelinterloper                       @controllers.AdminController.deleteInterloper(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

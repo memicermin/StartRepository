@@ -1,24 +1,23 @@
 package helpers;
 
-
-import controllers.routes;
 import models.users.User;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
 /**
- * Created by Enver on 1/27/2017.
+ * Created by Enver on 2/4/2017.
  */
-public class Admin extends Security.Authenticator {
+
+public class AutenticLoginUser extends Security.Authenticator {
 
     @Override
     public String getUsername(Http.Context context) {
-        if(!context.session().containsKey("email")){
+        if (!context.session().containsKey("email")) {
             return null;
         }
         User user = SessionHelper.getCurrentUser(context);
-        if(SessionHelper.admin(user)){
+        if (SessionHelper.loginUser(user)) {
             return user.getEmail();
         }
         return null;
@@ -26,6 +25,6 @@ public class Admin extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return redirect(routes.LoginController.singUp());
+        return redirect("/errlog");
     }
 }

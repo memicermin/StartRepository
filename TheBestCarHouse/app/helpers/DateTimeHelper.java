@@ -13,6 +13,7 @@ import java.util.Date;
 public class DateTimeHelper extends DateTimeFormat {
 
     public static final String DEFAULT_FORMAT = "EEE, dd.MM.yyyy - HH:mm";
+    public static final String LOGIN_FORMAT = "HH:mm.EEE.dd.MM.yyyy";
 
     public static String getCurrentDateFormated(String format) {
         //"EEE, dd.MM.yyyy - HH:mm"

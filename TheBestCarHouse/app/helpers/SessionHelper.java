@@ -65,4 +65,22 @@ public class SessionHelper {
         return false;
     }
 
+    public static boolean loginUser(User user) {
+        if(user != null){
+            if(user.getActive() < 0){
+                return false;
+            }
+            if(user.getUserLevel() < 0){
+                return false;
+            }
+            if(user.getVerification() < 0){
+                return false;
+            }
+            if(user.getGuest() > 0){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }

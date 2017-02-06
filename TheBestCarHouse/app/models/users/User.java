@@ -1,17 +1,13 @@
 package models.users;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.validation.Length;
 import helpers.DateTimeHelper;
 import helpers.HAT36N579;
 import helpers.MD5Hash;
 import models.users.help_user_models.UserForLogin;
 import models.users.help_user_models.UserForRegister;
 import notifiers.Emails;
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -62,30 +58,32 @@ public class User extends Model {
     @Column(name = "update_date")
     private String updateDate;
 
+    @Column(name = "last_login")
+    private String lastLogin;
+
+    @Column(name = "token")
+    private String token;
+
+    @Column(name = "notes", length = MAX_NOTES_LENGTH)
+    private String notes;
+
+    @Column(name = "active")
+    private Integer active;
+
     @Column(name = "verification")
     private Integer verification;
 
     @Column(name = "user_level")
     private Integer userLevel;
 
-    @Column(name = "login_count")
-    private Integer loginCount;
+    @Column(name = "guest")
+    private int guest;
 
     @Column(name = "premium_user")
     private Integer premiumUser;
 
-    @Column(name = "guest")
-    private int guest;
-
-    @Column(name = "active")
-    private Integer active;
-
-    @Column(name = "token")
-    private String token;
-
-    @Column(name = "notes", length = MAX_NOTES_LENGTH)
-
-    private String notes;
+    @Column(name = "login_count")
+    private Integer loginCount;
 
     /**
      * Constructor
@@ -193,6 +191,14 @@ public class User extends Model {
         this.updateDate = updateDate;
     }
 
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
     public Integer getVerification() {
         return verification;
     }
@@ -281,6 +287,7 @@ public class User extends Model {
             user.active = 0;
             user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
+            user.lastLogin = "0";
             user.save();
             Emails.sendTokenForVerify(user.getEmail(), user.getToken());
             return user;
@@ -299,29 +306,6 @@ public class User extends Model {
             return user;
         }
         return null;
-    }
-
-    public static List<User> getInterlopers() {
-        return find.where().gt("active", 0).where().gt("guest", 0).findList();
-    }
-
-    public static void penalizeUser(Long id) {
-        User user = findById(id);
-        User.adminUpdateNotes(id, " \nBlocked by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT) + ";");
-        if (user.getUserLevel() >= 0) {
-            user.setPremiumUser(-1);
-            user.setUserLevel(-1);
-        } else if (user.getUserLevel() >= -4 && user.getUserLevel() <= -1) {
-            user.setUserLevel(user.getUserLevel()-1);
-        } else if (user.getUserLevel() < -4) {
-            user.setActive(0);
-            user.setVerification(-1);
-            user.setUserLevel(user.getUserLevel() - 1);
-        }
-        if (user.getGuest() < 1 && user.getUserLevel() < -2) {
-            user.setGuest(1);
-        }
-        user.update();
     }
 
     public static String userUpdateToString(Long id) {

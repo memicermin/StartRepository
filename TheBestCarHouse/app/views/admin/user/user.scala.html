@@ -1,8 +1,8 @@
 @import models.users.User
 @import helpers.SessionHelper
+@import helpers.UserSecyrity
 @(user: User)
 @admin.admin(user.getFirstName) {
-
     <div class="col-md-offset-1">
         <div class="row">
             <div class="panel panel-info">
@@ -88,22 +88,31 @@
                 <div class="panel-footer">
                     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                     <span class="pull-right">
+                    @if(!SessionHelper.admin(user)) {
                         <a href="@routes.AdminController.editUser(user.getId)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-edit"></i>
                             Edit</a>
-                        @if(user.getActive < 1) {
-                            <a href="@routes.AdminController.activateUser(user.getId)" data-original-title="Activate this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
-                                Act</a>
-                        }
-                        @if(!SessionHelper.admin(user)) {
-                            @if(user.getActive > 0) {
+                        @if(!UserSecyrity.isBlockBlocked(user.getId)) {
+                            @if(!UserSecyrity.isBlocked(user.getId)) {
+                                @if(!UserSecyrity.isUnverified(user.getId)) {
+                                    <a href="@routes.AdminController.unverifiedUser(user.getId)" data-original-title="Unverified this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
+                                        Un VF</a>
+                                } else {
+                                    <a href="@routes.AdminController.activateUser(user.getId)" data-original-title="Activate this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
+                                        Act</a>
+                                }
                                 <a href="@routes.AdminController.blockUser(user.getId)" data-original-title="Block this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
                                     Block</a>
+                            } else {
+                                <a href="@routes.AdminController.deblockUser(user.getId)" data-original-title="Deblock this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
+                                    DeBlock</a>
                             }
-                            @if(user.getActive > -1) {
-                                <a href="@routes.AdminController.blockBlockUser(user.getId)" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i>
-                                    Del</a>
-                            }
+                            <a href="@routes.AdminController.blockBlockUser(user.getId)" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i>
+                                Del</a>
+                        } else {
+                            <a href="@routes.AdminController.deblockUser(user.getId)" data-original-title="Deblock this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
+                                DeBlock</a>
                         }
+                    }
                     </span>
                 </div>
             </div>

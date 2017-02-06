@@ -3,6 +3,7 @@ package controllers;
 import com.google.inject.Inject;
 import helpers.DateTimeHelper;
 import models.users.User;
+import models.users.help_user_models.UserForLogin;
 import models.users.help_user_models.UserForRegister;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -10,6 +11,8 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import resources.FlashMessages;
+import views.html.error.error_login;
+import views.html.user_control.login;
 import views.html.user_control.register_user;
 
 /**
@@ -20,6 +23,15 @@ public class RegisterController extends Controller {
 
     @Inject
     FormFactory formFactory;
+
+
+    public Result login(){
+        return ok(login.render(formFactory.form(UserForLogin.class)));
+    }
+
+    public Result loginErr(){
+        return ok(error_login.render());
+    }
 
 
     public Result register(){
@@ -53,7 +65,8 @@ public class RegisterController extends Controller {
 
         User temp = User.createNewUser(userForRegister);
         if (temp != null) {
-            return redirect("/");
+
+            return redirect("/login");
         }
         flash("error", FlashMessages.REGISTRATION_FAIL);
         return ok();

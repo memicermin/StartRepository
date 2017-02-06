@@ -12,7 +12,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.admin.admin_page;
-import views.html.admin.interlopers;
 import views.html.admin.user.edit_user;
 import views.html.admin.user.user;
 import views.html.admin.user_list;
@@ -77,6 +76,15 @@ public class AdminController extends Controller {
         return editUser(id);
     }
 
+    public Result unverifiedUser(Long id){
+        User user = User.findById(id);
+        User.adminUpdateNotes(id, " Unverified admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
+        user.setActive(0);
+        user.setVerification(0);
+        user.update();
+        return user(user.getId());
+    }
+
     public Result blockUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Blocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
@@ -87,7 +95,6 @@ public class AdminController extends Controller {
         user.setPremiumUser(0);
         user.setLoginCount(0);
         user.update();
-        Emails.sendtest(user.getEmail(), "You are activate");
         return user(user.getId());
     }
 
@@ -95,19 +102,19 @@ public class AdminController extends Controller {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " BlockedBlocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
         user.setActive(-1);
-        user.setVerification(-1);
+        user.setVerification(-2);
         user.setGuest(1);
-        user.setUserLevel(-1);
+        user.setUserLevel(-2);
         user.setPremiumUser(-1);
         user.setLoginCount(0);
         user.update();
         return user(user.getId());
     }
 
-    public Result activateUser(Long id) {
+    public Result deblockUser(Long id) {
         User user = User.findById(id);
-        User.adminUpdateNotes(id, " Activated admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(1);
+        User.adminUpdateNotes(id, " Deblocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
+        user.setActive(0);
         user.setVerification(0);
         user.setGuest(0);
         user.setUserLevel(0);
@@ -115,9 +122,26 @@ public class AdminController extends Controller {
         user.setLoginCount(0);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
-        Emails.sendtest(user.getEmail(), "You are activate");
+        Emails.sendTokenForVerify(user.getEmail(), user.getToken(), "Your account has been reactivated. It is necessary to verify your email.");
         return user(user.getId());
     }
+
+    public Result activateUser(Long id){
+        User user = User.findById(id);
+        User.adminUpdateNotes(id, " Activated admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
+        user.setActive(1);
+        user.setVerification(1);
+        user.setGuest(0);
+        user.setUserLevel(0);
+        user.setPremiumUser(0);
+        user.setLoginCount(0);
+        user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
+        user.update();
+        Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
+        return user(user.getId());
+    }
+
+
 
     public Result adminPage() {
         return ok(admin_page.render("Hello"));
@@ -127,22 +151,16 @@ public class AdminController extends Controller {
         return ok(user_list.render(User.find.all(), "All users"));
     }
 
-
-    public Result getInterlopers() {
-        return ok(interlopers.render(User.getInterlopers(), "Interlopers"));
-    }
-
     public Result getBlockedUsers() {
-        return ok(user_list.render(User.find.where().eq("active", 0).findList(), "Blocked users"));
+        return ok(user_list.render(User.find.where().eq("guest", 1).where().eq("verification", -1).where().eq("user_level", -1).where().eq("login_count", 0).findList(), "Blocked users"));
     }
 
     public Result getBlockBlockUsers() {
-        return ok(user_list.render(User.find.where().lt("active", 0).findList(), "Blocked users"));
+        return ok(user_list.render(User.find.where().eq("guest", 1).where().le("active", -1).where().le("verification", -2).where().le("user_level", -2).where().le("premium_user", -1).where().gt("guest", 0).findList(), "Blocked users"));
     }
 
-
     public Result getUnverifiedUsers() {
-        return ok(user_list.render(User.find.where().le("verification", 0).findList(), "Unverified"));
+        return ok(user_list.render(User.find.where().eq("verification", 0).where().eq("active", 0).findList(), "Unverified"));
     }
 
     public Result getPremiumUsers() {

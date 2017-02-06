@@ -26,7 +26,7 @@ public class AutenticUser extends Security.Authenticator {
     public Result onUnauthorized(Http.Context context) {
         User user = SessionHelper.getCurrentUser(context);
         if (user != null) {
-            if (user.getActive() < 1) {
+            if (user.getActive() == 0) {
                 return redirect("/login");
             }
         }
