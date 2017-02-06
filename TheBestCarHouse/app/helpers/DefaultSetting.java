@@ -61,7 +61,7 @@ public static void setdefaultSettings(){
         u2.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u2.setLastLogin("0");
         u2.save();
-        Emails.sendTokenForVerify(u2.getEmail(), u2.getToken());
+        Emails.confirmToken(u2.getEmail(), u2.getToken());
 
         User u3 = new User();
         u3.setUsername("tidza");
@@ -85,7 +85,7 @@ public static void setdefaultSettings(){
         u3.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u3.setLastLogin("0");
         u3.save();
-        Emails.sendTokenForVerify(u3.getEmail(), u3.getToken());
+        Emails.confirmToken(u3.getEmail(), u3.getToken());
 
         User u5 = new User();
         u5.setUsername("mitko");
@@ -109,7 +109,7 @@ public static void setdefaultSettings(){
         u5.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u5.setLastLogin("0");
         u5.save();
-        Emails.sendTokenForVerify(u5.getEmail(), u5.getToken());
+        Emails.confirmToken(u5.getEmail(), u5.getToken());
     }
 
 }

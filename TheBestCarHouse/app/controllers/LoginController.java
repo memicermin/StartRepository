@@ -2,6 +2,7 @@ package controllers;
 
 import com.google.inject.Inject;
 import helpers.DateTimeHelper;
+import helpers.SessionHelper;
 import models.users.User;
 import models.users.help_user_models.UserForLogin;
 import play.data.DynamicForm;
@@ -57,7 +58,7 @@ public class LoginController extends Controller {
                 return redirect("errlog");
             }
             if(user.getActive() == 0){
-                return redirect(routes.LoginController.verifyEmail(user.getId()));
+                //return redirect("/");
             }
             createSession(user);
             user.setLoginCount(user.getLoginCount() + 1);
@@ -92,6 +93,20 @@ public class LoginController extends Controller {
             flash("success", FlashMessages.LOGIN_SUCCESS);
         }else{
             singUp();
+        }
+        return redirect("/");
+    }
+
+    public Result confirmEmail(String token){
+        User user = SessionHelper.getCurrentUser(ctx());
+        if(user != null){
+            if(user.getToken().equals(token)){
+                user.setActive(1);
+                user.setVerification(1);
+                createSession(user);
+                user.setLoginCount(user.getLoginCount() + 1);
+                user.update();
+            }
         }
         return redirect("/");
     }

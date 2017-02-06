@@ -229,4 +229,9 @@ public class AdminController extends Controller {
         User.findById(id).delete();
         return redirect("/admin");
     }
+
+    public Result sendMessage(){
+        Emails.sendEmailMessage("enver.memic80@gmail.com", "Proba");
+        return redirect("/admin");
+    }
 }
