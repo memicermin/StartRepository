@@ -137,7 +137,7 @@ public class AdminController extends Controller {
         user.setLoginCount(0);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
-        Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
+       // Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
         return user(user.getId());
     }
 
