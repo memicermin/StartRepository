@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import helpers.Admin;
 import helpers.HAT36N579;
 import helpers.SessionHelper;
+import helpers.UserHelper;
 import models.users.User;
 import notifiers.Emails;
 import play.data.DynamicForm;
@@ -31,44 +32,24 @@ public class AdminController extends Controller {
     public Result updateUser(Long id) {
         DynamicForm dynamicForm = formFactory.form().bindFromRequest();
         User user = User.findById(id);
-        Integer active;
-        try {
-            active = Integer.parseInt(dynamicForm.get("active"));
-        } catch (NumberFormatException e) {
-            return editUser(id);
-        }
         if (User.adminUpdateNotes(id, " \nUpdated admin \"" + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ")) {
-            if (active < 0) {
-                user.setActive(active);
-                user.setVerification(-1);
-                user.setUserLevel(-1);
-                user.setGuest(1);
-                user.setPremiumUser(-1);
-                user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
-                user.setLoginCount(-1);
-            } else {
-                int verification;
-                int userLevel;
-                int guest;
-                int premiumUser;
-                int loginCount;
-                try {
-                    verification = Integer.parseInt(dynamicForm.get("verification"));
-                    userLevel = Integer.parseInt(dynamicForm.get("user_level"));
-                    guest = Integer.parseInt(dynamicForm.get("guest"));
-                    premiumUser = Integer.parseInt(dynamicForm.get("premium_user"));
-                    loginCount = Integer.parseInt(dynamicForm.get("login_count"));
-                } catch (NumberFormatException e) {
-                    return editUser(id);
-                }
-                user.setActive(active);
-                user.setVerification(verification);
-                user.setUserLevel(userLevel);
-                user.setGuest(guest);
-                user.setPremiumUser(premiumUser);
-                user.setToken(dynamicForm.get("token"));
-                user.setLoginCount(loginCount);
+
+            int userType;
+            int premiumUser;
+            int loginCount;
+            try {
+                userType = Integer.parseInt(dynamicForm.get("user_type"));
+                premiumUser = Integer.parseInt(dynamicForm.get("premium_user"));
+                loginCount = Integer.parseInt(dynamicForm.get("login_count"));
+            } catch (NumberFormatException e) {
+                return editUser(id);
             }
+
+            user.setUserType(userType);
+            user.setPremiumUser(premiumUser);
+            user.setToken(dynamicForm.get("token"));
+            user.setLoginCount(loginCount);
+
             user.update();
             return user(id);
         }
@@ -76,11 +57,10 @@ public class AdminController extends Controller {
         return editUser(id);
     }
 
-    public Result unverifiedUser(Long id){
+    public Result unverifiedUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Unverified admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(0);
-        user.setVerification(0);
+        user.setUserType(1);
         user.update();
         return user(user.getId());
     }
@@ -88,25 +68,7 @@ public class AdminController extends Controller {
     public Result blockUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Blocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(0);
-        user.setVerification(-1);
-        user.setGuest(1);
-        user.setUserLevel(-1);
-        user.setPremiumUser(0);
-        user.setLoginCount(0);
-        user.update();
-        return user(user.getId());
-    }
-
-    public Result blockBlockUser(Long id) {
-        User user = User.findById(id);
-        User.adminUpdateNotes(id, " BlockedBlocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(-1);
-        user.setVerification(-2);
-        user.setGuest(1);
-        user.setUserLevel(-2);
-        user.setPremiumUser(-1);
-        user.setLoginCount(0);
+        user.setUserType(0);
         user.update();
         return user(user.getId());
     }
@@ -114,10 +76,7 @@ public class AdminController extends Controller {
     public Result deblockUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Deblocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(0);
-        user.setVerification(0);
-        user.setGuest(0);
-        user.setUserLevel(0);
+        user.setUserType(1);
         user.setPremiumUser(0);
         user.setLoginCount(0);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
@@ -126,21 +85,15 @@ public class AdminController extends Controller {
         return user(user.getId());
     }
 
-    public Result activateUser(Long id){
+    public Result activateUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Activated admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setActive(1);
-        user.setVerification(1);
-        user.setGuest(0);
-        user.setUserLevel(0);
-        user.setPremiumUser(0);
-        user.setLoginCount(0);
+        user.setUserType(1);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
-       // Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
+        // Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
         return user(user.getId());
     }
-
 
 
     public Result adminPage() {
@@ -152,15 +105,11 @@ public class AdminController extends Controller {
     }
 
     public Result getBlockedUsers() {
-        return ok(user_list.render(User.find.where().eq("guest", 1).where().eq("verification", -1).where().eq("user_level", -1).where().eq("login_count", 0).findList(), "Blocked users"));
-    }
-
-    public Result getBlockBlockUsers() {
-        return ok(user_list.render(User.find.where().eq("guest", 1).where().le("active", -1).where().le("verification", -2).where().le("user_level", -2).where().le("premium_user", -1).where().gt("guest", 0).findList(), "Blocked users"));
+        return ok(user_list.render(User.find.where().eq("user_type", 0).findList(), "Blocked users"));
     }
 
     public Result getUnverifiedUsers() {
-        return ok(user_list.render(User.find.where().eq("verification", 0).where().eq("active", 0).findList(), "Unverified"));
+        return ok(user_list.render(User.find.where().eq("user_type", 1).findList(), "Unverified"));
     }
 
     public Result getPremiumUsers() {
@@ -168,9 +117,9 @@ public class AdminController extends Controller {
     }
 
     public Result getAdms() {
-        List<User> adms = User.find.where().ge("user_level", 1000).where().le("guest", -1).findList();
+        List<User> adms = User.find.where().ge("user_type", User.ADMIN).findList();
         for (int i = 0; i < adms.size(); i++) {
-            if (!SessionHelper.admin(adms.get(i))) {
+            if (!UserHelper.admin(adms.get(i)) || !UserHelper.mAdmin(adms.get(i))) {
                 adms.remove(i);
             }
         }
@@ -190,6 +139,7 @@ public class AdminController extends Controller {
      * The method can not eliminate authority of main admin,
      * but if admin tries to apply this method on the main admin,
      * being to blocked;
+     *
      * @param id
      * @return
      */
@@ -200,34 +150,25 @@ public class AdminController extends Controller {
         } catch (Exception e) {
             return redirect("/admin");
         }
-        if (!SessionHelper.mAdmin(admin)) {
+        if (!UserHelper.mAdmin(admin)) {
             User.adminUpdateNotes(id, " \nUnautorized admin: " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-            admin.setGuest(0);
-            admin.setUserLevel(0);
+            admin.setUserType(2);
             admin.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
             admin.update();
-        }else{
+        } else {
             User currentUser;
             try {
                 currentUser = SessionHelper.getCurrentUser(ctx());
                 User.adminUpdateNotes(currentUser.getId(), " \nUnauthorized by APP, Besause " +
-                        currentUser.getUsername()  + " tried to delete the main admin: " + admin.getUsername() + ". EX data is: ");
-                currentUser.setUserLevel(0);
+                        currentUser.getUsername() + " tried to delete the main admin: " + admin.getUsername() + ". EX data is: ");
+                currentUser.setUserType(1);
                 currentUser.setPremiumUser(0);
-                currentUser.setGuest(0);
                 currentUser.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
                 currentUser.update();
-
-            }catch (Exception e){
+            } catch (Exception e) {
                 return redirect("/");
             }
         }
         return user(admin.getId());
     }
-
-    public Result deleteInterloper(Long id) {
-        User.findById(id).delete();
-        return redirect("/admin");
-    }
-
 }

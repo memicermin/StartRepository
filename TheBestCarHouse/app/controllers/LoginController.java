@@ -53,18 +53,17 @@ public class LoginController extends Controller {
         User user = User.getUserForLogin(userForLogin);
 
         if (user != null) {
-            if(user.getActive() < 0){
+            if(user.getUserType() < User.INACTIVE){
                 clear();
                 return redirect("errlog");
             }
-            if(user.getActive() == 0){
+            if(user.getUserType() == User.INACTIVE){
                 //return redirect("/");
             }
             createSession(user);
             user.setLoginCount(user.getLoginCount() + 1);
             user.setLastLogin(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.LOGIN_FORMAT));
             user.update();
-            //flash("success", FlashMessages.LOGIN_SUCCESS);
             return redirect("/");
         }else{
             flash("error", FlashMessages.LOGIN_FAIL);
@@ -85,8 +84,7 @@ public class LoginController extends Controller {
             return redirect("/login");
         }
         if(dynamicForm.get("token").equals(user.getToken())){
-            user.setActive(1);
-            user.setVerification(1);
+            user.setUserType(2);
             createSession(user);
             user.setLoginCount(user.getLoginCount() + 1);
             user.update();
@@ -101,8 +99,7 @@ public class LoginController extends Controller {
         User user = SessionHelper.getCurrentUser(ctx());
         if(user != null){
             if(user.getToken().equals(token)){
-                user.setActive(1);
-                user.setVerification(1);
+                user.setUserType(2);
                 createSession(user);
                 user.setLoginCount(user.getLoginCount() + 1);
                 user.update();

@@ -16,7 +16,7 @@ public class AutenticUser extends Security.Authenticator {
             return null;
         }
         User user = SessionHelper.getCurrentUser(context);
-        if (SessionHelper.user(user)) {
+        if (UserHelper.user(user)) {
             return user.getEmail();
         }
         return null;
@@ -26,10 +26,8 @@ public class AutenticUser extends Security.Authenticator {
     public Result onUnauthorized(Http.Context context) {
         User user = SessionHelper.getCurrentUser(context);
         if (user != null) {
-            if (user.getActive() == 0) {
-                return redirect("/login");
-            }
+            return redirect("/singUp");
         }
-        return redirect("/singUp");
+        return redirect("/");
     }
 }

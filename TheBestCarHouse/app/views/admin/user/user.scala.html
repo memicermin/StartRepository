@@ -1,5 +1,5 @@
 @import models.users.User
-@import helpers.SessionHelper
+@import helpers.UserHelper
 @import helpers.UserSecyrity
 @(user: User)
 @admin.admin(user.getFirstName) {
@@ -61,13 +61,10 @@
                                     <tr>
                                         <td>Verification</td>
                                         <td>
-                                            @if(user.getVerification == 0) {
-                                                <a type="" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-remove"></i></a>
-                                            }
-                                            @if(user.getVerification > 0) {
+                                            @if(user.getUserType > User.INACTIVE) {
                                                 <a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
                                             }
-                                            @if(user.getVerification < 0) {
+                                            @if(user.getUserType < User.ACTIVE) {
                                                 <a type="" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                                             }
                                         </td>
@@ -88,9 +85,11 @@
                 <div class="panel-footer">
                     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                     <span class="pull-right">
-                    @if(!SessionHelper.admin(user)) {
+                    @if(!UserHelper.admin(user)) {
                         <a href="@routes.AdminController.editUser(user.getId)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-edit"></i>
                             Edit</a>
+
+                        @*
                         @if(!UserSecyrity.isBlockBlocked(user.getId)) {
                             @if(!UserSecyrity.isBlocked(user.getId)) {
                                 @if(!UserSecyrity.isUnverified(user.getId)) {
@@ -112,6 +111,9 @@
                             <a href="@routes.AdminController.deblockUser(user.getId)" data-original-title="Deblock this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
                                 DeBlock</a>
                         }
+
+
+                        *@
                     }
                     </span>
                 </div>

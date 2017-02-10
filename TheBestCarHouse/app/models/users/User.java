@@ -17,6 +17,12 @@ import java.util.UUID;
 @Table(name = "user")
 public class User extends Model {
 
+    public static final int BLOCKED = 0;
+    public static final int INACTIVE = 1;
+    public static final int ACTIVE = 2;
+    public static final int ADMIN = 3;
+    public static final int MADMIN = 4;
+
     public static final int MAX_NOTES_LENGTH = 25000;
     public static Model.Finder<Long, User> find = new Finder<>(User.class);
 
@@ -66,18 +72,18 @@ public class User extends Model {
 
     @Column(name = "notes", length = MAX_NOTES_LENGTH)
     private String notes;
+//
+//    @Column(name = "active")
+//    private Integer active;
+//
+//    @Column(name = "verification")
+//    private Integer verification;
 
-    @Column(name = "active")
-    private Integer active;
+    @Column(name = "user_type")
+    private Integer userType;
 
-    @Column(name = "verification")
-    private Integer verification;
-
-    @Column(name = "user_level")
-    private Integer userLevel;
-
-    @Column(name = "guest")
-    private int guest;
+//    @Column(name = "guest")
+//    private int guest;
 
     @Column(name = "premium_user")
     private Integer premiumUser;
@@ -198,21 +204,22 @@ public class User extends Model {
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
+//
+//    public Integer getVerification() {
+//        return verification;
+//    }
+//
+//    public void setVerification(Integer verification) {
+//        this.verification = verification;
+//    }
 
-    public Integer getVerification() {
-        return verification;
+
+    public Integer getUserType() {
+        return userType;
     }
 
-    public void setVerification(Integer verification) {
-        this.verification = verification;
-    }
-
-    public Integer getUserLevel() {
-        return userLevel;
-    }
-
-    public void setUserLevel(Integer userLevel) {
-        this.userLevel = userLevel;
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public Integer getLoginCount() {
@@ -222,22 +229,22 @@ public class User extends Model {
     public void setLoginCount(Integer loginCount) {
         this.loginCount = loginCount;
     }
-
-    public int getGuest() {
-        return guest;
-    }
-
-    public void setGuest(int guest) {
-        this.guest = guest;
-    }
-
-    public Integer getActive() {
-        return active;
-    }
-
-    public void setActive(Integer active) {
-        this.active = active;
-    }
+//
+//    public int getGuest() {
+//        return guest;
+//    }
+//
+//    public void setGuest(int guest) {
+//        this.guest = guest;
+//    }
+//
+//    public Integer getActive() {
+//        return active;
+//    }
+//
+//    public void setActive(Integer active) {
+//        this.active = active;
+//    }
 
     public String getToken() {
         return token;
@@ -279,12 +286,12 @@ public class User extends Model {
 
             user.creationDate = DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.updateDate = "0";
-            user.verification = 0;
-            user.userLevel = 0;
+//            user.verification = 0;
+//            user.userLevel = 0;
             user.loginCount = 0;
             user.premiumUser = 0;
-            user.guest = 0;
-            user.active = 0;
+//            user.guest = 0;
+//            user.active = 0;
             user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.lastLogin = "0";
@@ -329,12 +336,12 @@ public class User extends Model {
         try {
             String exData = "__________" + message + "User{" +
                     "id=" + id +
-                    ", verification=" + user.verification +
-                    ", userLevel=" + user.userLevel +
+//                    ", verification=" + user.verification +
+                    ", userType=" + user.userType +
                     ", loginCount=" + user.loginCount +
                     ", premiumUser=" + user.premiumUser +
-                    ", guest=" + user.guest +
-                    ", active=" + user.active +
+//                    ", guest=" + user.guest +
+//                    ", active=" + user.active +
                     ", token='" + user.token + '\'' +
                     '}' + " " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             String data = user.notes + exData;

@@ -1,5 +1,6 @@
 @import models.users.User
 @import helpers.SessionHelper
+@import helpers.UserHelper
 @import helpers.HAT36N579
 @import java.util.UUID
 @(user: User, form: Form[User])
@@ -79,26 +80,8 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label class="control-label" for="">Verification</label>
-                                                        <input id="" type="number" class="form-control" name="verification" value="@user.getVerification" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <p class="text-success">Num 1 means the user is verified</p>
-                                                    <p class="text-warning">Num 0 means the user is not verified</p>
-                                                    <p class="text-danger">Number -1 means the user is rejected</p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
                                                         <label class="control-label" for="">Level</label>
-                                                        @if(SessionHelper.mAdmin(user)) {
-                                                            <input id="" type="number" class="form-control" name="user_level" value="1000" required>
-                                                        } else {
-                                                            <input id="" type="number" class="form-control" name="user_level" value="@user.getUserLevel" required>
-                                                            }
+                                                            <input id="" type="number" class="form-control" name="user_ty" value="@user.getUserType" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -125,11 +108,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Premium</label>
-                                                        @if(SessionHelper.mAdmin(user)) {
-                                                            <input id="" type="number" class="form-control" name="premium_user" value="100" required>
-                                                        } else {
                                                             <input id="" type="number" class="form-control" name="premium_user" value="@user.getPremiumUser" required>
-                                                            }
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -141,27 +120,8 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label class="control-label" for="">Guest</label>
-                                                        @if(SessionHelper.mAdmin(user)) {
-                                                            <input id="" type="number" class="form-control" name="guest" value="-1" required>
-                                                        } else {
-                                                            <input id="" type="number" class="form-control" name="guest" value="@user.getGuest" required>
-                                                            }
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <p class="text-success"></p>
-                                                    <p class="text-warning"></p>
-                                                    <p class="text-danger">Num 1 meens the user is <strong>
-                                                        interlopers</strong></p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
                                                         <label class="control-label" for="">Token</label>
-                                                        @if(SessionHelper.mAdmin(user)) {
+                                                        @if(UserHelper.mAdmin(user)) {
                                                             <input id="" type="text" maxlength="36" class="form-control" name="token" value="@HAT36N579.getHat36(UUID.randomUUID().toString)" required>
                                                         } else {
                                                             <input id="" type="text" maxlength="36" class="form-control" name="token" value="@user.getToken" required>
@@ -179,21 +139,8 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label" for="">Active</label>
-                                                        <input id="" type="number" class="form-control" name="active" value="@user.getActive" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <p class="text-success">Num 1 means the user is active</p>
-                                                    <p class="text-warning">Num 0 means the user is block</p>
-                                                    <p class="text-danger">Number -1 means the user is blocked blocked</p>
-                                                </div>
-                                            </div>
                                             <br>
-                                            @if(!SessionHelper.mAdmin(user)) {
+                                            @if(!UserHelper.mAdmin(user)) {
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">

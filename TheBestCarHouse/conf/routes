@@ -26,8 +26,6 @@ GET         /admin/block/user                       @controllers.AdminController
 GET         /admin/BlockedUsers                     @controllers.AdminController.getBlockedUsers()
 GET         /admin/deblocking/user                  @controllers.AdminController.deblockUser(id: Long)
 GET         /admin/completly/activiting/user        @controllers.AdminController.activateUser(id: Long)
-GET         /admin/BlockBlockUsers                  @controllers.AdminController.getBlockBlockUsers()
-GET         /admin/block/block/user                 @controllers.AdminController.blockBlockUser(id: Long)
 GET         /admin/unverified/user/                 @controllers.AdminController.unverifiedUser(id: Long)
 GET         /admin/UnverifiedUsers                  @controllers.AdminController.getUnverifiedUsers()
 GET         /admin/PremiumUsers                     @controllers.AdminController.getPremiumUsers()
@@ -36,7 +34,6 @@ GET         /adm/unauth/                            @controllers.AdminController
 GET         /admin/user/                            @controllers.AdminController.user(id: Long)
 GET         /admin/edit/user                        @controllers.AdminController.editUser(id: Long)
 POST        /admin/update/user                      @controllers.AdminController.updateUser(id: Long)
-GET         /admdelinterloper                       @controllers.AdminController.deleteInterloper(id: Long)
 
 GET         /confirmemail                           @controllers.LoginController.confirmEmail(tok: String)
 

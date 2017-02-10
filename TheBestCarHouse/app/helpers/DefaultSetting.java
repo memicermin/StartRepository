@@ -2,7 +2,6 @@ package helpers;
 
 import models.users.User;
 import notifiers.Emails;
-import org.joda.time.DateTime;
 
 import java.util.UUID;
 
@@ -11,11 +10,11 @@ import java.util.UUID;
  */
 public class DefaultSetting {
 
-public static void setdefaultSettings(){
+    public static void setdefaultSettings() {
         setDefaultUsers();
     }
-    
-    private static void setDefaultUsers(){
+
+    private static void setDefaultUsers() {
         User u1 = new User();
         u1.setUsername("enver");
         u1.setEmail("enver.memic80@gmail.com");
@@ -28,12 +27,9 @@ public static void setdefaultSettings(){
         u1.setPhoneNumber("000-000-000");
         u1.setCreationDate(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u1.setUpdateDate("0");
-        u1.setVerification(1);
-        u1.setUserLevel(10000);
+        u1.setUserType(4);
         u1.setLoginCount(0);
-        u1.setPremiumUser(1000);
-        u1.setGuest(-2);
-        u1.setActive(1);
+        u1.setPremiumUser(0);
         u1.setToken(UUID.randomUUID().toString());
         u1.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u1.setLastLogin("0");
@@ -51,12 +47,9 @@ public static void setdefaultSettings(){
         u2.setPhoneNumber("000-000-001");
         u2.setCreationDate(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u2.setUpdateDate("0");
-        u2.setVerification(0);
-        u2.setUserLevel(0);
+        u2.setUserType(1);
         u2.setLoginCount(0);
         u2.setPremiumUser(0);
-        u2.setGuest(0);
-        u2.setActive(0);
         u2.setToken(UUID.randomUUID().toString());
         u2.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u2.setLastLogin("0");
@@ -75,12 +68,9 @@ public static void setdefaultSettings(){
         u3.setPhoneNumber("000-000-002");
         u3.setCreationDate(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u3.setUpdateDate("0");
-        u3.setVerification(0);
-        u3.setUserLevel(0);
+        u3.setUserType(1);
         u3.setLoginCount(0);
         u3.setPremiumUser(0);
-        u3.setGuest(0);
-        u3.setActive(0);
         u3.setToken(UUID.randomUUID().toString());
         u3.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u3.setLastLogin("0");
@@ -99,12 +89,9 @@ public static void setdefaultSettings(){
         u5.setPhoneNumber("000-000-005");
         u5.setCreationDate(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u5.setUpdateDate("0");
-        u5.setVerification(0);
-        u5.setUserLevel(0);
+        u5.setUserType(0);
         u5.setLoginCount(0);
         u5.setPremiumUser(0);
-        u5.setGuest(0);
-        u5.setActive(0);
         u5.setToken(UUID.randomUUID().toString());
         u5.setNotes("Reg by app: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT));
         u5.setLastLogin("0");
