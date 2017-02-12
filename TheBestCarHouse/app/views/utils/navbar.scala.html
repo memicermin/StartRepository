@@ -23,12 +23,13 @@
                 <a class="navbar-brand" href="/">Auto House</a>
 
 
-                @if(currentUser != null && currentUser.getUserType > User.INACTIVE) {
-                    <a class="navbar-brand" href="/">@currentUser.getUsername</a>
-                }
-
-                @if(UserHelper.admin(currentUser) || UserHelper.mAdmin(currentUser)) {
-                    <a class="navbar-brand" href="@routes.AdminController.adminPage()">admin</a>
+                @if(currentUser != null) {
+                    @if(currentUser.getUserType > User.INACTIVE) {
+                        <a class="navbar-brand" href="userinfo">@currentUser.getUsername</a>
+                    }
+                    @if(UserHelper.admin(currentUser.getId) || UserHelper.mAdmin(currentUser.getId)) {
+                        <a class="navbar-brand" href="@routes.AdminController.adminPage()">admin</a>
+                    }
                 }
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -46,7 +47,6 @@
                             <li><a href="#">TOWING_SERVICE</a></li>
                         </ul>
                     </li>
-
                     @if(currentUser != null) {
                         <li><a href="/singUp">Sing up</a></li>
                     } else {

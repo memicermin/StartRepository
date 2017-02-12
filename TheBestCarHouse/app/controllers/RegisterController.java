@@ -29,8 +29,8 @@ public class RegisterController extends Controller {
         return ok(login.render(formFactory.form(UserForLogin.class)));
     }
 
-    public Result loginErr(){
-        return ok(error_login.render());
+    public Result loginErr(String message){
+        return ok(error_login.render(message));
     }
 
 

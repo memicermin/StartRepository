@@ -24,6 +24,14 @@ public class User extends Model {
     public static final int MADMIN = 4;
 
     public static final int MAX_NOTES_LENGTH = 25000;
+
+    public static final String LOCATION = "location";
+    public static final String PHONE_NUMBER = "phone_number";
+    public static final String PASSWORD = "password";
+    public static final String NEW_PASSWORD = "new_password";
+    public static final String PASSWORD_AGAIN = "password_again";
+
+
     public static Model.Finder<Long, User> find = new Finder<>(User.class);
 
     @Id
@@ -40,13 +48,13 @@ public class User extends Model {
     @Column(name = "password", length = 100)
     private String password;
 
-    @Column(name = "first_name", updatable = false, length = 100)
+    @Column(name = "first_name", length = 100)
     private String firstName;
 
-    @Column(name = "last_name", updatable = false, length = 100)
+    @Column(name = "last_name", length = 100)
     private String lastName;
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", updatable = false)
     private String birthDate;
 
     @Column(name = "gender", length = 1)
@@ -72,18 +80,9 @@ public class User extends Model {
 
     @Column(name = "notes", length = MAX_NOTES_LENGTH)
     private String notes;
-//
-//    @Column(name = "active")
-//    private Integer active;
-//
-//    @Column(name = "verification")
-//    private Integer verification;
 
     @Column(name = "user_type")
     private Integer userType;
-
-//    @Column(name = "guest")
-//    private int guest;
 
     @Column(name = "premium_user")
     private Integer premiumUser;
@@ -204,15 +203,6 @@ public class User extends Model {
     public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
-//
-//    public Integer getVerification() {
-//        return verification;
-//    }
-//
-//    public void setVerification(Integer verification) {
-//        this.verification = verification;
-//    }
-
 
     public Integer getUserType() {
         return userType;
@@ -229,22 +219,6 @@ public class User extends Model {
     public void setLoginCount(Integer loginCount) {
         this.loginCount = loginCount;
     }
-//
-//    public int getGuest() {
-//        return guest;
-//    }
-//
-//    public void setGuest(int guest) {
-//        this.guest = guest;
-//    }
-//
-//    public Integer getActive() {
-//        return active;
-//    }
-//
-//    public void setActive(Integer active) {
-//        this.active = active;
-//    }
 
     public String getToken() {
         return token;
@@ -270,6 +244,10 @@ public class User extends Model {
         return find.byId(id);
     }
 
+    public static User findByToken(String token){
+        return find.where().eq("token", token).findUnique();
+    }
+
     public static User createNewUser(UserForRegister userForRegister) {
         try {
             User user = new User();
@@ -286,17 +264,12 @@ public class User extends Model {
 
             user.creationDate = DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.updateDate = "0";
-//            user.verification = 0;
-//            user.userLevel = 0;
             user.loginCount = 0;
             user.premiumUser = 0;
-//            user.guest = 0;
-//            user.active = 0;
-            user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.lastLogin = "0";
             user.save();
-            Emails.confirmToken(user.getEmail(), user.getToken());
+            Emails.confirmToken(user.getEmail(), user.getToken(), "Registrovali ste se kao nas korisnik");
             return user;
         } catch (PersistenceException e) {
             return null;
@@ -322,26 +295,19 @@ public class User extends Model {
                 ", email='" + user.email + '\'' +
                 ", firstName='" + user.firstName + '\'' +
                 ", lastName='" + user.lastName + '\'' +
-                ", birthDate='" + user.birthDate + '\'' +
-                ", gender=" + user.gender +
                 ", location='" + user.location + '\'' +
                 ", phoneNumber='" + user.phoneNumber + '\'' +
-                ", creationDate='" + user.creationDate + '\'' +
-                ", updateDate='" + user.updateDate + '\'' +
                 '}';
     }
 
     public static boolean adminUpdateNotes(Long id, String message) {
         User user = findById(id);
         try {
-            String exData = "__________" + message + "User{" +
+            String exData = "<<-----   ----->>" + message + "User{" +
                     "id=" + id +
-//                    ", verification=" + user.verification +
                     ", userType=" + user.userType +
                     ", loginCount=" + user.loginCount +
                     ", premiumUser=" + user.premiumUser +
-//                    ", guest=" + user.guest +
-//                    ", active=" + user.active +
                     ", token='" + user.token + '\'' +
                     '}' + " " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             String data = user.notes + exData;
@@ -357,6 +323,27 @@ public class User extends Model {
             return false;
         }
     }
+
+    public static boolean isBlocked(Long id){
+        if(findById(id).getUserType() != BLOCKED){
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isInactived(Long id){
+        if(findById(id).getUserType() != INACTIVE){
+            return false;
+        }
+        return true;
+    }
+    public static boolean isActive(Long id){
+        if(findById(id).getUserType() < ACTIVE){
+            return false;
+        }
+        return true;
+    }
+
 }
 
 /**

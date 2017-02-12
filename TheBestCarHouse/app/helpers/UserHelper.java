@@ -8,7 +8,8 @@ import models.users.User;
 public class UserHelper {
 
 
-    public static boolean admin(User user){
+    public static boolean admin(Long id){
+        User user = User.findById(id);
         if(user != null){
             if(user.getUserType() != User.ADMIN){
                 return false;
@@ -21,7 +22,8 @@ public class UserHelper {
         return false;
     }
 
-    public static boolean mAdmin(User user){
+    public static boolean mAdmin(Long id){
+        User user = User.findById(id);
         if(user != null){
             if(user.getUserType() != User.MADMIN){
                 return false;
@@ -34,17 +36,18 @@ public class UserHelper {
         return false;
     }
 
-    public static boolean user(User user){
+    public static boolean user(Long id){
+        User user = User.findById(id);
         if(user != null){
             if(user.getUserType() > User.INACTIVE){
-                return false;
+                return true;
             }
-            return true;
         }
         return false;
     }
 
-    public static boolean unactiveUser(User user) {
+    public static boolean unactiveUser(Long id){
+        User user = User.findById(id);
         if(user != null){
             if(user.getUserType() != User.INACTIVE){
                 return false;
@@ -54,7 +57,8 @@ public class UserHelper {
         return false;
     }
 
-    public static boolean blockedUser(User user){
+    public static boolean blockedUser(Long id){
+        User user = User.findById(id);
         if(user != null){
             if(user.getUserType() != User.BLOCKED){
                 return false;

@@ -11,7 +11,7 @@ GET         /message                                @controllers.AsyncController
 
 GET         /singUp                                 @controllers.LoginController.singUp()
 GET         /login                                  @controllers.RegisterController.login()
-GET         /errlog                                 @controllers.RegisterController.loginErr()
+GET         /errlog                                 @controllers.RegisterController.loginErr(message: String)
 
 POST        /loginuser                              @controllers.LoginController.loginUser()
 GET         /veryfiedemail                          @controllers.LoginController.verifyEmail(id: Long)
@@ -20,9 +20,15 @@ GET         /register                               @controllers.RegisterControl
 POST        /registeruser                           @controllers.RegisterController.registerUser()
 
 #
+GET         /userinfo                               @controllers.UserController.userInfo()
+GET         /user/edit/data                         @controllers.UserController.editUserData(id: Long, key: String)
+POST        /user/update/data                       @controllers.UserController.updateUserData(id: Long, key: String)
+
+#
 GET         /admin                                  @controllers.AdminController.adminPage()
 GET         /admin/allUsers                         @controllers.AdminController.allUsers()
 GET         /admin/block/user                       @controllers.AdminController.blockUser(id: Long)
+GET         /admin/delete/user                      @controllers.AdminController.deleteUser(id:Long)
 GET         /admin/BlockedUsers                     @controllers.AdminController.getBlockedUsers()
 GET         /admin/deblocking/user                  @controllers.AdminController.deblockUser(id: Long)
 GET         /admin/completly/activiting/user        @controllers.AdminController.activateUser(id: Long)

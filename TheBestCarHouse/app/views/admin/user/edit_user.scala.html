@@ -80,14 +80,14 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label class="control-label" for="">Level</label>
-                                                            <input id="" type="number" class="form-control" name="user_ty" value="@user.getUserType" required>
+                                                        <label class="control-label" for="">User Type</label>
+                                                            <input id="" type="number" class="form-control" name="user_type" value="@user.getUserType" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="text-success">Num 1</p>
-                                                    <p class="text-input">Num 0 </p>
-                                                    <p class="text-danger">Number -1 </p>
+                                                    <p class="text-input"></p>
+                                                    <p class="text-input"></p>
+                                                    <p class="text-input">0 = Blocked, 1 = Inactive, 2 = Active</p>
                                                 </div>
                                             </div>
                                             <hr>
@@ -99,6 +99,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
+                                                    <p class="text-input"></p>
                                                     <p class="text-input"></p>
                                                     <p class="text-input">Counter for Login</p>
                                                 </div>
@@ -113,15 +114,17 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <p class="text-input"></p>
+                                                    <p class="text-input"></p>
                                                     <p class="text-input">Ratings for User</p>
                                                 </div>
                                             </div>
+                                            @if(UserHelper.mAdmin(SessionHelper.getCurrentUser(ctx()).getId)){
                                             <hr>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="">Token</label>
-                                                        @if(UserHelper.mAdmin(user)) {
+                                                        @if(UserHelper.mAdmin(user.getId)) {
                                                             <input id="" type="text" maxlength="36" class="form-control" name="token" value="@HAT36N579.getHat36(UUID.randomUUID().toString)" required>
                                                         } else {
                                                             <input id="" type="text" maxlength="36" class="form-control" name="token" value="@user.getToken" required>
@@ -138,9 +141,10 @@
                                                     <p class="text-success"></p>
                                                 </div>
                                             </div>
+                                            }
                                             <hr>
                                             <br>
-                                            @if(!UserHelper.mAdmin(user)) {
+                                            @if(!UserHelper.mAdmin(user.getId)) {
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
@@ -171,7 +175,7 @@
                     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                     <span class="pull-right">
                         <a href="@routes.AdminController.editUser(user.getId)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                        <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a href="@routes.AdminController.deleteUser(user.getId)" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                     </span>
                 </div>
             </div>

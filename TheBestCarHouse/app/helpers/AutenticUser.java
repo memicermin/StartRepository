@@ -16,7 +16,7 @@ public class AutenticUser extends Security.Authenticator {
             return null;
         }
         User user = SessionHelper.getCurrentUser(context);
-        if (UserHelper.user(user)) {
+        if (UserHelper.user(user.getId())) {
             return user.getEmail();
         }
         return null;

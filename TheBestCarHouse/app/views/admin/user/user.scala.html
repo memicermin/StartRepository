@@ -1,6 +1,6 @@
 @import models.users.User
 @import helpers.UserHelper
-@import helpers.UserSecyrity
+@import helpers.SessionHelper
 @(user: User)
 @admin.admin(user.getFirstName) {
     <div class="col-md-offset-1">
@@ -59,23 +59,38 @@
                                         <td>@user.getLoginCount</td>
                                     </tr>
                                     <tr>
-                                        <td>Verification</td>
-                                        <td>
-                                            @if(user.getUserType > User.INACTIVE) {
-                                                <a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
-                                            }
-                                            @if(user.getUserType < User.ACTIVE) {
-                                                <a type="" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                                            }
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td>Premium User</td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>User Level</td>
-                                        <td></td>
+                                        <td>User Type</td>
+                                        <td>
+                                            @if(user.getUserType == User.BLOCKED) {
+                                                <p>
+                                                    <a type="" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                                    @user.getUsername Is Blocked
+                                                </p>
+                                            }
+                                            @if(user.getUserType == User.INACTIVE) {
+                                                <p><a type="" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-ok"></i></a>
+                                                    @user.getUsername Is Inactive
+                                                </p>
+                                            }
+                                            @if(user.getUserType == User.ACTIVE) {
+                                                <p><a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                                    @user.getUsername Is Active
+                                                </p>
+                                            }
+                                            @if(user.getUserType >= User.ADMIN) {
+                                                <p><a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                                    <a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                                    @if(user.getUserType == User.MADMIN){
+                                                        <a type="" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                                    }
+                                                    @user.getUsername Is Admin
+                                                </p>
+                                            }
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -85,35 +100,27 @@
                 <div class="panel-footer">
                     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                     <span class="pull-right">
-                    @if(!UserHelper.admin(user)) {
+                    @if(!UserHelper.mAdmin(user.getId)) {
                         <a href="@routes.AdminController.editUser(user.getId)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-edit"></i>
                             Edit</a>
-
-                        @*
-                        @if(!UserSecyrity.isBlockBlocked(user.getId)) {
-                            @if(!UserSecyrity.isBlocked(user.getId)) {
-                                @if(!UserSecyrity.isUnverified(user.getId)) {
-                                    <a href="@routes.AdminController.unverifiedUser(user.getId)" data-original-title="Unverified this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
-                                        Un VF</a>
-                                } else {
-                                    <a href="@routes.AdminController.activateUser(user.getId)" data-original-title="Activate this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
-                                        Act</a>
-                                }
-                                <a href="@routes.AdminController.blockUser(user.getId)" data-original-title="Block this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
-                                    Block</a>
-                            } else {
-                                <a href="@routes.AdminController.deblockUser(user.getId)" data-original-title="Deblock this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
-                                    DeBlock</a>
-                            }
-                            <a href="@routes.AdminController.blockBlockUser(user.getId)" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i>
-                                Del</a>
+                        @if(!User.isActive(user.getId)) {
+                            <a href="@routes.AdminController.activateUser(user.getId)" data-original-title="Activate this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
+                                Act</a>
+                        }else{
+                            <a href="@routes.AdminController.unverifiedUser(user.getId)" data-original-title="Block this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
+                                UnVerify</a>
+                        }
+                        @if(!User.isBlocked(user.getId)) {
+                            <a href="@routes.AdminController.blockUser(user.getId)" data-original-title="Block this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-stop"></i>
+                                Block</a>
                         } else {
                             <a href="@routes.AdminController.deblockUser(user.getId)" data-original-title="Deblock this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-check"></i>
                                 DeBlock</a>
                         }
-
-
-                        *@
+                        @if(UserHelper.mAdmin(SessionHelper.getCurrentUser(ctx()).getId)){
+                            <a href="@routes.AdminController.deleteUser(user.getId)" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i>
+                                Del</a>
+                        }
                     }
                     </span>
                 </div>

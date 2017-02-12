@@ -61,7 +61,9 @@ public class AdminController extends Controller {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Unverified admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
         user.setUserType(1);
+        user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
+        Emails.confirmToken(user.getEmail(), user.getToken(), "Vasa email adresa nije verifikovana");
         return user(user.getId());
     }
 
@@ -69,6 +71,7 @@ public class AdminController extends Controller {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Blocked admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
         user.setUserType(0);
+        user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
         return user(user.getId());
     }
@@ -81,20 +84,24 @@ public class AdminController extends Controller {
         user.setLoginCount(0);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
-        Emails.sendTokenForVerify(user.getEmail(), user.getToken(), "Your account has been reactivated. It is necessary to verify your email.");
+        Emails.confirmToken(user.getEmail(), user.getToken(), "Izvrsena je deblokada vaseg racuna");
         return user(user.getId());
     }
 
     public Result activateUser(Long id) {
         User user = User.findById(id);
         User.adminUpdateNotes(id, " Activated admin \" " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
-        user.setUserType(1);
+        user.setUserType(2);
         user.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));
         user.update();
-        // Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
+        Emails.sendEmailMessage(user.getEmail(), "Your account has been reactivated.");
         return user(user.getId());
     }
 
+    public Result deleteUser(Long id){
+        User.findById(id).delete();
+        return allUsers();
+    }
 
     public Result adminPage() {
         return ok(admin_page.render("Hello"));
@@ -118,11 +125,6 @@ public class AdminController extends Controller {
 
     public Result getAdms() {
         List<User> adms = User.find.where().ge("user_type", User.ADMIN).findList();
-        for (int i = 0; i < adms.size(); i++) {
-            if (!UserHelper.admin(adms.get(i)) || !UserHelper.mAdmin(adms.get(i))) {
-                adms.remove(i);
-            }
-        }
         return ok(user_list.render(adms, "Adms"));
     }
 
@@ -150,7 +152,7 @@ public class AdminController extends Controller {
         } catch (Exception e) {
             return redirect("/admin");
         }
-        if (!UserHelper.mAdmin(admin)) {
+        if (!UserHelper.mAdmin(admin.getId())) {
             User.adminUpdateNotes(id, " \nUnautorized admin: " + SessionHelper.getCurrentUser(ctx()).getEmail() + "\" Ex data is: ");
             admin.setUserType(2);
             admin.setToken(HAT36N579.getHat36(UUID.randomUUID().toString()));

@@ -55,15 +55,17 @@ public class LoginController extends Controller {
         if (user != null) {
             if(user.getUserType() < User.INACTIVE){
                 clear();
-                return redirect("errlog");
+                return redirect(routes.RegisterController.loginErr("Your account is blocked or deleted"));
             }
             if(user.getUserType() == User.INACTIVE){
-                //return redirect("/");
+                return redirect(routes.RegisterController.loginErr("Confirm your email address"));
             }
-            createSession(user);
-            user.setLoginCount(user.getLoginCount() + 1);
-            user.setLastLogin(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.LOGIN_FORMAT));
-            user.update();
+            if(user.getUserType() > User.INACTIVE){
+                createSession(user);
+                user.setLoginCount(user.getLoginCount() + 1);
+                user.setLastLogin(DateTimeHelper.getCurrentDateFormated(DateTimeHelper.LOGIN_FORMAT));
+                user.update();
+            }
             return redirect("/");
         }else{
             flash("error", FlashMessages.LOGIN_FAIL);
@@ -96,9 +98,10 @@ public class LoginController extends Controller {
     }
 
     public Result confirmEmail(String token){
-        User user = SessionHelper.getCurrentUser(ctx());
+        User user = User.findByToken(token);
         if(user != null){
-            if(user.getToken().equals(token)){
+            singUp();
+            if(user.getUserType() == 1){
                 user.setUserType(2);
                 createSession(user);
                 user.setLoginCount(user.getLoginCount() + 1);
@@ -107,5 +110,4 @@ public class LoginController extends Controller {
         }
         return redirect("/");
     }
-
 }

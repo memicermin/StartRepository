@@ -1,0 +1,31 @@
+@import users.User
+@import helpers.SessionHelper
+@()(implicit currentUser: User = SessionHelper.getCurrentUser(ctx()))
+
+<div class="main-place">
+    <a href="/" class="item-name"><h4>Home</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.UserController.editUserData(currentUser.getId, "username")" class="item-name"><h4>Username</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.UserController.editUserData(currentUser.getId, User.PASSWORD)" class="item-name"><h4>Security</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.UserController.editUserData(currentUser.getId, "name")" class="item-name"><h4>Name</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.UserController.editUserData(currentUser.getId, User.LOCATION)" class="item-name"><h4>Location</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="@routes.UserController.editUserData(currentUser.getId, User.PHONE_NUMBER)" class="item-name"><h4>Phone Number</h4></a>
+</div>
+
+<div class="main-place">
+    <a href="/" class="item-name"><h4></h4></a>
+</div>

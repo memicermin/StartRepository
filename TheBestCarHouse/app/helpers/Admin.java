@@ -18,7 +18,7 @@ public class Admin extends Security.Authenticator {
             return null;
         }
         User user = SessionHelper.getCurrentUser(context);
-        if(UserHelper.admin(user) || UserHelper.mAdmin(user)){
+        if(UserHelper.admin(user.getId()) || UserHelper.mAdmin(user.getId())){
             return user.getEmail();
         }
         return null;
