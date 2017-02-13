@@ -1,20 +1,43 @@
 /**
  * Created by Enver on 11/25/2016.
  */
+var usernameRegex = /^[a-z]{4,20}$/;
+var nameRegex = /^([a-zA-Z]+\s?){2,30}$/;
+var phoneRegex = /^(([+]{1}|[0]{1})([0-9]{8,17}))$/;
+var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+var emailRegex = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+
 
 function inputValidate(id) {
-
+    checkAll();
     var element = document.getElementById(id);
-
     if (id == "username") {
         validateUsername(element);
     }
     if (id == "email") {
         validateEmail(element);
     }
-
+    if(id == "password"){
+        validatePassword(element);
+    }if(id == "password_again"){
+        validatePasswordAgain(element);
+    }
 }
 
+function checkAll(){
+    var valid = false;
+    if(!validateUsername(document.getElementById("username"))){
+        valid = true;
+    }
+    if(!validateEmail(document.getElementById("email"))){
+        valid = true;
+    }
+    if(!validatePasswordAgain(document.getElementById("password_again"))){
+        valid = true;
+    }
+
+    document.getElementById("signupSubmit").disabled = valid;
+}
 
 function validateUsername(element) {
     var valid = true;
@@ -40,27 +63,31 @@ function validateUsername(element) {
 
     if (valid != true) {
         inputError(element);
-
+        return false;
     } else {
         inputSuccess(element);
+        return true;
     }
 
 
 }
+
+
 
 function validateEmail(element) {
     var email = element.value;
-    if (validateEmailPattern(email)) {
+    if (checkExp(email, emailRegex)) {
         inputSuccess(element);
+        return true;
     } else {
         inputError(element);
+        return false;
     }
 }
 
-function validatePassword() {
-    var element = document.getElementById("password");
+function validatePassword(element) {
     var password = element.value;
-    if (checkPassword(password)) {
+    if (checkExp(password, passwordRegex)) {
         inputSuccess(element);
     } else {
         setPlaceholder("password", "[A-Za-z0-9]+-*/_");
@@ -68,41 +95,36 @@ function validatePassword() {
     }
 }
 
-function validatePasswordAgain() {
-    var element = document.getElementById("password_again");
+function validatePasswordAgain(element) {
     var passwordAgain = element.value;
     var password = document.getElementById("password").value;
-    if (checkPassword(password)) {
+    if (checkExp(password, passwordRegex)) {
         if (password != passwordAgain) {
             inputError(element);
             setPlaceholder("password_again", "Passwords are different");
+            return false;
         } else {
             inputSuccess(element);
+            return true;
         }
     } else {
         element.value = "";
-        document.getElementById("password").focus();
+      //  document.getElementById("password").focus();
         validatePassword();
+        return false;
     }
+}
 
+function blankInput(id){
+    var element = document.getElementById(id);
+    element.value = "";
+    element.classList.remove.remove("error-class");
+    element.classList.remove.remove("success-class");
 }
 
 /*
  Help functions
  */
-
-function checkPassword(password) {
-    var pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-    if (pattern.test(password)) {
-        return true;
-    }
-    return false;
-}
-
-function validateEmailPattern(email) {
-    var re = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
-    return re.test(email);
-}
 
 function setPlaceholder(id, text) {
     document.getElementById(id).value = "";
@@ -117,6 +139,10 @@ function containSpace(val) {
         }
     }
     return isSpace;
+}
+
+function checkExp(exp, re) {
+    return re.test(exp);
 }
 
 function inputSuccess(element) {
