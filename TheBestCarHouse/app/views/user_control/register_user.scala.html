@@ -27,7 +27,7 @@
 
                             <div class="form-group">
                                 <label class="control-label" for="signupPassword">Password</label>
-                                <input id="password" type="password" onblur="inputValidate('password')" oninput="blankInput('password_again')" maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" name="password">
+                                <input id="password" type="password" onblur="inputValidate('password')" maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" name="password">
                             </div>
 
                             <div class="form-group">
@@ -36,8 +36,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label" for="">Your Birth Date</label>
-                                <input id="" type="date" maxlength="50" class="form-control" name="birth_date" value="@form("birth_date").value" required>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <label class="control-label" for="">Your Birth Date</label>
+                                    </div>
+
+                                    <div class="col-lg-7">
+                                        <p>Alternative Date format yyyy-mm-dd</p>
+                                    </div>
+                                </div>
+                                <input id="birth_date" onblur="inputValidate('birth_date')" type="date" maxlength="50" class="form-control" placeholder="dd.mm.gggg" name="birth_date" value="@form("birth_date").value" required>
                             </div>
                         </div>
 
@@ -45,28 +53,28 @@
 
                             <div class="form-group">
                                 <label class="control-label" for="">Your First Name</label>
-                                <input id="" type="text" maxlength="50" class="form-control" name="first_name" value="@form("first_name").value" required>
+                                <input id="first_name" type="text" onblur="inputValidate('first_name')" maxlength="50" class="form-control" name="first_name" value="@form("first_name").value" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label" for="">Your Last Name</label>
-                                <input id="" type="text" maxlength="50" class="form-control" name="last_name" value="@form("last_name").value" required>
+                                <input id="last_name" onblur="inputValidate('last_name')" type="text" maxlength="50" class="form-control" name="last_name" value="@form("last_name").value" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label" for="">Your Location</label>
-                                <input id="" type="text" maxlength="50" class="form-control" name="location" value="@form("location").value" required>
+                                <input id="location" onblur="inputValidate('location')" type="text" maxlength="50" class="form-control" name="location" value="@form("location").value" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label" for="">Your Phone Number</label>
-                                <input id="" type="text" maxlength="50" class="form-control" name="phone_number" value="@form("phone_number").value">
+                                <input id="phone_number" onblur="inputValidate('phone_number')" type="text" maxlength="50" class="form-control" name="phone_number" value="@form("phone_number").value">
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label" for="">Your Gender</label>
                                 <div>
-                                    <select class="form-control" id="select" name="gender">
+                                    <select class="form-control" id="select" onblur="inputValidate('select')" name="gender">
                                         <option value="not_selecteed"></option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -79,9 +87,10 @@
                         <div class="col-lg-12">
                             <br>
                             <div class="form-group">
-                                <button id="signupSubmit" type="submit" class="btn btn-success btn-block" disabled>
+                                <button id="signupSubmit" type="submit" class="btn btn-danger btn-block" disabled>
                                     Completed your account</button>
                             </div>
+                            <h3 id="info_reg"></h3>
                         </div>
                     </form>
                 </div>

@@ -1,87 +1,74 @@
 /**
  * Created by Enver on 11/25/2016.
  */
+
+//PATTERNS
 var usernameRegex = /^[a-z]{4,20}$/;
 var nameRegex = /^([a-zA-Z]+\s?){2,30}$/;
 var phoneRegex = /^(([+]{1}|[0]{1})([0-9]{8,17}))$/;
 var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
 var emailRegex = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+//IDs
+var usernameId = "username";
+var emailId = "email";
+var passwordId = "password";
+var passwordAgainId = "password_again";
+var firstNameId = "first_name";
+var lastNameId = "last_name";
+var locatinId = "location";
+var phoneNumberId = "phone_number";
+var birthDateId = "birth_date";
+var submitBtn = "signupSubmit";
 
 
+//MAIN VALIDATE FUNCTION
 function inputValidate(id) {
-    checkAll();
     var element = document.getElementById(id);
-    if (id == "username") {
+    if (id == usernameId) {
         validateUsername(element);
     }
-    if (id == "email") {
+    if (id == emailId) {
         validateEmail(element);
     }
-    if(id == "password"){
+    if (id == passwordId) {
         validatePassword(element);
-    }if(id == "password_again"){
+    }
+    if (id == passwordAgainId) {
         validatePasswordAgain(element);
     }
+    if (id == firstNameId) {
+        validateName(element);
+    }
+    checkAll();
+
 }
 
-function checkAll(){
-    var valid = false;
-    if(!validateUsername(document.getElementById("username"))){
-        valid = true;
-    }
-    if(!validateEmail(document.getElementById("email"))){
-        valid = true;
-    }
-    if(!validatePasswordAgain(document.getElementById("password_again"))){
-        valid = true;
-    }
 
-    document.getElementById("signupSubmit").disabled = valid;
+function validateName(element) {
+    var valid = true;
+    var name = element.value;
+    if (checkExp(name, nameRegex)) {
+        inputSuccess(element);
+    } else {
+        inputError(element);
+        valid = false;
+    }
+    return valid;
 }
 
 function validateUsername(element) {
-    var valid = true;
-    var val = element.value;
-
-    if (val != "") {
-        if (val.length < 3) {
-            setPlaceholder("username", "min 3 char");
-            valid = false;
-        }
-        if (val.length > 18) {
-            setPlaceholder("username", "max 18 char");
-            valid = false;
-        }
-        if (containSpace(val)) {
-            setPlaceholder("username", "You can not use \"space\"");
-            valid = false;
-        }
-    } else {
-        setPlaceholder("username", "This field is required");
-        valid = false;
-    }
-
-    if (valid != true) {
-        inputError(element);
-        return false;
-    } else {
+    if (checkExp(element.value, usernameRegex)) {
         inputSuccess(element);
-        return true;
+    } else {
+        inputError(element);
     }
-
-
 }
 
-
-
 function validateEmail(element) {
-    var email = element.value;
-    if (checkExp(email, emailRegex)) {
+    if (checkExp(element.value, emailRegex)) {
         inputSuccess(element);
-        return true;
     } else {
         inputError(element);
-        return false;
     }
 }
 
@@ -90,41 +77,112 @@ function validatePassword(element) {
     if (checkExp(password, passwordRegex)) {
         inputSuccess(element);
     } else {
-        setPlaceholder("password", "[A-Za-z0-9]+-*/_");
+        setPlaceholder(passwordId, "[A-Za-z0-9]+-*/_");
         inputError(element);
+        alert("Password must contains Uppercase letter, Lowrecasse letter, and special character +-/_.");
     }
+    blankInput(passwordAgainId);
 }
 
 function validatePasswordAgain(element) {
     var passwordAgain = element.value;
-    var password = document.getElementById("password").value;
+    var password = document.getElementById(passwordId).value;
     if (checkExp(password, passwordRegex)) {
-        if (password != passwordAgain) {
-            inputError(element);
-            setPlaceholder("password_again", "Passwords are different");
-            return false;
-        } else {
+        if (passwordAgain == password) {
             inputSuccess(element);
-            return true;
+        } else {
+            setPlaceholder(passwordAgainId, "Passwords are different");
+            inputError(element);
+            blankInput(passwordAgainId);
+            document.getElementById(passwordAgainId).focus();
         }
     } else {
-        element.value = "";
-      //  document.getElementById("password").focus();
-        validatePassword();
-        return false;
+        blankInput(passwordAgainId);
+        document.getElementById(passwordId).focus();
     }
 }
 
-function blankInput(id){
-    var element = document.getElementById(id);
-    element.value = "";
-    element.classList.remove.remove("error-class");
-    element.classList.remove.remove("success-class");
+function validateName(element) {
+    var name = element.value;
+    if (checkExp(name, nameRegex)) {
+        inputSuccess(element);
+    } else {
+        inputError(element);
+    }
 }
 
 /*
  Help functions
  */
+
+
+function checkAll() {
+    var inputDisabled = false;
+    /*
+     if (!checkExp(document.getElementById(usernameId).value, usernameRegex)) {
+     inputDisabled = true;
+     }
+     if (!checkExp(document.getElementById(emailId).value, emailRegex)) {
+     inputDisabled = true;
+     }
+
+     if (!checkPasswords()) {
+     inputDisabled = true;
+     }
+
+     if (!checkExp(document.getElementById(firstNameId).value, nameRegex)) {
+     inputDisabled = true;
+     }
+
+     if (!checkExp(document.getElementById(lastNameId).value, nameRegex)) {
+     inputDisabled = true;
+     }
+
+     if (!checkExp(document.getElementById(locatinId).value, nameRegex)) {
+     inputDisabled = true;
+     }
+
+    if (!checkExp(document.getElementById(phoneNumberId).value, phoneRegex)) {
+        inputDisabled = true;
+    }
+*/
+    /*
+     */
+    if(!ageControl(document.getElementById(birthDateId).value)){
+        inputDisabled = true;
+    }
+
+
+    document.getElementById(submitBtn).disabled = inputDisabled;
+    if (inputDisabled) {
+        document.getElementById(submitBtn).classList.remove("btn-success");
+        document.getElementById(submitBtn).classList.add("btn-danger");
+    } else {
+        document.getElementById(submitBtn).classList.remove("btn-danger");
+        document.getElementById(submitBtn).classList.add("btn-success");
+    }
+
+}
+
+
+function checkPasswords() {
+    var password = document.getElementById(passwordId).value;
+    var passAgain = document.getElementById(passwordAgainId).value;
+    if (checkExp(password, passwordRegex)) {
+        if (passAgain == password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+function blankInput(id) {
+    var element = document.getElementById(id);
+    element.value = "";
+    element.classList.remove("error-class");
+    element.classList.remove("success-class");
+}
 
 function setPlaceholder(id, text) {
     document.getElementById(id).value = "";
@@ -152,4 +210,51 @@ function inputSuccess(element) {
 function inputError(element) {
     element.classList.add("error-class");
     element.classList.remove("success-class");
+}
+
+function ageControl(birthDate) {
+    document.getElementById("info_reg").innerHTML = " " + birthDate;
+    var bd = birthDate.split("-");
+    var bDay = parseInt(bd[2]);
+    var bMonth = parseInt(bd[1]);
+    var bYear = parseInt(bd[0]);
+
+    var dateToday = new Date();
+
+    var dayToday = dateToday.getDate();
+    var monthToday = dateToday.getMonth() +1;
+    var yearToday = dateToday.getFullYear();
+
+
+    if (bYear > (yearToday - 80) && (bYear + 18) < yearToday) {
+        return true;
+    }
+
+    if (bYear == (yearToday - 80)) {
+        if (bMonth > monthToday) {
+            return true;
+        } else if (bMonth == monthToday) {
+            if (bDay > dayToday) {
+                return true;
+            }
+        }
+    }
+
+    if ((bYear + 18) == yearToday) {
+        if (bMonth < monthToday) {
+            return true;
+        } else if (bMonth == monthToday) {
+            if (bDay < dayToday) {
+                return true;
+            }
+        }
+    }
+
+
+    return false;
+
+
+
+
+
 }
