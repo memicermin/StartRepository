@@ -152,12 +152,11 @@ function checkAll() {
      */
     var birthDate = document.getElementById(birthDateId).value;
     if (!isValidDate(birthDate)) {
+        document.getElementById("info_reg").innerHTML = "isValidate";
         inputDisabled = true;
     } else {
-        var old = calculateAge(birthDate);
-        document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + " old = " + old;
-
-        if (!ageControl(old)) {
+        if (!ageControl(birthDate)) {
+            // document.getElementById("info_reg").innerHTML = "age Control";
             inputDisabled = true;
         }
     }
@@ -211,22 +210,60 @@ function inputError(element) {
     element.classList.remove("success-class");
 }
 
-function ageControl(oldDate) {
-    var old = calculateAge(oldDate).split("-");
-    var days = parseInt(old[0]);
-    var months = parseInt(old[1]);
-    var years = parseInt(old[2]);
-    document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + years + ": months = " + months + ": days = " + days;
-    if (years < MIN_AGE && years > MAX_AGE) {
+function ageControl(birthDate) {
+    var bd = birthDate.split("-");
+    var birthDay = parseInt(bd[0]);
+    var birthMonth = parseInt(bd[1]);
+    var birthYear = parseInt(bd[2]);
+    var dayToday = new Date().getDate();
+    var monthToday = new Date().getMonth() + 1;
+    var yearToday = new Date().getFullYear();
+    var diffDay;
+    var diffMonth;
+    var diffYear;
+
+    diffYear = yearToday - birthYear;
+
+    if (birthMonth <= monthToday) {
+        diffMonth = monthToday - birthMonth;
+    } else {
+        diffMonth = (12 - birthMonth) + monthToday;
+        diffYear--;
+    }
+    if (birthDay <= dayToday) {
+        diffDay = dayToday - birthDay;
+    } else {
+        if (birthMonth == 1 || birthMonth == 3 || birthMonth == 5 || birthMonth == 7 || birthMonth == 8 || birthMonth == 10 || birthMonth == 12) {
+            diffDay = (31 - birthDay) + dayToday;
+        }
+        if (birthMonth == 4 || birthMonth == 6 || birthMonth == 9 || birthMonth == 11) {
+            diffDay = (30 - birthDay) + dayToday;
+        }
+        if (birthMonth == 2) {
+            diffDay = (29 - birthDay) + dayToday;
+        }
+        if (diffMonth == 0) {
+            diffYear--;
+        } else {
+            diffMonth--;
+        }
+    }
+
+    //document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
+    // return diffDay + "-" + diffMonth + "-" + diffYear;
+
+    // document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + years + ": months = " + months + ": days = " + days;
+    if (diffYear > MIN_AGE && diffYear < MAX_AGE) {
+       // document.getElementById("info_reg").innerHTML = "odma vracam true";
         return true;
-    } else if (years == MIN_AGE) {
-        if ((years - months - days) == MIN_AGE) {
+    } else if (diffYear == MIN_AGE) {
+        if ((diffYear - diffMonth - diffDay) == MIN_AGE) {
             return true;
         } else {
             return false;
         }
-    } else if (years == MAX_AGE) {
-        if ((years + months + days) == MAX_AGE) {
+    } else if (diffYear == MAX_AGE) {
+        if ((diffYear + diffMonth + diffDay) == MAX_AGE) {
             return true;
         } else {
             return false;
@@ -275,14 +312,14 @@ function calculateAge(birthDate) {
         }
     }
 
-    if(diffDay.length == 1){
+    if (diffDay.length == 1) {
         diffDay = "0" + diffDay;
     }
-    if(diffMonth.length == 1){
+    if (diffMonth.length == 1) {
         diffMonth = "0" + diffMonth;
     }
 
-    document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
+    // document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
     return diffDay + "-" + diffMonth + "-" + diffYear;
 }
 
