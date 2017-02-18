@@ -8,6 +8,7 @@ var nameRegex = /^([a-zA-Z]+\s?){2,30}$/;
 var phoneRegex = /^(([+]{1}|[0]{1})([0-9]{8,17}))$/;
 var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
 var emailRegex = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+var ddMMyyyyRegex = /^([0-9]{2})-([0-9]{2})-([0-9]{4})$/;
 //IDs
 var usernameId = "username";
 var emailId = "email";
@@ -15,11 +16,13 @@ var passwordId = "password";
 var passwordAgainId = "password_again";
 var firstNameId = "first_name";
 var lastNameId = "last_name";
-var locatinId = "location";
+var locationId = "location";
 var phoneNumberId = "phone_number";
 var birthDateId = "birth_date";
 var submitBtn = "signupSubmit";
-
+//
+var MAX_AGE = 80;
+var MIN_AGE = 18;
 
 //MAIN VALIDATE FUNCTION
 function inputValidate(id) {
@@ -45,17 +48,27 @@ function inputValidate(id) {
 
 
 function validateName(element) {
-    var valid = true;
     var name = element.value;
     if (checkExp(name, nameRegex)) {
         inputSuccess(element);
     } else {
         inputError(element);
-        valid = false;
     }
-    return valid;
 }
 
+/*
+ function validateName(element) {
+ var valid = true;
+ var name = element.value;
+ if (checkExp(name, nameRegex)) {
+ inputSuccess(element);
+ } else {
+ inputError(element);
+ valid = false;
+ }
+ return valid;
+ }
+ */
 function validateUsername(element) {
     if (checkExp(element.value, usernameRegex)) {
         inputSuccess(element);
@@ -102,15 +115,6 @@ function validatePasswordAgain(element) {
     }
 }
 
-function validateName(element) {
-    var name = element.value;
-    if (checkExp(name, nameRegex)) {
-        inputSuccess(element);
-    } else {
-        inputError(element);
-    }
-}
-
 /*
  Help functions
  */
@@ -138,20 +142,25 @@ function checkAll() {
      inputDisabled = true;
      }
 
-     if (!checkExp(document.getElementById(locatinId).value, nameRegex)) {
+     if (!checkExp(document.getElementById(locationId).value, nameRegex)) {
      inputDisabled = true;
      }
 
-    if (!checkExp(document.getElementById(phoneNumberId).value, phoneRegex)) {
-        inputDisabled = true;
-    }
-*/
-    /*
+     if (!checkExp(document.getElementById(phoneNumberId).value, phoneRegex)) {
+     inputDisabled = true;
+     }
      */
-    if(!ageControl(document.getElementById(birthDateId).value)){
+    var birthDate = document.getElementById(birthDateId).value;
+    if (!isValidDate(birthDate)) {
         inputDisabled = true;
-    }
+    } else {
+        var old = calculateAge(birthDate);
+        document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + " old = " + old;
 
+        if (!ageControl(old)) {
+            inputDisabled = true;
+        }
+    }
 
     document.getElementById(submitBtn).disabled = inputDisabled;
     if (inputDisabled) {
@@ -189,16 +198,6 @@ function setPlaceholder(id, text) {
     document.getElementById(id).placeholder = text;
 }
 
-function containSpace(val) {
-    var isSpace = false;
-    for (var i = 0; i < val.length; i++) {
-        if (val[i] == ' ') {
-            isSpace = true;
-        }
-    }
-    return isSpace;
-}
-
 function checkExp(exp, re) {
     return re.test(exp);
 }
@@ -212,49 +211,121 @@ function inputError(element) {
     element.classList.remove("success-class");
 }
 
-function ageControl(birthDate) {
-    document.getElementById("info_reg").innerHTML = " " + birthDate;
-    var bd = birthDate.split("-");
-    var bDay = parseInt(bd[2]);
-    var bMonth = parseInt(bd[1]);
-    var bYear = parseInt(bd[0]);
-
-    var dateToday = new Date();
-
-    var dayToday = dateToday.getDate();
-    var monthToday = dateToday.getMonth() +1;
-    var yearToday = dateToday.getFullYear();
-
-
-    if (bYear > (yearToday - 80) && (bYear + 18) < yearToday) {
+function ageControl(oldDate) {
+    var old = calculateAge(oldDate).split("-");
+    var days = parseInt(old[0]);
+    var months = parseInt(old[1]);
+    var years = parseInt(old[2]);
+    document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + years + ": months = " + months + ": days = " + days;
+    if (years < MIN_AGE && years > MAX_AGE) {
         return true;
-    }
-
-    if (bYear == (yearToday - 80)) {
-        if (bMonth > monthToday) {
+    } else if (years == MIN_AGE) {
+        if ((years - months - days) == MIN_AGE) {
             return true;
-        } else if (bMonth == monthToday) {
-            if (bDay > dayToday) {
-                return true;
-            }
+        } else {
+            return false;
+        }
+    } else if (years == MAX_AGE) {
+        if ((years + months + days) == MAX_AGE) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+function calculateAge(birthDate) {
+    var bd = birthDate.split("-");
+    var birthDay = parseInt(bd[0]);
+    var birthMonth = parseInt(bd[1]);
+    var birthYear = parseInt(bd[2]);
+    var dayToday = new Date().getDate();
+    var monthToday = new Date().getMonth() + 1;
+    var yearToday = new Date().getFullYear();
+    var diffDay;
+    var diffMonth;
+    var diffYear;
+
+    diffYear = yearToday - birthYear;
+
+    if (birthMonth <= monthToday) {
+        diffMonth = monthToday - birthMonth;
+    } else {
+        diffMonth = (12 - birthMonth) + monthToday;
+        diffYear--;
+    }
+    if (birthDay <= dayToday) {
+        diffDay = dayToday - birthDay;
+    } else {
+        if (birthMonth == 1 || birthMonth == 3 || birthMonth == 5 || birthMonth == 7 || birthMonth == 8 || birthMonth == 10 || birthMonth == 12) {
+            diffDay = (31 - birthDay) + dayToday;
+        }
+        if (birthMonth == 4 || birthMonth == 6 || birthMonth == 9 || birthMonth == 11) {
+            diffDay = (30 - birthDay) + dayToday;
+        }
+        if (birthMonth == 2) {
+            diffDay = (29 - birthDay) + dayToday;
+        }
+        if (diffMonth == 0) {
+            diffYear--;
+        } else {
+            diffMonth--;
         }
     }
 
-    if ((bYear + 18) == yearToday) {
-        if (bMonth < monthToday) {
-            return true;
-        } else if (bMonth == monthToday) {
-            if (bDay < dayToday) {
-                return true;
+    if(diffDay.length == 1){
+        diffDay = "0" + diffDay;
+    }
+    if(diffMonth.length == 1){
+        diffMonth = "0" + diffMonth;
+    }
+
+    document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
+    return diffDay + "-" + diffMonth + "-" + diffYear;
+}
+
+function isValidDate(birthDate) {
+    var bd = birthDate.split("-");
+    var day = parseInt(bd[0]);
+    var month = parseInt(bd[1]);
+    var year = parseInt(bd[2]);
+    var valid = true;
+
+    if (day < 1 || month < 1 || year < 1) {
+        valid = false;
+    }
+    if (month > 12) {
+        valid = false;
+    }
+    if (year > new Date().getFullYear()) {
+        valid = false;
+    }
+    if (year == new Date().getFullYear()) {
+        if (month > new Date().getMonth() + 1) {
+            valid = false;
+        }
+        if (month == new Date().getMonth() + 1) {
+            if (day > new Date().getDate()) {
+                valid = false;
             }
         }
     }
-
-
-    return false;
-
-
-
-
-
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+        if (day > 31) {
+            valid = false;
+        }
+    }
+    if (month == 4 || month == 6 || month == 9 || month == 11) {
+        if (day > 30) {
+            valid = false;
+        }
+    }
+    if (month == 2) {
+        if (day > 29) {
+            valid = false;
+        }
+    }
+    return valid;
 }
