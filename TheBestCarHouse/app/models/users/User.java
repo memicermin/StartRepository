@@ -268,6 +268,8 @@ public class User extends Model {
             user.premiumUser = 0;
             user.notes = "Registered: " + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
             user.lastLogin = "0";
+            user.userType = 1;
+            user.token = HAT36N579.getHat36(UUID.randomUUID().toString());
             user.save();
             Emails.confirmToken(user.getEmail(), user.getToken(), "Registrovali ste se kao nas korisnik");
             return user;

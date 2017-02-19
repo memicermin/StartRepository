@@ -48,39 +48,44 @@ public class DateTimeHelper extends DateTimeFormat {
     }
 
     public static boolean isRealsAge(String birthDate) {
-            int currentDay = Integer.parseInt(getCurrentDateFormated("dd"));
-            int currentMonth = Integer.parseInt(getCurrentDateFormated("MM"));
-            int currentYear = Integer.parseInt(getCurrentDateFormated("yyyy"));
+        int currentDay = Integer.parseInt(getCurrentDateFormated("dd"));
+        int currentMonth = Integer.parseInt(getCurrentDateFormated("MM"));
+        int currentYear = Integer.parseInt(getCurrentDateFormated("yyyy"));
+//
+//            birthDate = DateTimeHelper.formatedBirthDate(birthDate);
+//            String[] dates = birthDate.split("\\.");
+//            int year = Integer.parseInt(dates[2]);
+//            int month = Integer.parseInt(dates[1]);
+//            int day = Integer.parseInt(dates[0]);
 
-            birthDate = DateTimeHelper.formatedBirthDate(birthDate);
-            String[] dates = birthDate.split("\\.");
-            int year = Integer.parseInt(dates[2]);
-            int month = Integer.parseInt(dates[1]);
-            int day = Integer.parseInt(dates[0]);
+        String[] dates = birthDate.split("-");
+        int year = Integer.parseInt(dates[2]);
+        int month = Integer.parseInt(dates[1]);
+        int day = Integer.parseInt(dates[0]);
 
-            if (year > (currentYear - 80) && (year + 18) < currentYear) {
+        if (year > (currentYear - 80) && (year + 18) < currentYear) {
+            return true;
+        }
+
+        if (year == (currentYear - 80)) {
+            if (month > currentMonth) {
                 return true;
-            }
-
-            if (year == (currentYear - 80)) {
-                if (month > currentMonth) {
+            } else if (month == currentMonth) {
+                if (day > currentDay) {
                     return true;
-                } else if (month == currentMonth) {
-                    if (day > currentDay) {
-                        return true;
-                    }
                 }
             }
+        }
 
-            if ((year + 18) == currentYear) {
-                if (month < currentMonth) {
+        if ((year + 18) == currentYear) {
+            if (month < currentMonth) {
+                return true;
+            } else if (month == currentMonth) {
+                if (day < currentDay) {
                     return true;
-                } else if (month == currentMonth) {
-                    if (day < currentDay) {
-                        return true;
-                    }
                 }
             }
+        }
 
 
         return false;

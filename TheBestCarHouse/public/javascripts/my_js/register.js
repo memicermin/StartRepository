@@ -42,10 +42,49 @@ function inputValidate(id) {
     if (id == firstNameId) {
         validateName(element);
     }
+    if (id == birthDateId) {
+        validateBirthDate(element);
+    }
+    if (id == lastNameId) {
+        validateName(element);
+    }
+    if (id == locationId) {
+        validateName(element);
+    }
+    if (id == phoneNumberId) {
+        validatePhoneNumber(element);
+    }
     checkAll();
-
 }
 
+function validateBirthDate(element) {
+    var birthDate = element.value;
+    if (!checkExp(birthDate, ddMMyyyyRegex)) {
+        inputError(element);
+        setPlaceholder(birthDateId, "Valid format: dd-mm-yyyy");
+    } else if (!isValidDate(birthDate)) {
+        inputError(element);
+        setPlaceholder(birthDateId, "Date not valid");
+    } else {
+        if (ageControlMessage(birthDate) == 0) {
+            inputSuccess(element);
+        }else if(ageControlMessage(birthDate) < 0){
+            inputError(element);
+            setPlaceholder(birthDateId, "You must have more than 18 year");
+        }else{
+            inputError(element);
+            setPlaceholder(birthDateId, "You must have less than 80 year");
+        }
+    }
+}
+
+function validatePhoneNumber(element){
+    if(checkExp(element.value, phoneRegex)){
+        inputSuccess(element);
+    }else{
+        inputError(element);
+    }
+}
 
 function validateName(element) {
     var name = element.value;
@@ -122,7 +161,7 @@ function validatePasswordAgain(element) {
 
 function checkAll() {
     var inputDisabled = false;
-    /*
+    /* */
      if (!checkExp(document.getElementById(usernameId).value, usernameRegex)) {
      inputDisabled = true;
      }
@@ -149,14 +188,12 @@ function checkAll() {
      if (!checkExp(document.getElementById(phoneNumberId).value, phoneRegex)) {
      inputDisabled = true;
      }
-     */
+
     var birthDate = document.getElementById(birthDateId).value;
     if (!isValidDate(birthDate)) {
-        document.getElementById("info_reg").innerHTML = "isValidate";
         inputDisabled = true;
     } else {
         if (!ageControl(birthDate)) {
-            // document.getElementById("info_reg").innerHTML = "age Control";
             inputDisabled = true;
         }
     }
@@ -209,6 +246,74 @@ function inputError(element) {
     element.classList.add("error-class");
     element.classList.remove("success-class");
 }
+/**
+ * This method returns 0 if date has between 18 and 80 age.
+ * If date has more than 80 the method returns 1, but if
+ * date has less than 18 the method returns -1.
+ * @param birthDate
+ * @returns {number}
+ */
+function ageControlMessage(birthDate) {
+    var bd = birthDate.split("-");
+    var birthDay = parseInt(bd[0]);
+    var birthMonth = parseInt(bd[1]);
+    var birthYear = parseInt(bd[2]);
+    var dayToday = new Date().getDate();
+    var monthToday = new Date().getMonth() + 1;
+    var yearToday = new Date().getFullYear();
+    var diffDay;
+    var diffMonth;
+    var diffYear;
+
+    diffYear = yearToday - birthYear;
+
+    if (birthMonth <= monthToday) {
+        diffMonth = monthToday - birthMonth;
+    } else {
+        diffMonth = (12 - birthMonth) + monthToday;
+        diffYear--;
+    }
+    if (birthDay <= dayToday) {
+        diffDay = dayToday - birthDay;
+    } else {
+        if (birthMonth == 1 || birthMonth == 3 || birthMonth == 5 || birthMonth == 7 || birthMonth == 8 || birthMonth == 10 || birthMonth == 12) {
+            diffDay = (31 - birthDay) + dayToday;
+        }
+        if (birthMonth == 4 || birthMonth == 6 || birthMonth == 9 || birthMonth == 11) {
+            diffDay = (30 - birthDay) + dayToday;
+        }
+        if (birthMonth == 2) {
+            diffDay = (29 - birthDay) + dayToday;
+        }
+        if (diffMonth == 0) {
+            diffYear--;
+        } else {
+            diffMonth--;
+        }
+    }
+
+    if (diffYear > MIN_AGE && diffYear < MAX_AGE) {
+        return 0;
+    } else if (diffYear == MIN_AGE) {
+        if ((diffYear - diffMonth - diffDay) >= MIN_AGE) {
+            return 0;
+        } else {
+            return -1;
+        }
+    } else if (diffYear == MAX_AGE) {
+        if ((diffYear + diffMonth + diffDay) <= MAX_AGE) {
+            return 0;
+        } else {
+            return 1;
+        }
+    } else {
+        if (diffYear < MIN_AGE) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+}
 
 function ageControl(birthDate) {
     var bd = birthDate.split("-");
@@ -249,12 +354,7 @@ function ageControl(birthDate) {
         }
     }
 
-    //document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
-    // return diffDay + "-" + diffMonth + "-" + diffYear;
-
-    // document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + years + ": months = " + months + ": days = " + days;
     if (diffYear > MIN_AGE && diffYear < MAX_AGE) {
-       // document.getElementById("info_reg").innerHTML = "odma vracam true";
         return true;
     } else if (diffYear == MIN_AGE) {
         if ((diffYear - diffMonth - diffDay) == MIN_AGE) {
@@ -318,8 +418,6 @@ function calculateAge(birthDate) {
     if (diffMonth.length == 1) {
         diffMonth = "0" + diffMonth;
     }
-
-    // document.getElementById("info_reg").innerHTML = document.getElementById("info_reg").value + "years = " + diffYear + ": months = " +diffMonth + ": days = " + diffDay;
     return diffDay + "-" + diffMonth + "-" + diffYear;
 }
 
