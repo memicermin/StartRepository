@@ -6,7 +6,34 @@
 create table brand (
   id                            bigint auto_increment not null,
   brand                         varchar(255),
+  part_of_brand                 integer,
   constraint pk_brand primary key (id)
+);
+
+create table car (
+  id                            bigint auto_increment not null,
+  model                         varchar(255),
+  constraint pk_car primary key (id)
+);
+
+create table price (
+  id                            bigint auto_increment not null,
+  current_price                 float,
+  old_price                     float,
+  action                        integer,
+  constraint pk_price primary key (id)
+);
+
+create table product (
+  id                            bigint auto_increment not null,
+  part_of_service               integer,
+  constraint pk_product primary key (id)
+);
+
+create table sale (
+  id                            bigint auto_increment not null,
+  part_of_sale                  integer,
+  constraint pk_sale primary key (id)
 );
 
 create table user (
@@ -36,6 +63,14 @@ create table user (
 # --- !Downs
 
 drop table if exists brand;
+
+drop table if exists car;
+
+drop table if exists price;
+
+drop table if exists product;
+
+drop table if exists sale;
 
 drop table if exists user;
 

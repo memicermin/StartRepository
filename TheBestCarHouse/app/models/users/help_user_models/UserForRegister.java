@@ -1,6 +1,5 @@
 package models.users.help_user_models;
 
-import helpers.DateTimeHelper;
 import play.data.DynamicForm;
 import play.data.validation.Constraints;
 import resources.Patterns;
@@ -44,12 +43,9 @@ public class UserForRegister {
         ufr.password = df.get("password");
         ufr.firsName = df.get("first_name");
         ufr.lastName = df.get("last_name");
-
-        ufr.birthDate = DateTimeHelper.formatedBirthDate(df.get("birth_date"));
-
+        ufr.birthDate = df.get("birth_date");
         ufr.location = df.get("location");
         ufr.phoneNumber = df.get("phone_number");
-
         if(df.get("gender").equals("male")){
             ufr.gender = 1;
         }else if(df.get("gender").equals("female")){

@@ -1,110 +1,122 @@
 @import user.user_panel
+@import user.user_meny
 @import users.User
 @(user: User, key: String, form: Form[User])
-@user_panel("") {
-    <div class="row">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">@user.getFirstName @user.getLastName</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3 col-lg-3 " align="center">
-                        @if(user.getGender == 1) {
-                            <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive" title="" alt="">
-                        }
-                        @if(user.getGender == 2) {
-                            <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-responsive">
-                        }
-                        @if(user.getGender == 3) {
-                            <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-responsive">
-                            }
-                    </div>
-                    <div class=" col-md-9 col-lg-9 ">
-                        <form action="@routes.UserController.updateUserData(user.getId, key)" role="form" method="post">
-                            @if(key.equals("username")) {
-                                <p id="username_info">Use only lowercase letters</p>
-                                <div class="form-inline">
-                                    <input type="text" maxlength="21" class="form-control" value="@user.getUsername" id="username" name="username" oninput="usernameValidate('username')">
-                                    <button type="submit" class="btn btn-default" id="username-button" disabled>Update</button>
+    @user_panel("") {
+        <div class="user-edit-container">
+            <div class="row">
+                <div class="col-lg-2 sidebar">
+                @user_meny()
+                </div>
+                <div class="col-lg-9">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@user.getFirstName @user.getLastName</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-3 " align="center">
+                                    @if(user.getGender == 1) {
+                                        <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive" title="" alt="">
+                                    }
+                                    @if(user.getGender == 2) {
+                                        <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-responsive">
+                                    }
+                                    @if(user.getGender == 3) {
+                                        <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-responsive">
+                                        }
                                 </div>
-                            }
-                            @if(key.equals("name")) {
-                                <div class="form-inline">
-                                    <input type="text" maxlength="24" class="form-control" pattern="[A-Za-z]{2,24}" value="@user.getFirstName" id="first_name" name="first_name" oninput="nameValidate()">
-                                    <input type="text" maxlength="24" class="form-control" pattern="[A-Za-z]{2,24}" value="@user.getLastName" id="last_name" name="last_name" oninput="nameValidate()">
-                                    <button type="submit" class="btn btn-default" id="name-button" disabled>Update</button>
+                                <div class=" col-md-9 col-lg-9 ">
+                                    <form action="@routes.UserController.updateUserData(user.getId, key)" role="form" method="post">
+                                        @if(key.equals("username")) {
+                                            <p id="username_info">Use only lowercase letters</p>
+                                            <div class="form-inline">
+                                                <input type="text" maxlength="21" class="form-control" value="@user.getUsername" id="username" name="username" oninput="usernameValidate('username')">
+                                                <button type="submit" class="btn btn-default" id="username-button" disabled>
+                                                    Update</button>
+                                            </div>
+                                        }
+                                        @if(key.equals("name")) {
+                                            <div class="form-inline">
+                                                <input type="text" maxlength="24" class="form-control" pattern="[A-Za-z]{2,24}" value="@user.getFirstName" id="first_name" name="first_name" oninput="nameValidate()">
+                                                <input type="text" maxlength="24" class="form-control" pattern="[A-Za-z]{2,24}" value="@user.getLastName" id="last_name" name="last_name" oninput="nameValidate()">
+                                                <button type="submit" class="btn btn-default" id="name-button" disabled>
+                                                    Update</button>
+                                            </div>
+                                        }
+
+                                        @if(key.equals(User.LOCATION)) {
+                                            <div class="form-inline">
+                                                <input type="text" class="form-control" value="@user.getLocation" id="@User.LOCATION" name="@User.LOCATION" oninput="locationValidate('@User.LOCATION')">
+                                                <button type="submit" class="btn btn-default" id="location_button" disabled>
+                                                    Update</button>
+                                            </div>
+                                        }
+
+                                        @if(key.equals(User.PHONE_NUMBER)) {
+                                            <div class="form-inline">
+                                                <input type="text" class="form-control" value="@user.getPhoneNumber" id="@User.PHONE_NUMBER" name="@User.PHONE_NUMBER" oninput="phoneNumberValidate('@User.PHONE_NUMBER')">
+                                                <button type="submit" class="btn btn-default" id="phone_button" disabled>
+                                                    Update</button>
+                                            </div>
+                                        }
+
+                                        @if(key.equals(User.NEW_PASSWORD)) {
+                                            <br>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <input class="form-control" maxlength="24" id="@User.PASSWORD" name="@User.PASSWORD" oninput="passwordValidate('@User.PASSWORD')" type="password">
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <p id="new_password_info"></p>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <input class="form-control" maxlength="24" id="@User.PASSWORD_AGAIN" name="@User.PASSWORD_AGAIN" oninput="passwordAgainValidate('@User.PASSWORD_AGAIN')" type="password">
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <p id="password_again_info"></p>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <button id="new_pass_submit" type="submit" class="btn btn-success btn-block" disabled>
+                                                            Change your password</button>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <p id="password_button_info"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        @if(key.equals(User.PASSWORD)) {
+                                            <p>Enter the current password</p>
+                                            <div class="form-inline">
+                                                <div class="col-lg-4">
+                                                    <input oninput="regularLengthPassword('@User.PASSWORD')" id="@User.PASSWORD" type="@User.PASSWORD" maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" name="@User.PASSWORD">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <a href="@routes.UserController.updateUserData(user.getId, User.PASSWORD)"><button class="btn btn-default" id="password_button" disabled>
+                                                        Continue</button></a>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <p id="password_info"></p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </form>
                                 </div>
-                            }
-
-                            @if(key.equals(User.LOCATION)) {
-                                <div class="form-inline">
-                                    <input type="text" class="form-control" value="@user.getLocation" id="@User.LOCATION" name="@User.LOCATION" oninput="locationValidate('@User.LOCATION')">
-                                    <button type="submit" class="btn btn-default" id="location_button" disabled>Update</button>
-                                </div>
-                            }
-
-                            @if(key.equals(User.PHONE_NUMBER)) {
-                                <div class="form-inline">
-                                    <input type="text" class="form-control" value="@user.getPhoneNumber" id="@User.PHONE_NUMBER" name="@User.PHONE_NUMBER" oninput="phoneNumberValidate('@User.PHONE_NUMBER')">
-                                    <button type="submit" class="btn btn-default" id="phone_button" disabled>Update</button>
-                                </div>
-                            }
-
-                            @if(key.equals(User.NEW_PASSWORD)) {
-                                <br>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-5">
-                                            <input class="form-control" maxlength="24" id="@User.PASSWORD" name="@User.PASSWORD" oninput="passwordValidate('@User.PASSWORD')" type="password">
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <p id="new_password_info"></p>
-                                        </div>
-                                    </div>
-
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-5">
-                                            <input class="form-control" maxlength="24" id="@User.PASSWORD_AGAIN" name="@User.PASSWORD_AGAIN" oninput="passwordAgainValidate('@User.PASSWORD_AGAIN')" type="password">
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <p id="password_again_info"></p>
-                                        </div>
-                                    </div>
-
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-lg-5">
-                                            <button id="new_pass_submit" type="submit" class="btn btn-success btn-block" disabled>
-                                                Change your password</button>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <p id="password_button_info"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            }
-                            @if(key.equals(User.PASSWORD)) {
-                                <p>Enter the current password</p>
-                                <div class="form-inline">
-                                    <div class="col-lg-4">
-                                        <input oninput="regularLengthPassword('@User.PASSWORD')" id="@User.PASSWORD" type="@User.PASSWORD" maxlength="25" class="form-control" placeholder="at least 6 characters" length="40" name="@User.PASSWORD">
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <a href="@routes.UserController.updateUserData(user.getId, User.PASSWORD)"><button class="btn btn-default" id="password_button" disabled>
-                                            Continue</button></a>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <p id="password_info"></p>
-                                    </div>
-                                </div>
-                            }
-                        </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }

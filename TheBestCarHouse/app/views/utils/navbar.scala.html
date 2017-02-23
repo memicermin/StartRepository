@@ -5,6 +5,7 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/navbar.css")">
 
 @if(User.find.findRowCount() == 0) {
+    @*
     <div class="container">
         <div class="start-button">
             <div class="form-group">
@@ -15,17 +16,15 @@
             </div>
         </div>
     </div>
+    *@
 } else {
     <nav class="navbar navbar-webmaster">
         <div class="">
             <div class="navbar-header">
-
                 <a class="navbar-brand" href="/">Auto House</a>
-
-
                 @if(currentUser != null) {
                     @if(currentUser.getUserType > User.INACTIVE) {
-                        <a class="navbar-brand" href="userinfo">@currentUser.getUsername</a>
+                        <a class="navbar-brand" href="user/page/">@currentUser.getUsername</a>
                     }
                     @if(UserHelper.admin(currentUser.getId) || UserHelper.mAdmin(currentUser.getId)) {
                         <a class="navbar-brand" href="@routes.AdminController.adminPage()">admin</a>

@@ -106,6 +106,7 @@ public class LoginController extends Controller {
                 createSession(user);
                 user.setLoginCount(user.getLoginCount() + 1);
                 user.update();
+                User.confirmEmailUpdateNotes(user.getId());
             }
         }
         return redirect("/");

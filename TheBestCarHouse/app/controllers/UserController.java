@@ -20,9 +20,16 @@ import views.html.user.edit_user_data;
 @Security.Authenticated(UserSecyrity.class)
 public class UserController extends Controller {
 
-
     @Inject
     FormFactory formFactory;
+
+    public Result userPage(){
+        User user = SessionHelper.getCurrentUser(ctx());
+        if (user != null) {
+            return ok(views.html.user.user.render(user));
+        }
+        return redirect("/login");
+    }
 
     public Result userInfo() {
         User user = SessionHelper.getCurrentUser(ctx());

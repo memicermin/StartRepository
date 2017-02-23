@@ -4,6 +4,9 @@ import java.time.Clock;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import javax.inject.*;
+
+import helpers.DefaultSetting;
+import models.users.User;
 import play.Logger;
 import play.inject.ApplicationLifecycle;
 
@@ -36,6 +39,9 @@ public class ApplicationTimer {
         start = clock.instant();
         Logger.info("ApplicationTimer demo: Starting application at " + start);
 
+        if(User.find.findRowCount() == 0) {
+            DefaultSetting.setdefaultSettings();
+        }
         // When the application starts, register a stop hook with the
         // ApplicationLifecycle object. The code inside the stop hook will
         // be run when the application stops.

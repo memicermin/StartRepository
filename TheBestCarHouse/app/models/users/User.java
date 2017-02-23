@@ -302,6 +302,25 @@ public class User extends Model {
                 '}';
     }
 
+    public static boolean confirmEmailUpdateNotes(Long id){
+        User user = findById(id);
+        try {
+            String data = "<<-----   ----->> User " + user.getUsername() + " verified Email: "
+                    + DateTimeHelper.getCurrentDateFormated(DateTimeHelper.DEFAULT_FORMAT);
+            String newData = user.notes + data;
+            if (data.length() < MAX_NOTES_LENGTH) {
+                user.setNotes(newData);
+            } else {
+                user.setNotes(data.substring(data.length() - MAX_NOTES_LENGTH, data.length()));
+            }
+            user.update();
+            return true;
+        } catch (Exception e) {
+            System.err.print(e.toString());
+            return false;
+        }
+    }
+
     public static boolean adminUpdateNotes(Long id, String message) {
         User user = findById(id);
         try {

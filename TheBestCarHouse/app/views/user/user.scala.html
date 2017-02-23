@@ -1,0 +1,6 @@
+@import models.users.User
+@(user: User)
+@views.html.user.user_panel(user.getUsername){
+    <h1>@user.getFirstName</h1>
+    <h4>This is User Home Page</h4>
+}

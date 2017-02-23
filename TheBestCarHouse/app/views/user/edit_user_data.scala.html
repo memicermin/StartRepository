@@ -1,82 +1,90 @@
 @import models.users.User
 @import user.user_panel
+@import user.user_meny
 @(user: User)
-@user_panel(user.getUsername){
-    <div class="row">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">@user.getFirstName @user.getLastName</h3>
+@user_panel(user.getUsername) {
+    <div class="user-edit-container">
+        <div class="row">
+            <div class="col-lg-2 sidebar">
+            @user_meny()
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3 col-lg-3 " align="center">
-                        @if(user.getGender == 1) {
-                            <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive" title="" alt="">
-                        }
-                        @if(user.getGender == 2) {
-                            <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-responsive">
-                        }
-                        @if(user.getGender == 3) {
-                            <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-responsive">
-                            }
+            <div class="col-lg-9">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@user.getFirstName @user.getLastName</h3>
                     </div>
-                    <div class=" col-md-9 col-lg-9 ">
-                        <table class="table table-user-information">
-                            <tbody>
-                                <tr>
-                                    <td>Username</td>
-                                    <td>@user.getUsername</td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td><a href="#">@user.getEmail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>First Name</td>
-                                    <td>@user.getFirstName</td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name</td>
-                                    <td>@user.getLastName</td>
-                                </tr>
-                                <tr>
-                                    <td>Gender</td>
-                                    @if(user.getGender == 1){
-                                        <td>Male</td>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center">
+                                @if(user.getGender == 1) {
+                                    <img src="@routes.Assets.versioned("images/boy_face.jpg")" class="img-responsive" title="" alt="">
+                                }
+                                @if(user.getGender == 2) {
+                                    <img alt="" src="@routes.Assets.versioned("images/girl_face.jpg")" class="img-responsive">
+                                }
+                                @if(user.getGender == 3) {
+                                    <img alt="" src="@routes.Assets.versioned("images/info_icon.jpg")" class="img-responsive">
                                     }
-                                    @if(user.getGender == 2){
-                                        <td>Female</td>
-                                    }
-                                    @if(user.getGender == 3){
-                                        <td>Other</td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td>Date of Birth</td>
-                                    <td>@user.getBirthDate</td>
-                                </tr>
-                                <tr>
-                                    <td>Reg Date</td>
-                                    <td>@user.getCreationDate</td>
-                                </tr>
-                                <tr>
-                                    <td>Location</td>
-                                    <td>@user.getLocation</td>
-                                </tr>
-                                <tr>
-                                    <td>Phone Number</td>
-                                    <td>@user.getPhoneNumber</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            </div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>Username</td>
+                                            <td>@user.getUsername</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td><a href="#">@user.getEmail</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>First Name</td>
+                                            <td>@user.getFirstName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name</td>
+                                            <td>@user.getLastName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender</td>
+                                            @if(user.getGender == 1) {
+                                                <td>Male</td>
+                                            }
+                                            @if(user.getGender == 2) {
+                                                <td>Female</td>
+                                            }
+                                            @if(user.getGender == 3) {
+                                                <td>Other</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <td>Date of Birth</td>
+                                            <td>@user.getBirthDate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reg Date</td>
+                                            <td>@user.getCreationDate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td>@user.getLocation</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone Number</td>
+                                            <td>@user.getPhoneNumber</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <span class="pull-right">
+
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="panel-footer">
-                <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-                <span class="pull-right">
-
-                </span>
             </div>
         </div>
     </div>

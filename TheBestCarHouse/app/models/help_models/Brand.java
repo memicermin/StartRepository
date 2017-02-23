@@ -13,21 +13,33 @@ import java.util.List;
 @Table(name = "brand")
 public class Brand extends Model {
 
+    public static final Integer CAR_BRAND = 1;
+    public static final Integer WHEELS = 3;
+
+
     public static Finder<Long, Brand> find = new Finder<>(Brand.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    public Long id;
+    private Long id;
 
 
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "part_of_brand")
+    private Integer partOfBrand;
+
+
+    public Brand(String brand, Integer partOfBrand) {
+        this.brand = brand;
+        this.partOfBrand = partOfBrand;
+
+    }
 
     public Brand(String brand) {
         this.brand = brand;
-
     }
 
     public Brand() {
@@ -45,8 +57,13 @@ public class Brand extends Model {
         this.brand = brand;
     }
 
+    public Integer getPartOfBrand() {
+        return partOfBrand;
+    }
 
-
+    public void setPartOfBrand(Integer partOfBrand) {
+        this.partOfBrand = partOfBrand;
+    }
 
     public static Brand findBrandById(Long id){
         return find.byId(id);
