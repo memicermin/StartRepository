@@ -1,4 +1,4 @@
-package models.products;
+package models.help_models;
 
 import com.avaje.ebean.Model;
 

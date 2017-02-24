@@ -14,7 +14,7 @@ import java.util.List;
 public class Brand extends Model {
 
     public static final Integer CAR_BRAND = 1;
-    public static final Integer WHEELS = 3;
+    public static final Integer TIRES = 3;
 
 
     public static Finder<Long, Brand> find = new Finder<>(Brand.class);
