@@ -16,6 +16,10 @@ public class CarTires extends Model {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+
     private Brand brand;
+
+
     private Price price;
 }

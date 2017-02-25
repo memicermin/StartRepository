@@ -30,6 +30,10 @@ GET         /user/edit/data                         @controllers.UserController.
 POST        /user/update/data                       @controllers.UserController.updateUserData(id: Long, key: String)
 
 #
+GET         /sale/add/sale                          @controllers.SaleController.addSale()
+POST        /sale/new/sale                          @controllers.SaleController.saveSale()
+
+#
 GET         /admin                                  @controllers.AdminController.adminPage()
 GET         /admin/allUsers                         @controllers.AdminController.allUsers()
 GET         /admin/block/user                       @controllers.AdminController.blockUser(id: Long)

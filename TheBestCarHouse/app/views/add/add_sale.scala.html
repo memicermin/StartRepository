@@ -1,0 +1,78 @@
+@import models.products.Sale
+@import models.help_models.Brand
+@(form: Form[Sale], brands: List[Brand], years: List[Integer])
+
+@admin.admin("New Car") {
+    <div class="">
+        <form role="form" action="@routes.SaleController.saveSale()" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-4">
+                            <div class="form-area">
+                                <div class="form-group">
+                                    <select class="form-control" name="@resources.FieldNames.BRAND">
+                                    @for(brand <- brands) {
+                                        <option value="@brand.getId">@brand.getBrand</option>
+                                    }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="type" name="@resources.FieldNames.TYPE" placeholder="@resources.Placeholders.TYPE" required>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" name="@resources.FieldNames.YEAR">
+                                    @for(year <- years) {
+                                        <option value="@year.intValue()">@year.intValue()</option>
+                                    }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" id="price" name="@resources.FieldNames.PRICE" placeholder="@resources.Placeholders.PRICE" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" type="textarea" id="details" name="@resources.FieldNames.DETAILS" placeholder="@resources.Placeholders.DETAILS" maxlength="240" rows="7"></textarea>
+                                </div>
+                            </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-area">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" name="@resources.FieldNames.BODY_TYPE" placeholder="@resources.Placeholders.BODY_TYPE" required>
+                        </div> <div class="form-group">
+                            <input type="text" class="form-control" id="" name="@resources.FieldNames.COLOR" placeholder="@resources.Placeholders.COLOR" required>
+                        </div> <div class="form-group">
+                            <input type="number" class="form-control" id="" name="@resources.FieldNames.MILEAGE" placeholder="@resources.Placeholders.MILEAGE" required>
+                        </div> <div class="form-group">
+                            <input type="text" class="form-control" id="" name="@resources.FieldNames.MOTOR_VOLUME" placeholder="@resources.Placeholders.MOTOR_VOLUME" required>
+                        </div> <div class="form-group">
+                            <input type="number" class="form-control" id="" name="@resources.FieldNames.MOTOR_POWER" placeholder="@resources.Placeholders.MOTOR_POWER" required>
+                        </div> <div class="form-group">
+                            <input type="text" class="form-control" id="" name="@resources.FieldNames.TYPE_OF_FUEL" placeholder="@resources.Placeholders.TYPE_OF_FUEL" required>
+                        </div> <div class="form-group">
+                            <input type="text" class="form-control" id="" name="@resources.FieldNames.TRANSMISSION" placeholder="@resources.Placeholders.TRANSMISSION" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4>Add a photos</h4></div>
+                        <div class="panel-body">
+                            <p>Click <strong>Add a photo</strong>
+                                and select the photos you want to upload. </p>
+                            <div class="form-group">
+                                @*
+                                <input type="file" class="form-control" name="images" accept="image/*" id="upload-img" multiple/>
+                                *@
+                                <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Add</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+}

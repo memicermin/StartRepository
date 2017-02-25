@@ -14,13 +14,12 @@ create table car (
   id                            bigint auto_increment not null,
   brand_id                      bigint,
   type                          varchar(255),
-  year                          integer,
-  price                         double,
+  year                          varchar(255),
   body_type                     varchar(255),
   color                         varchar(255),
-  meileage                      integer,
+  mileage                       varchar(255),
   motor_volume                  varchar(255),
-  motor_power                   integer,
+  motor_power                   varchar(255),
   type_of_fuel                  varchar(255),
   transmission                  varchar(255),
   constraint pk_car primary key (id)
@@ -34,6 +33,15 @@ create table car_parts (
 create table car_tires (
   id                            bigint auto_increment not null,
   constraint pk_car_tires primary key (id)
+);
+
+create table image (
+  id                            bigint auto_increment not null,
+  public_id                     varchar(255),
+  secret_image_url              varchar(255),
+  image_url                     varchar(255),
+  car_id                        bigint,
+  constraint pk_image primary key (id)
 );
 
 create table price (
@@ -61,8 +69,8 @@ create table sale (
   car_parts_id                  bigint,
   tires_id                      bigint,
   price_id                      bigint,
-  description                   varchar(255),
-  available                     integer,
+  description                   varchar(1500),
+  available                     integer(1),
   constraint pk_sale primary key (id)
 );
 
@@ -92,6 +100,9 @@ create table user (
 alter table car add constraint fk_car_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
 create index ix_car_brand_id on car (brand_id);
 
+alter table image add constraint fk_image_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
+create index ix_image_car_id on image (car_id);
+
 alter table rent_a_car add constraint fk_rent_a_car_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
 create index ix_rent_a_car_car_id on rent_a_car (car_id);
 
@@ -115,6 +126,9 @@ create index ix_sale_price_id on sale (price_id);
 
 alter table car drop foreign key fk_car_brand_id;
 drop index ix_car_brand_id on car;
+
+alter table image drop foreign key fk_image_car_id;
+drop index ix_image_car_id on image;
 
 alter table rent_a_car drop foreign key fk_rent_a_car_car_id;
 drop index ix_rent_a_car_car_id on rent_a_car;
@@ -141,6 +155,8 @@ drop table if exists car;
 drop table if exists car_parts;
 
 drop table if exists car_tires;
+
+drop table if exists image;
 
 drop table if exists price;
 

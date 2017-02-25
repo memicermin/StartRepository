@@ -1,7 +1,6 @@
 package models.help_models;
 
 import com.avaje.ebean.Model;
-import models.help_models.Brand;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +12,8 @@ import java.util.List;
 @Table(name = "car")
 public class Car extends Model {
 
+    public static Model.Finder<Long, Car> find = new Finder<>(Car.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -23,24 +24,22 @@ public class Car extends Model {
     @Column(name = "brand")
     private Brand brand;
 
-//    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-//    private List<Image> images;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    public List<Image> images;
 
     private String type;
 
-    private Integer year;
-
-    private Double price;
+    private String year;
 
     private String bodyType;
 
     private String color;
 
-    private Integer meileage;
+    private String mileage;
 
     private String motorVolume;
 
-    private Integer motorPower;
+    private String motorPower;
 
     private String typeOfFuel;
 
@@ -50,11 +49,11 @@ public class Car extends Model {
     }
 
     //GETTERS AND SETTERS
-    public Integer getMotorPower() {
+    public String getMotorPower() {
         return motorPower;
     }
 
-    public void setMotorPower(Integer motorPower) {
+    public void setMotorPower(String motorPower) {
         this.motorPower = motorPower;
     }
 
@@ -86,20 +85,12 @@ public class Car extends Model {
         this.type = type;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getBodyType() {
@@ -118,12 +109,12 @@ public class Car extends Model {
         this.color = color;
     }
 
-    public Integer getMeileage() {
-        return meileage;
+    public String getMileage() {
+        return mileage;
     }
 
-    public void setMeileage(Integer meileage) {
-        this.meileage = meileage;
+    public void setMileage(String mileage) {
+        this.mileage = mileage;
     }
 
     public String getMotorVolume() {
@@ -151,4 +142,8 @@ public class Car extends Model {
     }
 
     // FIND METHODS
+
+    public static Car getCarById(Long id){
+        return find.byId(id);
+    }
 }

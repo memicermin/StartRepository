@@ -19,6 +19,8 @@ public class Sale extends Model {
     public static final Integer CAR_PARTS = 2;
     public static final Integer TIRES = 3;
 
+    public static Model.Finder<Long, Sale> find = new Finder<>(Sale.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -47,10 +49,10 @@ public class Sale extends Model {
     @Column(name = "price")
     private Price price;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 1500)
     private String description;
 
-    @Column(name = "available")
+    @Column(name = "available", length = 1)
     private Integer available;
 
     public Sale() {
@@ -114,5 +116,10 @@ public class Sale extends Model {
 
     public void setPrice(Price price) {
         this.price = price;
+    }
+
+    //GET METHODS
+    public Sale getSaleById(Long id){
+        return find.byId(id);
     }
 }

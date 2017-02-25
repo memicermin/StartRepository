@@ -2,15 +2,18 @@ package models.help_models;
 
 import com.avaje.ebean.Model;
 import com.cloudinary.Cloudinary;
+import models.products.Sale;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by Enver on 2/21/2017.
  */
+@Entity
+@Table(name = "image")
 public class Image extends Model{
 
     private static Model.Finder<String,Image> find = new Model.Finder<>(Image.class);
@@ -31,6 +34,11 @@ public class Image extends Model{
     @Column(name = "image_url")
     public String image_url;
 
+    @Column(name = "id")
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    @ManyToOne
+    public Car car;
+
 
     /**
      * Constructor
@@ -44,5 +52,33 @@ public class Image extends Model{
         return img;
     }
 
+    /**
+     * Method that return image after uploading it on cloudinary
+     */
+    public static Image create(File image, Long id) {
+        Map result;
+        try {
+            result = cloudinary.uploader().upload(image, null);
+            return create(result, id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static Image create(Map uploadResult, Long id) {
+        Image img = new Image();
+        img.public_id = (String) uploadResult.get("public_id");
+        img.image_url = (String) uploadResult.get("url");
+        img.secret_image_url = (String) uploadResult.get("secure_url");
+        Car car = Car.getCarById(id);
+        img.car = car;
+
+
+
+        img.save();
+        return img;
+    }
 
 }
