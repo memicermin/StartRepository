@@ -68,14 +68,14 @@ public class Car extends Model {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
-//
-//    public List<Image> getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(List<Image> images) {
-//        this.images = images;
-//    }
+
+    public List<Image> getImages(Long id) {
+        return Image.find.where().eq("car_id", id).findList();
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     public String getType() {
         return type;

@@ -13,6 +13,8 @@ import javax.persistence.*;
 @Table(name = "rent_a_car")
 public class RentACar extends Model {
 
+    public static Model.Finder<Long, RentACar> find = new Finder<>(RentACar.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -36,6 +38,9 @@ public class RentACar extends Model {
 
     @Column(name = "availability_date")
     private String availabilityDate;
+
+    @Column(name = "active_car")
+    private Integer activeCar;
 
     public RentACar() {
     }
@@ -82,5 +87,18 @@ public class RentACar extends Model {
 
     public void setAvailabilityDate(String availabilityDate) {
         this.availabilityDate = availabilityDate;
+    }
+
+    public Integer getActiveCar() {
+        return activeCar;
+    }
+
+    public void setActiveCar(Integer activeCar) {
+        this.activeCar = activeCar;
+    }
+
+    //FIND METHODS
+    public RentACar byId(Long id){
+        return find.byId(id);
     }
 }

@@ -1,6 +1,7 @@
 package models.help_models;
 
 import com.avaje.ebean.Model;
+import resources.FieldNames;
 
 import javax.persistence.*;
 import java.util.List;
@@ -76,6 +77,10 @@ public class Brand extends Model {
 
     public static List<Brand> getAllBrands() {
         return find.all();
+    }
+
+    public static List<Brand> getCarBrands(){
+        return find.where().eq(FieldNames.PART_OF_BRAND, CAR_BRAND).findList();
     }
 
 }

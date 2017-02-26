@@ -16,7 +16,7 @@ import java.util.Map;
 @Table(name = "image")
 public class Image extends Model{
 
-    private static Model.Finder<String,Image> find = new Model.Finder<>(Image.class);
+    public static Model.Finder<Long,Image> find = new Model.Finder<>(Image.class);
 
     public static Cloudinary cloudinary;
 
@@ -74,8 +74,6 @@ public class Image extends Model{
         img.secret_image_url = (String) uploadResult.get("secure_url");
         Car car = Car.getCarById(id);
         img.car = car;
-
-
 
         img.save();
         return img;

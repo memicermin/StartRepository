@@ -1,10 +1,9 @@
-@import models.products.Sale
 @import models.help_models.Brand
-@(form: Form[Sale], brands: List[Brand], years: List[Integer])
-
-@admin.admin("New Car for Sale") {
+@import models.products.RentACar
+@(form: Form[RentACar], brands: List[Brand], years: List[Integer])
+@admin.admin("New Car for Rent A Car") {
     <div class="">
-        <form role="form" action="@routes.SaleController.saveSale()" method="post" enctype="multipart/form-data">
+        <form role="form" action="@routes.RentACarController.saveRentACar()" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-area">
@@ -59,20 +58,13 @@
                             <p>Click <strong>Add a photo</strong>
                                 and select the photos you want to upload. </p>
                             <div class="form-group">
-                                @*
-                                <input type="file" class="form-control" name="images" accept="image/*" id="upload-img" multiple/>
-                                *@
                                 <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
-
                             </div>
                         </div>
-
                     </div>
                     <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Add</button>
-
                 </div>
             </div>
         </form>
     </div>
-
 }

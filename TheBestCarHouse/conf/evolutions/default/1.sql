@@ -59,6 +59,7 @@ create table rent_a_car (
   description                   varchar(255),
   available                     integer,
   availability_date             varchar(255),
+  active_car                    integer,
   constraint pk_rent_a_car primary key (id)
 );
 

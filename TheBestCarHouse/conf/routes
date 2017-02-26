@@ -33,6 +33,9 @@ POST        /user/update/data                       @controllers.UserController.
 GET         /sale/add/sale                          @controllers.SaleController.addSale()
 POST        /sale/new/sale                          @controllers.SaleController.saveSale()
 
+GET         /rent/a/car/add/rent/a/car              @controllers.RentACarController.addRentACar()
+POST        /rent/a/car/new/rent/a/car              @controllers.RentACarController.saveRentACar()
+
 #
 GET         /admin                                  @controllers.AdminController.adminPage()
 GET         /admin/allUsers                         @controllers.AdminController.allUsers()

@@ -6,6 +6,18 @@
             <div class="col-md-4">
                 <form class="form-inline" action="@routes.BrandController.saveBrand()" method="post">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <select class="form-control" name="@resources.FieldNames.PART_OF_BRAND">
+                                    <option value="0"></option>
+                                    <option value="@Brand.CAR_BRAND">Car Brand</option>
+                                    <option value="@Brand.TIRES">Tires Brand</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
                         <div class="col-xs-8">
                             <div class="form-group">
                                 <input type="text" name="brand" class="form-control" placeholder="Audi">

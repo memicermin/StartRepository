@@ -8,6 +8,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import resources.FieldNames;
 import views.html.add.add_brand;
 
 /**
@@ -25,7 +26,7 @@ public class BrandController extends Controller {
 
     public Result saveBrand(){
                 DynamicForm dynamicForm = formFactory.form().bindFromRequest();
-                Brand brand = new Brand(dynamicForm.get("brand"));
+                Brand brand = new Brand(dynamicForm.get(FieldNames.BRAND), Integer.parseInt(dynamicForm.get(FieldNames.PART_OF_BRAND)));
                 brand.save();
                 return redirect("/add/brand");
     }

@@ -9,6 +9,7 @@ public class FieldNames {
     /** Fields for: html.views.admin_view.add_sale */
 
     public static final String BRAND = "brand";
+    public static final String PART_OF_BRAND = "part_of_brand";
     public static final String TYPE = "type";
     public static final String YEAR = "year";
     public static final String DETAILS = "details";
