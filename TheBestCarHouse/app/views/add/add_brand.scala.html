@@ -27,11 +27,16 @@
                     </div>
                 </form>
                 <hr>
+                <p>1 = Car Brand, 3 = Tires Brand</p>
+                <hr>
 
                 @for(brand <- brands) {
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-5">
                             <p>@brand.getBrand</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>@brand.getPartOfBrand</p>
                         </div>
                         <div class="col-md-2">
                             <a href="@routes.BrandController.deleteBrand(brand.getId)"><i class="glyphicon glyphicon-trash"></i></a>

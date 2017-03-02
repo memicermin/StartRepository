@@ -32,6 +32,10 @@ create table car_parts (
 
 create table car_tires (
   id                            bigint auto_increment not null,
+  brand_id                      bigint,
+  type                          varchar(3),
+  year                          varchar(4),
+  dimension                     varchar(10),
   constraint pk_car_tires primary key (id)
 );
 
@@ -41,6 +45,7 @@ create table image (
   secret_image_url              varchar(255),
   image_url                     varchar(255),
   car_id                        bigint,
+  car_tires                     bigint,
   constraint pk_image primary key (id)
 );
 
@@ -101,8 +106,14 @@ create table user (
 alter table car add constraint fk_car_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
 create index ix_car_brand_id on car (brand_id);
 
+alter table car_tires add constraint fk_car_tires_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
+create index ix_car_tires_brand_id on car_tires (brand_id);
+
 alter table image add constraint fk_image_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
 create index ix_image_car_id on image (car_id);
+
+alter table image add constraint fk_image_car_tires foreign key (car_tires) references car_tires (id) on delete restrict on update restrict;
+create index ix_image_car_tires on image (car_tires);
 
 alter table rent_a_car add constraint fk_rent_a_car_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
 create index ix_rent_a_car_car_id on rent_a_car (car_id);
@@ -128,8 +139,14 @@ create index ix_sale_price_id on sale (price_id);
 alter table car drop foreign key fk_car_brand_id;
 drop index ix_car_brand_id on car;
 
+alter table car_tires drop foreign key fk_car_tires_brand_id;
+drop index ix_car_tires_brand_id on car_tires;
+
 alter table image drop foreign key fk_image_car_id;
 drop index ix_image_car_id on image;
+
+alter table image drop foreign key fk_image_car_tires;
+drop index ix_image_car_tires on image;
 
 alter table rent_a_car drop foreign key fk_rent_a_car_car_id;
 drop index ix_rent_a_car_car_id on rent_a_car;

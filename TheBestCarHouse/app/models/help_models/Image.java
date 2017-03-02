@@ -39,6 +39,12 @@ public class Image extends Model{
     @ManyToOne
     public Car car;
 
+    @Column(name = "id")
+    @JoinColumn(name = "car_tires", referencedColumnName = "id")
+    @ManyToOne
+    public CarTires carTires;
+
+
 
     /**
      * Constructor
@@ -55,11 +61,11 @@ public class Image extends Model{
     /**
      * Method that return image after uploading it on cloudinary
      */
-    public static Image create(File image, Long id) {
+    public static Image create(File image, Long id, int type) {
         Map result;
         try {
             result = cloudinary.uploader().upload(image, null);
-            return create(result, id);
+            return create(result, id, type);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,13 +73,21 @@ public class Image extends Model{
     }
 
 
-    public static Image create(Map uploadResult, Long id) {
+    public static Image create(Map uploadResult, Long id, int type) {
         Image img = new Image();
         img.public_id = (String) uploadResult.get("public_id");
         img.image_url = (String) uploadResult.get("url");
         img.secret_image_url = (String) uploadResult.get("secure_url");
-        Car car = Car.getCarById(id);
-        img.car = car;
+
+        if(type == Sale.CARS){
+            Car car = Car.getCarById(id);
+            img.car = car;
+        }
+//        if(type == Sale.TIRES){
+//            CarTires tires = CarTires.getTiresById(id);
+//            img.carTires = tires;
+//        }
+
 
         img.save();
         return img;

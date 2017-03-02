@@ -6,7 +6,7 @@ package resources;
 public class FieldNames {
 
 
-    /** Fields for: html.views.admin_view.add_sale */
+    /** Fields for: html.views.admin_view.add_car_for_sale */
 
     public static final String BRAND = "brand";
     public static final String PART_OF_BRAND = "part_of_brand";

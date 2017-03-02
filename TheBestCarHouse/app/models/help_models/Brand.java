@@ -83,4 +83,7 @@ public class Brand extends Model {
         return find.where().eq(FieldNames.PART_OF_BRAND, CAR_BRAND).findList();
     }
 
+    public static List<Brand> getCarTiresBrands() {
+        return find.where().eq(FieldNames.PART_OF_BRAND, TIRES).findList();
+    }
 }

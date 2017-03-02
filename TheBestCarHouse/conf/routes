@@ -30,8 +30,10 @@ GET         /user/edit/data                         @controllers.UserController.
 POST        /user/update/data                       @controllers.UserController.updateUserData(id: Long, key: String)
 
 #
-GET         /sale/add/sale                          @controllers.SaleController.addSale()
-POST        /sale/new/sale                          @controllers.SaleController.saveSale()
+GET         /sale/add/sale                          @controllers.SaleController.addCarSale()
+POST        /sale/new/sale                          @controllers.SaleController.saveCarSale()
+GET         /sale/car/tires/add                     @controllers.SaleController.addCarTiresForSale()
+POST        /sale/car/tires/new                     @controllers.SaleController.saveCarTiresForSale()
 
 GET         /rent/a/car/add/rent/a/car              @controllers.RentACarController.addRentACar()
 POST        /rent/a/car/new/rent/a/car              @controllers.RentACarController.saveRentACar()

@@ -1,0 +1,76 @@
+@import models.products.Sale
+@import models.help_models.Brand
+@(form: Form[Sale], brands: List[Brand], years: List[Integer])
+
+@admin.admin("New Car Tires for Sale") {
+    <div class="col-lg-offset-1 col-lg-11">
+        <form role="form" action="@routes.SaleController.saveCarTiresForSale()" method="post" enctype="multipart/form-data">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="form-group">
+                                <select class="form-control" name="@resources.FieldNames.YEAR">
+                                @for(year <- years) {
+                                    <option value="@year.intValue()">@year.intValue()</option>
+                                }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <select class="form-control" name="@resources.FieldNames.BRAND">
+                                @for(brand <- brands) {
+                                    <option value="@brand.getId">@brand.getBrand</option>
+                                }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="" name="@resources.FieldNames.PRICE" placeholder="@resources.Placeholders.PRICE" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" maxlength="3" class="form-control" id="" name="@resources.FieldNames.TYPE" placeholder="C" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="" name="dimension" placeholder="Dimension 225/50/17" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="submit" id="submit" name="submit" class="btn btn-primary form-control">Add</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-1">
+                        <div class="row">
+                            <div class="form-group">
+                                <textarea class="form-control" type="textarea" id="details" name="@resources.FieldNames.DETAILS" placeholder="@resources.Placeholders.DETAILS" maxlength="1490" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h4>Add a photos</h4></div>
+                                <div class="panel-body">
+                                    <p>Click <strong>Add a photo</strong>
+                                        and select the photos you want to upload. </p>
+                                    <div class="form-group">
+                                        <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}

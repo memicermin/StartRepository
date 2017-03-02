@@ -6,7 +6,7 @@ package resources;
 public class Placeholders {
 
 
-    /** Placeholders for: html.views.admin_view.add_sale */
+    /** Placeholders for: html.views.admin_view.add_car_for_sale */
     public static final String TYPE = "Tip";
     public static final String PRICE = "Cijena";
     public static final String DETAILS = "Detaljan opis";

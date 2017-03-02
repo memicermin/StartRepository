@@ -75,7 +75,7 @@ public class RentACarController extends Controller {
             for (Http.MultipartFormData.FilePart filePart : fileParts) {
                 try {
                     File file = (File) filePart.getFile();
-                    Image image = Image.create(file, car.getId());
+                    Image image = Image.create(file, car.getId(), Sale.CARS);
                     image.save();
                 } catch (RuntimeException re) {
                     Logger.info("Imamo pad " + new DateTime().toString() + " -> " + filePart.getFile().toString());

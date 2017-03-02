@@ -13,6 +13,8 @@ import javax.persistence.*;
 @Table(name = "rent_a_car")
 public class RentACar extends Model {
 
+    public static final Integer RENT_A_CAR = 4;
+
     public static Model.Finder<Long, RentACar> find = new Finder<>(RentACar.class);
 
     @Id
