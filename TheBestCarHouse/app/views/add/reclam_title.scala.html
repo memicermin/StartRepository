@@ -1,0 +1,37 @@
+@import models.help_models.ReclamTitle
+@(titles: List[ReclamTitle], form: Form[ReclamTitle])
+@admin.admin("New Reclam Title") {
+  <div class="">
+    <div class="row">
+      <div class="col-md-4">
+        <form class="form-inline" action="@routes.AdminController.saveReclaimTitle()" method="post">
+          <div class="row">
+            <div class="col-xs-8">
+              <input type="text" name="title" class="form-control" required>
+            </div>
+            <div class="col-xs-2">
+              <button type="submit" class="btn btn-success">Add Title</button>
+            </div>
+          </div>
+        </form>
+        <hr>
+        @for(title <- titles) {
+          <div class="row">
+            <div class="col-md-8">
+              <p>@title.getTitle </p>
+            </div>
+            <div class="col-md-2">
+              <a href="@routes.AdminController.deleteReclaimTitle(title.getId)"><i class="glyphicon glyphicon-trash"></i></a>
+            </div>
+            <div class="col-md-2">
+              <a><i class="glyphicon glyphicon-pencil"></i></a>
+            </div>
+          </div>
+        }
+
+      </div>
+      <div class="col-md-8">
+      </div>
+    </div>
+  </div>
+}

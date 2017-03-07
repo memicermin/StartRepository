@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table background (
+  id                            bigint auto_increment not null,
+  active                        integer,
+  constraint pk_background primary key (id)
+);
+
 create table brand (
   id                            bigint auto_increment not null,
   brand                         varchar(255),
@@ -46,6 +52,7 @@ create table image (
   image_url                     varchar(255),
   car_id                        bigint,
   car_tires                     bigint,
+  background                    bigint,
   constraint pk_image primary key (id)
 );
 
@@ -55,6 +62,12 @@ create table price (
   old_price                     float,
   action                        integer,
   constraint pk_price primary key (id)
+);
+
+create table reclaim_title (
+  id                            bigint auto_increment not null,
+  title                         varchar(255),
+  constraint pk_reclaim_title primary key (id)
 );
 
 create table rent_a_car (
@@ -115,6 +128,9 @@ create index ix_image_car_id on image (car_id);
 alter table image add constraint fk_image_car_tires foreign key (car_tires) references car_tires (id) on delete restrict on update restrict;
 create index ix_image_car_tires on image (car_tires);
 
+alter table image add constraint fk_image_background foreign key (background) references background (id) on delete restrict on update restrict;
+create index ix_image_background on image (background);
+
 alter table rent_a_car add constraint fk_rent_a_car_car_id foreign key (car_id) references car (id) on delete restrict on update restrict;
 create index ix_rent_a_car_car_id on rent_a_car (car_id);
 
@@ -148,6 +164,9 @@ drop index ix_image_car_id on image;
 alter table image drop foreign key fk_image_car_tires;
 drop index ix_image_car_tires on image;
 
+alter table image drop foreign key fk_image_background;
+drop index ix_image_background on image;
+
 alter table rent_a_car drop foreign key fk_rent_a_car_car_id;
 drop index ix_rent_a_car_car_id on rent_a_car;
 
@@ -166,6 +185,8 @@ drop index ix_sale_tires_id on sale;
 alter table sale drop foreign key fk_sale_price_id;
 drop index ix_sale_price_id on sale;
 
+drop table if exists background;
+
 drop table if exists brand;
 
 drop table if exists car;
@@ -177,6 +198,8 @@ drop table if exists car_tires;
 drop table if exists image;
 
 drop table if exists price;
+
+drop table if exists reclaim_title;
 
 drop table if exists rent_a_car;
 

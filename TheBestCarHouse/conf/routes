@@ -55,6 +55,10 @@ GET         /admin/user/                            @controllers.AdminController
 GET         /admin/edit/user                        @controllers.AdminController.editUser(id: Long)
 POST        /admin/update/user                      @controllers.AdminController.updateUser(id: Long)
 
+GET         /titles                                 @controllers.AdminController.listReclaimTitles()
+POST        /save+title                             @controllers.AdminController.saveReclaimTitle()
+GET         /delete-title                           @controllers.AdminController.deleteReclaimTitle(id: Long)
+
 GET         /confirmemail                           @controllers.LoginController.confirmEmail(tok: String)
 
 # Map static resources from the /public folder to the /assets URL path

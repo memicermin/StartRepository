@@ -5,6 +5,7 @@ import helpers.Admin;
 import helpers.HAT36N579;
 import helpers.SessionHelper;
 import helpers.UserHelper;
+import models.help_models.ReclamTitle;
 import models.users.User;
 import notifiers.Emails;
 import play.data.DynamicForm;
@@ -12,6 +13,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.add.reclam_title;
 import views.html.admin.admin_page;
 import views.html.admin.user.edit_user;
 import views.html.admin.user.user;
@@ -173,4 +175,28 @@ public class AdminController extends Controller {
         }
         return user(admin.getId());
     }
+
+    public Result listReclaimTitles(){
+                return ok(reclam_title.render(ReclamTitle.find.all(), formFactory.form(ReclamTitle.class)));
+    }
+
+    public Result saveReclaimTitle(){
+                DynamicForm dynamicForm = formFactory.form().bindFromRequest();
+                ReclamTitle title = new ReclamTitle(dynamicForm.get("title"));
+                title.save();
+                return redirect("/titles");
+
+
+
+    }
+
+    public Result deleteReclaimTitle(Long id){
+                ReclamTitle title = ReclamTitle.find.byId(id);
+                title.delete();
+                return redirect("/titles");
+
+
+
+    }
+
 }

@@ -1,0 +1,32 @@
+.main-background{
+
+    background-size: cover;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: inherit;
+    opacity : 0.7;
+    z-index: 1;
+
+}
+
+.background-area{
+    height: 100%;
+}
+
+.titles-row{
+    text-align: center;
+    margin-top: 200px;
+
+}
+
+.titles-text-color{
+    color: #e08e0b;
+    font-size: 55px;
+}
+
+.titles-font{
+    font-style: oblique;
+
+}

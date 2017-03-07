@@ -45,6 +45,13 @@ public class Image extends Model{
     public CarTires carTires;
 
 
+    @Column(name = "id")
+    @JoinColumn(name = "background", referencedColumnName = "id")
+    @ManyToOne
+    public Background background;
+
+
+
 
     /**
      * Constructor
@@ -83,10 +90,10 @@ public class Image extends Model{
             Car car = Car.getCarById(id);
             img.car = car;
         }
-//        if(type == Sale.TIRES){
-//            CarTires tires = CarTires.getTiresById(id);
-//            img.carTires = tires;
-//        }
+        if(type == Sale.TIRES){
+            CarTires tires = CarTires.getTiresById(id);
+            img.carTires = tires;
+        }
 
 
         img.save();
