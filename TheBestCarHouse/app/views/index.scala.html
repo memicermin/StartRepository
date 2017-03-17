@@ -1,26 +1,28 @@
 @import models.help_models.ReclamTitle
+@import models.help_models.Background
 @(message: String, titles: List[ReclamTitle])
 
 @main(message) {
-
-
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
-
-    <div class="background-area">
-        <img src="assets/images/passat-b6.jpg" class="main-background">
-        <div class="row">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <div class="titles-row">
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <h1 class="titles-text-color titles-font"><strong>@ReclamTitle.getFirstReclaimTitle</strong></h1>
-                        </div>
-                        @for(reclamTitle <- titles) {
-                            <div class="item">
-                            <h1 class="titles-text-color titles-font"><strong>@reclamTitle.getTitle</strong></h1>
+    <div class="dark-background">
+        <div class="background-area">
+            @if(Background.find.findRowCount() > 0) {
+                <img src=@Background.getBackground() class="main-background">
+            } else {
+                <img src="assets/images/passat-b6.jpg" class="main-background">
+            }
+            <div class="row">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="titles-row">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <h1 class="titles-text-color titles-font"><strong>@ReclamTitle.getFirstReclaimTitle</strong></h1>
                             </div>
-                        }
+                            @for(reclamTitle <- titles) {
+                                <div class="item">
+                                    <h1 class="titles-text-color titles-font"><strong>@reclamTitle.getTitle</strong></h1>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

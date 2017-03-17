@@ -1,0 +1,34 @@
+@import help_models.Background
+@(form: Form[Background], backgrounds: List[Background])
+@admin.admin("New Background") {
+    <form action="@routes.BackgroundController.saveBackground()" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Add a photos</h4></div>
+                <div class="panel-body">
+                    <p>Click <strong>Add a photo</strong>
+                        and select the photos you want to upload. </p>
+                    <div class="form-group">
+                        <input type="file" name="@resources.FieldNames.IMAGES" class="form-control" id="uploadImage" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Add photo" accept="image/*" multiple/>
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Add</button>
+        </div>
+    </form>
+    <br>
+    <hr>
+    <div class="container-fluid">
+        @for(background <- backgrounds){
+            <div class="col-lg-2">
+                @if(background.getActive != 1){
+                    <a href="@routes.BackgroundController.changeBackground(background.getId)"><img src='@background.img.image_url' height="120" width="120"></a>
+                }else{
+                    <img src='@background.img.image_url' height="120" width="120">
+                }
+            </div>
+        }
+
+    </div>
+}

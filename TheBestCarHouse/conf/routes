@@ -9,6 +9,10 @@ GET         /count                                  @controllers.CountController
 # An example controller showing how to write asynchronous code
 GET         /message                                @controllers.AsyncController.message
 
+#
+GET         /all/cars/for/sale                      @controllers.VisitorSaleController.getAllCarsForSale()
+
+#
 GET         /add/brand                              @controllers.BrandController.addBrand()
 POST        /new/brand                              @controllers.BrandController.saveBrand()
 GET         /delete/brand                           @controllers.BrandController.deleteBrand(id: Long)
@@ -37,6 +41,10 @@ POST        /sale/car/tires/new                     @controllers.SaleController.
 
 GET         /rent/a/car/add/rent/a/car              @controllers.RentACarController.addRentACar()
 POST        /rent/a/car/new/rent/a/car              @controllers.RentACarController.saveRentACar()
+
+GET         /background/add                         @controllers.BackgroundController.addBackground()
+POST        /background/save/new                    @controllers.BackgroundController.saveBackground()
+GET         /background/change                      @controllers.BackgroundController.changeBackground(id: Long)
 
 #
 GET         /admin                                  @controllers.AdminController.adminPage()

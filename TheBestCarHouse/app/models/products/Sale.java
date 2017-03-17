@@ -1,12 +1,10 @@
 package models.products;
 
 import com.avaje.ebean.Model;
-import models.help_models.Car;
-import models.help_models.CarParts;
-import models.help_models.CarTires;
-import models.help_models.Price;
+import models.help_models.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Enver on 2/22/2017.
@@ -121,5 +119,25 @@ public class Sale extends Model {
     //GET METHODS
     public Sale getSaleById(Long id){
         return find.byId(id);
+    }
+
+    public static boolean hasImage(Long id){
+        if(Image.find.where().eq("car_id", id).findList().size() > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public Image getFirstImage(Long id){
+        List<Image> images = Image.find.where().eq("car_id", id).findList();
+        if(images != null){
+            return images.get(0);
+        }else{
+            return  null;
+        }
+    }
+
+    public static List<Sale> getAllCarsForSale() {
+        return find.where().eq("part_of_sale", CARS).findList();
     }
 }

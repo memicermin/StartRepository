@@ -1,0 +1,60 @@
+@import models.products.Sale
+@(cars: List[Sale])
+@main("Cars"){
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/car_for_sale.css")">
+    <script src="@routes.Assets.versioned("javascripts/my_js/sale/car_for_sale.js")" type="text/javascript"></script>
+    <div id="all-products" class="container">
+        <div class="container-fluid">
+        @for(car <- cars) {
+            <a href="#">
+                <div id="car" class="car col-md-4">
+                    <div class="row car-head">
+                        <div class="navbar-left brand">
+                            <h4>@car.getCar.getBrand.getBrand</h4>
+                        </div>
+                        <div class="navbar-right type">
+                            <h4>@car.getCar.getType</h4>
+                        </div>
+                    </div>
+
+                    <div class="car-image">
+                    @if(Sale.hasImage(car.getId)) {
+                        <img id="img-sale" onmouseover="" onmouseout="" src="@car.getFirstImage(car.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                    } else {
+                        <img src="http://placehold.it/310x210">
+                        }
+                    </div>
+                    @if(car.getPrice.getAction == true) {
+                        <div class="action">
+                            <div class="col-lg-4">
+                                <img src="assets\images\badge_akcija.png">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <h4 class="navbar-right action-old-price"><strong>@car.getPrice.getOldPrice Km</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-car-footer">
+                            <div class="action-price">
+                                <div class="row">
+                                    <h3 class="action-h-price"> <strong> @car.getPrice.getCurrentPrice Km</strong></h3>
+                                </div>
+                            </div>
+                        </div>
+                    } else {
+                        <div class="car-footer">
+                            <div class="price">
+                                <h3 class="h-price"> <strong> @car.getPrice.getCurrentPrice Km</strong></h3>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </a>
+
+        }
+        </div>
+        <hr>
+    </div>
+}

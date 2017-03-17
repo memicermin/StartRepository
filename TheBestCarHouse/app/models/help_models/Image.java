@@ -44,11 +44,11 @@ public class Image extends Model{
     @ManyToOne
     public CarTires carTires;
 
-
-    @Column(name = "id")
-    @JoinColumn(name = "background", referencedColumnName = "id")
-    @ManyToOne
-    public Background background;
+//
+//    @Column(name = "id")
+//    @JoinColumn(name = "background", referencedColumnName = "id")
+//    @ManyToOne
+//    public Background background;
 
 
 
@@ -79,7 +79,6 @@ public class Image extends Model{
         return null;
     }
 
-
     public static Image create(Map uploadResult, Long id, int type) {
         Image img = new Image();
         img.public_id = (String) uploadResult.get("public_id");
@@ -94,10 +93,37 @@ public class Image extends Model{
             CarTires tires = CarTires.getTiresById(id);
             img.carTires = tires;
         }
-
-
         img.save();
         return img;
     }
+
+
+    /**
+     *
+     * @param image
+     * @return
+     */
+    public static Image createBackground(File image){
+        Map result;
+        try {
+            result = cloudinary.uploader().upload(image, null);
+            return createBckg(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Image createBckg(Map uploadResult) {
+        Image img = new Image();
+        img.public_id = (String) uploadResult.get("public_id");
+        img.image_url = (String) uploadResult.get("url");
+        img.secret_image_url = (String) uploadResult.get("secure_url");
+
+//        Background bckg = Background.getBackgroundById(id);
+//        img.background = bckg;
+        return img;
+    }
+
 
 }

@@ -1,7 +1,16 @@
+/**
+ * Created by Enver on 11/20/2016.
+ */
+
+
 $(document).ready(function () {
     $('#myCarousel').carousel({
         interval: 4000
+
+
     });
+
+
 
     var clickEvent = false;
     $('#myCarousel').on('click', '.nav a', function () {

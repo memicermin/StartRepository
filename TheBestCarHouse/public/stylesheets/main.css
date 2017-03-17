@@ -1,4 +1,4 @@
-.main-background{
+.main-background {
 
     background-size: cover;
     position: absolute;
@@ -6,27 +6,46 @@
     left: 0;
     width: 100%;
     height: inherit;
-    opacity : 0.7;
-    z-index: 1;
+    opacity: 0.8;
+    z-index: -1;
+
 
 }
 
-.background-area{
+.dark-background{
+
+    /*
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 255.2),
+            rgba(255, 0, 0, 0.2)
+    );
+    */
+
+}
+
+.background-area {
+
     height: 100%;
+
 }
 
-.titles-row{
+.titles-row {
     text-align: center;
     margin-top: 200px;
 
+
 }
 
-.titles-text-color{
-    color: #e08e0b;
+.titles-text-color {
+    color: white;
     font-size: 55px;
 }
 
-.titles-font{
+.titles-font {
     font-style: oblique;
 
+}
+
+.body-my-panel{
+    margin: 0px 17px 0px 0px;
 }
