@@ -117,7 +117,7 @@ public class Sale extends Model {
     }
 
     //GET METHODS
-    public Sale getSaleById(Long id){
+    public static Sale getSaleById(Long id){
         return find.byId(id);
     }
 
@@ -137,7 +137,38 @@ public class Sale extends Model {
         }
     }
 
+    public List<Image> getOtherImagesForCar(Long id){
+        List<Image> images = Image.find.where().eq("car_id", id).findList();
+        if(images.size() == 1){
+            return images;
+        }else{
+            images.remove(0);
+            return images;
+        }
+    }
+
     public static List<Sale> getAllCarsForSale() {
         return find.where().eq("part_of_sale", CARS).findList();
     }
+
+    public static boolean tiresHasImage(Long id){
+        if(Image.find.where().eq("car_tires", id).findList().size() > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public static Image getFirstTiresImage(Long id){
+        List<Image> images = Image.find.where().eq("car_tires", id).findList();
+        if(images != null){
+            return images.get(0);
+        }else{
+            return  null;
+        }
+    }
+
+    public static List<Sale> getAllTiresForSale() {
+        return find.where().eq("part_of_sale", TIRES).findList();
+    }
+
 }

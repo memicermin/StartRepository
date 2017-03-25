@@ -28,4 +28,14 @@ public class Admin extends Security.Authenticator {
     public Result onUnauthorized(Http.Context context) {
         return redirect(routes.LoginController.singUp());
     }
+
+    public static boolean isAdmin(){
+        User currentUser = SessionHelper.getCurrentUser(Http.Context.current());
+        if(currentUser != null){
+            if(UserHelper.admin(currentUser.getId()) || UserHelper.mAdmin(currentUser.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

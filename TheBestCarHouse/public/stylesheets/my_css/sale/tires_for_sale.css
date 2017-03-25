@@ -1,0 +1,45 @@
+.tire {
+    height: 300px;
+    background-color: #e2e2e2;
+    margin-bottom: 30px;
+}
+
+.tire-head {
+    height: 40px;
+    background-color: #dbdbdb;
+}
+
+
+.tire-brand {
+    margin-left: 25px;
+}
+
+.tire-dimension {
+    margin-right: 25px;
+}
+
+.tire-body {
+
+}
+
+.tire-image {
+    padding: 5px 5px 5px 5px;
+}
+
+.tire-image img {
+    height: 210px;
+    width: 330px;
+}
+
+.tire-footer {
+    background-color: #666666;
+}
+
+.tire-price{
+    padding: 0.5px 0px 0.5px 0px;
+}
+
+.tire-price h4 {
+    margin-left: 15px;
+    color: white;
+}

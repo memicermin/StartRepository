@@ -6,7 +6,7 @@
     <div id="all-products" class="container">
         <div class="container-fluid">
         @for(car <- cars) {
-            <a href="#">
+            <a href="@routes.VisitorSaleController.getCarForSale(car.getId)">
                 <div id="car" class="car col-md-4">
                     <div class="row car-head">
                         <div class="navbar-left brand">
@@ -18,16 +18,16 @@
                     </div>
 
                     <div class="car-image">
-                    @if(Sale.hasImage(car.getId)) {
-                        <img id="img-sale" onmouseover="" onmouseout="" src="@car.getFirstImage(car.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                    @if(Sale.hasImage(car.getCar.getId)) {
+                        <img id="img-sale" onmouseover="" onmouseout="" src="@car.getFirstImage(car.getCar.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
                     } else {
                         <img src="http://placehold.it/310x210">
                         }
                     </div>
-                    @if(car.getPrice.getAction == true) {
+                    @if(car.getPrice.getAction == 1) {
                         <div class="action">
                             <div class="col-lg-4">
-                                <img src="assets\images\badge_akcija.png">
+                                <img src="@routes.Assets.versioned("images/badge_akcija.png")">
                             </div>
                             <div class="col-lg-8">
                                 <div class="row">

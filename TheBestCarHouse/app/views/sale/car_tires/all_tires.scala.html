@@ -1,5 +1,49 @@
 @import models.products.Sale
-@(cars: List[Sale])
-@main("Car Tires"){
+@(tires: List[Sale])
+@main("Car Tires") {
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/tires_for_sale.css")">
+    <div id="all-products" class="container">
+        <div class="container-fluid">
+        @for(item <- tires) {
+            <a href="#">
+                <div class="col-lg-4">
+                    <div class="tire">
+
+                        <div class="tire-head">
+                            <div class="row">
+                                <div class="navbar-left tire-brand">
+                                    <h4>@item.getTires.getBrand.getBrand</h4>
+                                </div>
+                                <div class="navbar-right tire-dimension">
+                                    <h4>@item.getTires.getDimension</h4>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tire-body">
+                            <div class="tire-image">
+                            @if(Sale.tiresHasImage(item.getTires.getId)) {
+                                <img id="img-sale" onmouseover="" onmouseout="" src="@Sale.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                            } else {
+                                <img src="http://placehold.it/310x210">
+                                }
+                            </div>
+                        </div>
+
+                        <div class="tire-footer">
+                            <div class="tire-price">
+                                <h4>@item.getPrice.getCurrentPrice KM</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </a>
+        }
+        </div>
+    </div>
 
 }

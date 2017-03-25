@@ -1,0 +1,156 @@
+@import models.products.Sale
+@(product: Sale)
+@main(product.getCar.getType) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/car_for_sale.css")">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+            @if(product.getPrice.getAction != 0) {
+                <img src="assets\images\best-price-tag-6522322.png" height="67" width="100">
+                }
+            </div>
+            <div class="col-md-2">
+                <h3>@product.getCar.getBrand.getBrand</h3>
+            </div>
+            <div class="col-md-2">
+                <h3>@product.getCar.getType</h3>
+            </div>
+            <div class="col-md-2">
+            @if(helpers.Admin.isAdmin()) {
+                <a href="@routes.PriceController.editPrice(product.getId)"><h3 class="product-price"><strong>@product.getPrice.getCurrentPrice
+                    KM</strong></h3></a>
+            } else {
+                <h3 class="product-price"><strong>@product.getPrice.getCurrentPrice KM</strong></h3>
+            }
+            </div>
+            @if(product.getPrice.getAction != 0) {
+                <div class="col-md-2">
+                    <h3 class="product-old-price">@product.getPrice.getOldPrice <strong> KM</strong></h3>
+                </div>
+                <div class="col-md-2">
+                    <img src="assets\images\best-price-tag-6522322.png" height="67" width="100">
+                </div>
+            }
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-outer'>
+                            <!-- me art lab slider -->
+                        <div class='carousel-inner'>
+
+                            <div class='item active'>
+
+                            @if(Sale.hasImage(product.getCar.getId)) {
+                                <img src='@product.getFirstImage(product.getCar.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getCar.getId).image_url" width="400" height="400"/>
+                            } else {
+                                <img src="http://placehold.it/400x400" width="400" height="400">
+                                }
+                            </div>
+                            @if(Sale.hasImage(product.getCar.getId)) {
+                                @for(image <- product.getOtherImagesForCar(product.getCar.getId)) {
+                                    <div class='item' id="item">
+                                        <a href="" onclick="getImage()"><img src='@image.image_url' alt="Cinque Terre" id="" data-zoom-image="@image.image_url" width="400" height="400"/></a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                            <!-- sag sol -->
+                        <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+                            <span class='glyphicon glyphicon-chevron-left'></span>
+                        </a>
+                        <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+                            <span class='glyphicon glyphicon-chevron-right'></span>
+                        </a>
+                    </div>
+
+                        <!-- thumb -->
+
+                    <ol class='carousel-indicators mCustomScrollbar meartlab'>
+                    @for(image <- product.getCar.images) {
+                        <li data-target='#carousel-custom' data-slide-to=''><img src='@image.image_url' alt="Cinque Terre"/></li>
+
+                    }
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-6 car-info">
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">Brand </label>
+                    <label class="col-md-5 control-label">@product.getCar.getBrand.getBrand</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.TYPE</label>
+                    <label class="col-md-5 control-label">@product.getCar.getType</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">Godina proizvodnje </label>
+                    <label class="col-md-5 control-label">@product.getCar.getYear</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.MILEAGE</label>
+                    <label class="col-md-5 control-label">@product.getCar.getMileage km</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.COLOR</label>
+                    <label class="col-md-5 control-label">@product.getCar.getColor</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.BODY_TYPE</label>
+                    <label class="col-md-5 control-label">@product.getCar.getBodyType</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.MOTOR_VOLUME</label>
+                    <label class="col-md-5 control-label">@product.getCar.getMotorVolume</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.MOTOR_POWER</label>
+                    <label class="col-md-5 control-label">@product.getCar.getMotorPower <strong>Kw</strong></label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.TYPE_OF_FUEL</label>
+                    <label class="col-md-5 control-label">@product.getCar.getTypeOfFuel</label>
+                </div>
+                <div class="form-group info-row">
+                    <label class="col-md-4 control-label">@resources.Placeholders.TRANSMISSION</label>
+                    <label class="col-md-5 control-label">@product.getCar.getTransmission</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="tabs col-md-12">
+                <li>
+                    <input type=radio name=tabs id=tab1 checked>
+                    <label for=tab1>@resources.Placeholders.DETAILS</label>
+                    <div id=tab-content1 class=tab-content>
+                        <p>
+                        @product.getDescription
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <input type=radio name=tabs id=tab2>
+                    <label for=tab2>Pitanja</label>
+                    <div id=tab-content2 class=tab-content>
+                        <p>
+                            Ovo jos ne radi??? . . .
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <br style=clear:both;>
+        </div>
+    </div>
+    <script>
+         $("#zoom_05").elevateZoom({ zoomType    : "inner", cursor: "crosshair" });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+         $(".mCustomScrollbar").mCustomScrollbar({axis:"x"});
+        });
+    </script>
+}
