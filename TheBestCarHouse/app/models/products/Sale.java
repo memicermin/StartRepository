@@ -158,12 +158,22 @@ public class Sale extends Model {
         return false;
     }
 
-    public static Image getFirstTiresImage(Long id){
+    public Image getFirstTiresImage(Long id){
         List<Image> images = Image.find.where().eq("car_tires", id).findList();
         if(images != null){
             return images.get(0);
         }else{
             return  null;
+        }
+    }
+
+    public List<Image> getOtherImagesforTires(Long id){
+        List<Image> images = Image.find.where().eq("car_tires", id).findList();
+        if(images.size() == 1){
+            return images;
+        }else{
+            images.remove(0);
+            return images;
         }
     }
 

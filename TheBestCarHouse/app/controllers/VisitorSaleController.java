@@ -4,6 +4,7 @@ import models.products.Sale;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.sale.car_tires.all_tires;
+import views.html.sale.car_tires.tires_for_sale;
 import views.html.sale.cars.all_cars;
 import views.html.sale.cars.car_for_sale;
 
@@ -23,5 +24,9 @@ public class VisitorSaleController extends Controller {
 
     public Result getCarForSale(Long id){
         return ok(car_for_sale.render(Sale.find.byId(id)));
+    }
+
+    public Result getTiresForSale(Long id){
+        return ok(tires_for_sale.render(Sale.getSaleById(id)));
     }
 }

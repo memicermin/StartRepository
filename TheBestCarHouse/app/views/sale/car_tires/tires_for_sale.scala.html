@@ -1,6 +1,6 @@
 @import models.products.Sale
 @(product: Sale)
-@main(product.getCar.getType) {
+@main(product.getTires.getBrand.getBrand) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/car_for_sale.css")">
 
     <div class="container">
@@ -12,13 +12,13 @@
                 }
             </div>
             <div class="col-md-2">
-                <img src="@product.getCar.getBrand.image.image_url" height="70" width="80">
+                <img src="@product.getTires.getBrand.image.image_url" height="70" width="80">
             </div>
             <div class="col-md-2">
-                <h3>@product.getCar.getBrand.getBrand</h3>
+                <h3>@product.getTires.getBrand.getBrand</h3>
             </div>
             <div class="col-md-2">
-                <h3>@product.getCar.getType</h3>
+                <h3>@product.getTires.getType</h3>
             </div>
             <div class="col-md-2">
             @if(helpers.Admin.isAdmin()) {
@@ -46,14 +46,14 @@
 
                             <div class='item active'>
 
-                            @if(Sale.hasImage(product.getCar.getId)) {
-                                <img src='@product.getFirstImage(product.getCar.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getCar.getId).image_url" width="400" height="400"/>
+                            @if(Sale.tiresHasImage(product.getTires.getId)) {
+                                <img src='@product.getFirstTiresImage(product.getTires.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getTires.getId).image_url" width="400" height="400"/>
                             } else {
                                 <img src="http://placehold.it/400x400" width="400" height="400">
                                 }
                             </div>
-                            @if(Sale.hasImage(product.getCar.getId)) {
-                                @for(image <- product.getOtherImagesForCar(product.getCar.getId)) {
+                            @if(Sale.tiresHasImage(product.getTires.getId)) {
+                                @for(image <- product.getOtherImagesforTires(product.getTires.getId)) {
                                     <div class='item' id="item">
                                         <a href="" onclick="getImage()"><img src='@image.image_url' alt="Cinque Terre" id="" data-zoom-image="@image.image_url" width="400" height="400"/></a>
                                     </div>
@@ -72,56 +72,32 @@
                         <!-- thumb -->
 
                     <ol class='carousel-indicators mCustomScrollbar meartlab'>
-                    @for(image <- product.getCar.images) {
+                    @for(image <- product.getTires.getImages(product.getTires.getId)) {
                         <li data-target='#carousel-custom' data-slide-to=''><img src='@image.image_url' alt="Cinque Terre"/></li>
 
                     }
                     </ol>
                 </div>
             </div>
+            @*
+
+*@
             <div class="col-md-6 car-info">
                 <div class="form-group info-row">
                     <label class="col-md-4 control-label">Brand </label>
-                    <label class="col-md-5 control-label">@product.getCar.getBrand.getBrand</label>
+                    <label class="col-md-5 control-label">@product.getTires.getBrand.getBrand</label>
                 </div>
                 <div class="form-group info-row">
                     <label class="col-md-4 control-label">@resources.Placeholders.TYPE</label>
-                    <label class="col-md-5 control-label">@product.getCar.getType</label>
+                    <label class="col-md-5 control-label">@product.getTires.getType</label>
                 </div>
                 <div class="form-group info-row">
                     <label class="col-md-4 control-label">Godina proizvodnje </label>
-                    <label class="col-md-5 control-label">@product.getCar.getYear</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.MILEAGE</label>
-                    <label class="col-md-5 control-label">@product.getCar.getMileage km</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.COLOR</label>
-                    <label class="col-md-5 control-label">@product.getCar.getColor</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.BODY_TYPE</label>
-                    <label class="col-md-5 control-label">@product.getCar.getBodyType</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.MOTOR_VOLUME</label>
-                    <label class="col-md-5 control-label">@product.getCar.getMotorVolume</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.MOTOR_POWER</label>
-                    <label class="col-md-5 control-label">@product.getCar.getMotorPower <strong>Kw</strong></label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.TYPE_OF_FUEL</label>
-                    <label class="col-md-5 control-label">@product.getCar.getTypeOfFuel</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.TRANSMISSION</label>
-                    <label class="col-md-5 control-label">@product.getCar.getTransmission</label>
+                    <label class="col-md-5 control-label">@product.getTires.getYear</label>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <ul class="tabs col-md-12">
                 <li>
@@ -154,4 +130,5 @@
          $(".mCustomScrollbar").mCustomScrollbar({axis:"x"});
         });
     </script>
+
 }

@@ -13,6 +13,7 @@ create table background (
 
 create table brand (
   id                            bigint auto_increment not null,
+  image_id                      bigint,
   brand                         varchar(255),
   part_of_brand                 integer,
   constraint pk_brand primary key (id)
@@ -119,6 +120,9 @@ create table user (
 
 alter table background add constraint fk_background_image_id foreign key (image_id) references image (id) on delete restrict on update restrict;
 
+alter table brand add constraint fk_brand_image_id foreign key (image_id) references image (id) on delete restrict on update restrict;
+create index ix_brand_image_id on brand (image_id);
+
 alter table car add constraint fk_car_brand_id foreign key (brand_id) references brand (id) on delete restrict on update restrict;
 create index ix_car_brand_id on car (brand_id);
 
@@ -153,6 +157,9 @@ create index ix_sale_price_id on sale (price_id);
 # --- !Downs
 
 alter table background drop foreign key fk_background_image_id;
+
+alter table brand drop foreign key fk_brand_image_id;
+drop index ix_brand_image_id on brand;
 
 alter table car drop foreign key fk_car_brand_id;
 drop index ix_car_brand_id on car;

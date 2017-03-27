@@ -25,6 +25,10 @@ public class Brand extends Model {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    @Column(name = "image")
+    public Image image;
 
     @Column(name = "brand")
     private String brand;
@@ -36,6 +40,13 @@ public class Brand extends Model {
     public Brand(String brand, Integer partOfBrand) {
         this.brand = brand;
         this.partOfBrand = partOfBrand;
+
+    }
+
+    public Brand(String brand, Integer partOfBrand, Image image) {
+        this.brand = brand;
+        this.partOfBrand = partOfBrand;
+        this.image = image;
 
     }
 

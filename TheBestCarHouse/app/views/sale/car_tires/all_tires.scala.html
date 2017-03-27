@@ -6,7 +6,7 @@
     <div id="all-products" class="container">
         <div class="container-fluid">
         @for(item <- tires) {
-            <a href="#">
+            <a href="@routes.VisitorSaleController.getTiresForSale(item.getId)">
                 <div class="col-lg-4">
                     <div class="tire">
 
@@ -25,7 +25,7 @@
                         <div class="tire-body">
                             <div class="tire-image">
                             @if(Sale.tiresHasImage(item.getTires.getId)) {
-                                <img id="img-sale" onmouseover="" onmouseout="" src="@Sale.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                                <img id="img-sale" onmouseover="" onmouseout="" src="@item.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
                             } else {
                                 <img src="http://placehold.it/310x210">
                                 }

@@ -88,7 +88,7 @@ public class CarTires extends Model {
     }
 
     public List<Image> getImages(Long id) {
-        return Image.find.where().eq("car_tires_id", id).findList();
+        return Image.find.where().eq("car_tires", id).findList();
     }
 
 }

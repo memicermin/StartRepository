@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Enver on 03/06/2017.
@@ -25,10 +26,6 @@ public class ReclamTitle extends Model{
     public ReclamTitle(String title) {
         this.title = title;
     }
-
-    public ReclamTitle() {
-    }
-
 
     public Long getId() {
         return id;
@@ -57,5 +54,21 @@ public class ReclamTitle extends Model{
             titles.remove(0);
         }
         return titles;
+    }
+
+    public static List<ReclamTitle> getAllTitles(){
+        return find.all();
+    }
+
+    public static String getRandomTitle(){
+        Random rnd = new Random();
+        List<ReclamTitle> titles = getAllTitles();
+        int size = titles.size();
+        System.out.println(size);
+        if(size > 0){
+            return titles.get(rnd.nextInt(size)).title;
+        }else{
+            return "Welcome";
+        }
     }
 }

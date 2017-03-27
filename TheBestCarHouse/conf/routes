@@ -13,9 +13,11 @@ GET         /message                                @controllers.AsyncController
 GET         /all/cars/for/sale                      @controllers.VisitorSaleController.getAllCarsForSale()
 GET         /all/tires/for/sale                     @controllers.VisitorSaleController.getAllTiresForSale()
 GET         /car                                    @controllers.VisitorSaleController.getCarForSale(id: Long)
+GET         /tires                                  @controllers.VisitorSaleController.getTiresForSale(id: Long)
 
 #
 GET         /edit/price                             @controllers.PriceController.editPrice(id: Long)
+POST        /update/price                           @controllers.PriceController.updatePrice(id: Long)
 #
 GET         /add/brand                              @controllers.BrandController.addBrand()
 POST        /new/brand                              @controllers.BrandController.saveBrand()

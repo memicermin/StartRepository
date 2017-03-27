@@ -1,4 +1,5 @@
 .main-background {
+    margin: -50px 0px 0px 0px;
 
     background-size: cover;
     position: absolute;
@@ -12,19 +13,11 @@
 
 }
 
-.dark-background{
-
-    /*
-        background-image: linear-gradient(
-            rgba(0, 0, 0, 255.2),
-            rgba(255, 0, 0, 0.2)
-    );
-    */
+.dark-background {
 
 }
 
 .background-area {
-
     height: 100%;
 
 }

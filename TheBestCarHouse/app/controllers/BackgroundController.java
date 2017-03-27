@@ -40,9 +40,7 @@ public class BackgroundController extends Controller {
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
-        System.out.println();
-        System.out.println(fileParts.toString());
-        System.out.println();
+
         if (fileParts != null) {
             boolean isFirstImage = true;
             for (Http.MultipartFormData.FilePart filePart : fileParts) {

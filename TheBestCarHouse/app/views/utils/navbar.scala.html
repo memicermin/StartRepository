@@ -4,55 +4,40 @@
 @()(implicit currentUser: User = SessionHelper.getCurrentUser(ctx()))
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/navbar.css")">
 
-@if(User.find.findRowCount() == 0) {
-    @*
-    <div class="container">
-        <div class="start-button">
-            <div class="form-group">
-                <form action="@helpers.DefaultSetting.setdefaultSettings()">
-                    <button class="btn btn-success btn-block" type="submit">
-                        Start</button>
-                </form>
-            </div>
+<nav class="navbar navbar-webmaster">
+    <div class="my-navbar">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Auto House</a>
+            @if(currentUser != null) {
+                @if(currentUser.getUserType > User.INACTIVE) {
+                    <a class="navbar-brand" href="@routes.UserController.userPage()">@currentUser.getUsername</a>
+                }
+                @if(UserHelper.admin(currentUser.getId) || UserHelper.mAdmin(currentUser.getId)) {
+                    <a class="navbar-brand" href="@routes.AdminController.adminPage()">admin</a>
+                }
+            }
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="active"><a href="#">Rent A Car<span class="sr-only">(current)</span></a></li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        SALE <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/all/cars/for/sale">Cars</a></li>
+                        <li><a href="/all/tires/for/sale">Tires</a></li>
+                    </ul>
+                </li>
+
+                @if(currentUser != null) {
+                    <li><a href="/singUp">Sing up</a></li>
+                } else {
+                    <li><a href="/login">Log in</a></li>
+                }
+            </ul>
         </div>
     </div>
-    *@
-} else {
-    <nav class="navbar navbar-webmaster">
-        <div class="">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Auto House</a>
-                @if(currentUser != null) {
-                    @if(currentUser.getUserType > User.INACTIVE) {
-                        <a class="navbar-brand" href="@routes.UserController.userPage()">@currentUser.getUsername</a>
-                    }
-                    @if(UserHelper.admin(currentUser.getId) || UserHelper.mAdmin(currentUser.getId)) {
-                        <a class="navbar-brand" href="@routes.AdminController.adminPage()">admin</a>
-                    }
-                }
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
+</nav>
 
-                    <li class="active"><a href="#">Rent A Car<span class="sr-only">(current)</span></a></li>
-
-                    <li class="active"><a href="/all/cars/for/sale">Sale <span class="sr-only">
-                        (current)</span></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            SERVICE <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">MECHANICAL_SERVICES</a></li>
-                            <li><a href="#">TOWING_SERVICE</a></li>
-                        </ul>
-                    </li>
-                    @if(currentUser != null) {
-                        <li><a href="/singUp">Sing up</a></li>
-                    } else {
-                        <li><a href="/login">Log in</a></li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-}
