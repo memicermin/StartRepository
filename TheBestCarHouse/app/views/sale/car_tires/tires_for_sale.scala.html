@@ -2,40 +2,57 @@
 @(product: Sale)
 @main(product.getTires.getBrand.getBrand) {
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/car_for_sale.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/tires_for_sale.css")">
 
     <div class="container">
-        <div class="row">
-
-            <div class="col-md-2">
+            <!-- head   -->
+        <div class="row head_for_tires">
             @if(product.getPrice.getAction != 0) {
-                <img src="assets\images\best-price-tag-6522322.png" height="70" width="100">
+                <div class="col-md-2 action_logo">
+                    <img src="assets\images\best-price-tag-6522322.png" height="116" width="146">
+                </div>
+            }
+            <div class="col-md-2 brand_image">
+                <img src="@product.getTires.getBrand.image.image_url" height="130" width="130">
+            </div>
+
+            <div class="col-md-3 brand_and_dim">
+                <div class="row">
+                    <h3><strong>@product.getTires.getBrand.getBrand</strong></h3>
+                </div>
+                <div class="row">
+                    <h4><strong>@product.getTires.getDimension</strong></h4>
+                </div>
+            </div>
+            <div class="col-lg-3 year_and_type">
+                <div class="row"><h4><strong>@product.getTires.getYear</strong></h4></div>
+                <div class="row"><h4><strong>@product.getTires.getType</strong></h4></div>
+            </div>
+
+
+            <div class="col-md-2 current_price">
+                <div class="row">
+                @if(helpers.Admin.isAdmin()) {
+                    <a href="@routes.PriceController.editPrice(product.getId)"><h3 class="product-price"><strong>@product.getPrice.getCurrentPrice
+                        KM</strong></h3></a>
+                } else {
+                    <h3 class="product-price"><strong>@product.getPrice.getCurrentPrice KM</strong></h3>
+                }
+                </div>
+                @if(product.getPrice.getAction != 0) {
+                    <div class="row">
+                        <h4 class="product-old-price">@product.getPrice.getOldPrice <strong> KM</strong></h4>
+                    </div>
                 }
             </div>
-            <div class="col-md-2">
-                <img src="@product.getTires.getBrand.image.image_url" height="70" width="80">
-            </div>
-            <div class="col-md-2">
-                <h3>@product.getTires.getBrand.getBrand</h3>
-            </div>
-            <div class="col-md-2">
-                <h3>@product.getTires.getType</h3>
-            </div>
-            <div class="col-md-2">
-            @if(helpers.Admin.isAdmin()) {
-                <a href="@routes.PriceController.editPrice(product.getId)"><h3 class="product-price"><strong>@product.getPrice.getCurrentPrice
-                    KM</strong></h3></a>
-            } else {
-                <h3 class="product-price"><strong>@product.getPrice.getCurrentPrice KM</strong></h3>
-            }
-            </div>
-            @if(product.getPrice.getAction != 0) {
-                <div class="col-md-2">
-                    <h3 class="product-old-price">@product.getPrice.getOldPrice <strong> KM</strong></h3>
+            @if(product.getPrice.getAction == 0) {
+                <div class="col-md-2 brand_image">
+                    <img src="@product.getTires.getBrand.image.image_url" height="130" width="130">
                 </div>
             }
         </div>
 
-        <hr>
+            <!-- /head   -->
 
         <div class="row">
             <div class="col-md-5">
@@ -47,7 +64,7 @@
                             <div class='item active'>
 
                             @if(Sale.tiresHasImage(product.getTires.getId)) {
-                                <img src='@product.getFirstTiresImage(product.getTires.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstImage(product.getTires.getId).image_url" width="400" height="400"/>
+                                <img src='@product.getFirstTiresImage(product.getTires.getId).image_url' alt="Cinque Terre" id="" data-zoom-image="@product.getFirstTiresImage(product.getTires.getId).image_url" width="400" height="400"/>
                             } else {
                                 <img src="http://placehold.it/400x400" width="400" height="400">
                                 }
@@ -79,47 +96,31 @@
                     </ol>
                 </div>
             </div>
-            @*
-
-*@
-            <div class="col-md-6 car-info">
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">Brand </label>
-                    <label class="col-md-5 control-label">@product.getTires.getBrand.getBrand</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">@resources.Placeholders.TYPE</label>
-                    <label class="col-md-5 control-label">@product.getTires.getType</label>
-                </div>
-                <div class="form-group info-row">
-                    <label class="col-md-4 control-label">Godina proizvodnje </label>
-                    <label class="col-md-5 control-label">@product.getTires.getYear</label>
+            <div class="col-lg-7">
+                <div class="row">
+                    <ul class="tabs col-md-12">
+                        <li>
+                            <input type=radio name=tabs id=tab1 checked>
+                            <label for=tab1>@resources.Placeholders.DETAILS</label>
+                            <div id=tab-content1 class=tab-content>
+                                <p>
+                                @product.getDescription
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <input type=radio name=tabs id=tab2>
+                            <label for=tab2>Pitanja</label>
+                            <div id=tab-content2 class=tab-content>
+                                <p>
+                                    Ovo jos ne radi??? . . .
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <br style=clear : both ;>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <ul class="tabs col-md-12">
-                <li>
-                    <input type=radio name=tabs id=tab1 checked>
-                    <label for=tab1>@resources.Placeholders.DETAILS</label>
-                    <div id=tab-content1 class=tab-content>
-                        <p>
-                        @product.getDescription
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <input type=radio name=tabs id=tab2>
-                    <label for=tab2>Pitanja</label>
-                    <div id=tab-content2 class=tab-content>
-                        <p>
-                            Ovo jos ne radi??? . . .
-                        </p>
-                    </div>
-                </li>
-            </ul>
-            <br style=clear:both;>
         </div>
     </div>
     <script>

@@ -1,45 +1,33 @@
-.tire {
-    height: 300px;
-    background-color: #e2e2e2;
-    margin-bottom: 30px;
+.head_for_tires{
+    background-color: #dddddd;
+    padding: 4px;
 }
 
-.tire-head {
-    height: 40px;
-    background-color: #dbdbdb;
+.action_logo{
+    background-color: #5e5e5e;
+    height: 135px;
+    padding-top: 10px;
+    padding-left: 20px;
 }
 
-
-.tire-brand {
-    margin-left: 25px;
+.brand_image {
+background-color: transparent;
+    height: 135px;
+    padding-left: 30px;
 }
 
-.tire-dimension {
-    margin-right: 25px;
+.brand_and_dim {
+    background-color: #adadad;
+    height: 135px;
+    padding: 20px 0px 0px 30px;
 }
 
-.tire-body {
-
+.year_and_type {
+    padding: 35px 0px 0px 50px;
 }
 
-.tire-image {
-    padding: 5px 5px 5px 5px;
-}
-
-.tire-image img {
-    height: 210px;
-    width: 330px;
-}
-
-.tire-footer {
-    background-color: #666666;
-}
-
-.tire-price{
-    padding: 0.5px 0px 0.5px 0px;
-}
-
-.tire-price h4 {
-    margin-left: 15px;
-    color: white;
+.current_price {
+    background-color: #adadad;
+    padding: 20px 0px 0px 58px;
+    height: 135px;
 }

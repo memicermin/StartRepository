@@ -2,7 +2,7 @@
 @(tires: List[Sale])
 @main("Car Tires") {
 
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/tires_for_sale.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/sale/all_tires_for_sale.css")">
     <div id="all-products" class="container">
         <div class="container-fluid">
         @for(item <- tires) {
@@ -13,31 +13,47 @@
                         <div class="tire-head">
                             <div class="row">
                                 <div class="navbar-left tire-brand">
-                                    <h4>@item.getTires.getBrand.getBrand</h4>
+                                    <strong><h4>@item.getTires.getBrand.getBrand</h4></strong>
                                 </div>
                                 <div class="navbar-right tire-dimension">
-                                    <h4>@item.getTires.getDimension</h4>
+                                    <strong><h4>@item.getTires.getDimension</h4></strong>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="tire-body">
-                            <div class="tire-image">
+
                             @if(Sale.tiresHasImage(item.getTires.getId)) {
-                                <img id="img-sale" onmouseover="" onmouseout="" src="@item.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
-                            } else {
+                                <div class="tire-image">
+                                    @if(item.getPrice.getAction != 0) {
+                                        <div class="img-tire-action">
+                                            <img id="img-sale" onmouseover="" onmouseout="" src="@item.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                                        </div>
+                                        <div>
+                                            <img class="tire_action" src="@routes.Assets.versioned("images/badge_akcija.png")">
+                                        </div>
+                                    } else {
+                                        <img id="img-sale" onmouseover="" onmouseout="" src="@item.getFirstTiresImage(item.getTires.getId).image_url" class="img-thumbnail img" alt="Cinque Terre" width="310" height="210">
+                                    }
+                                } else {
                                 <img src="http://placehold.it/310x210">
                                 }
-                            </div>
+                        </div>
                         </div>
 
-                        <div class="tire-footer">
-                            <div class="tire-price">
-                                <h4>@item.getPrice.getCurrentPrice KM</h4>
+                        @if(item.getPrice.getAction != 0) {
+                            <div class="tire-footer-action">
+                                <div class="tire-price">
+                                    <h4>@item.getPrice.getCurrentPrice KM</h4>
+                                </div>
                             </div>
-                        </div>
-
+                        }else{
+                            <div class="tire-footer">
+                                <div class="tire-price">
+                                    <h4>@item.getPrice.getCurrentPrice KM</h4>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
 

@@ -169,12 +169,10 @@ public class Sale extends Model {
 
     public List<Image> getOtherImagesforTires(Long id){
         List<Image> images = Image.find.where().eq("car_tires", id).findList();
-        if(images.size() == 1){
-            return images;
-        }else{
+        if(images.size() > 1){
             images.remove(0);
-            return images;
         }
+        return images;
     }
 
     public static List<Sale> getAllTiresForSale() {
