@@ -97,4 +97,26 @@ public class Brand extends Model {
     public static List<Brand> getCarTiresBrands() {
         return find.where().eq(FieldNames.PART_OF_BRAND, TIRES).findList();
     }
+
+    public static boolean isActiveCarBrand(Brand brand){
+        List<Car> allCars = Car.find.all();
+        boolean existBrand = false;
+        for (Car car : allCars){
+            if(car.getBrand().getId() == brand.getId()){
+                existBrand = true;
+            }
+        }
+        return existBrand;
+    }
+
+    public static boolean isActiveTiresBrand(Brand brand){
+        List<CarTires> allCarTires = CarTires.find.all();
+        boolean existBrand = false;
+        for (CarTires carTires : allCarTires){
+            if(carTires.getBrand().getId() == brand.getId()){
+                existBrand = true;
+            }
+        }
+        return existBrand;
+    }
 }

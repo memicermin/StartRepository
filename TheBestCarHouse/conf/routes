@@ -10,6 +10,7 @@ GET         /count                                  @controllers.CountController
 GET         /message                                @controllers.AsyncController.message
 
 #
+GET         /sale/by/brand                          @controllers.VisitorSaleController.getSalesByBrand(id: Long)
 GET         /all/cars/for/sale                      @controllers.VisitorSaleController.getAllCarsForSale()
 GET         /all/tires/for/sale                     @controllers.VisitorSaleController.getAllTiresForSale()
 GET         /car                                    @controllers.VisitorSaleController.getCarForSale(id: Long)
@@ -19,6 +20,7 @@ GET         /tires                                  @controllers.VisitorSaleCont
 GET         /edit/price                             @controllers.PriceController.editPrice(id: Long)
 POST        /update/price                           @controllers.PriceController.updatePrice(id: Long)
 #
+GET         /brands                                 @controllers.VisitorSaleController.listBrands()
 GET         /add/brand                              @controllers.BrandController.addBrand()
 POST        /new/brand                              @controllers.BrandController.saveBrand()
 GET         /delete/brand                           @controllers.BrandController.deleteBrand(id: Long)

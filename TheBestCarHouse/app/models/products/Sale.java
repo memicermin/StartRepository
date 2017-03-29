@@ -179,4 +179,11 @@ public class Sale extends Model {
         return find.where().eq("part_of_sale", TIRES).findList();
     }
 
+    public static Sale getSaleByTiresId(Long id) {
+        return find.where().eq("tires_id", id).findUnique();
+    }
+
+    public static Sale getSaleByCarId(Long id) {
+        return find.where().eq("car_id", id).findUnique();
+    }
 }

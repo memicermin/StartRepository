@@ -64,7 +64,6 @@ public class ReclamTitle extends Model{
         Random rnd = new Random();
         List<ReclamTitle> titles = getAllTitles();
         int size = titles.size();
-        System.out.println(size);
         if(size > 0){
             return titles.get(rnd.nextInt(size)).title;
         }else{

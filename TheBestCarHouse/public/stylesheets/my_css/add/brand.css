@@ -1,0 +1,41 @@
+.brand_list {
+    margin: 0px 45px 0px -25px;
+}
+
+.show_brand {
+    background-color: #adadad;
+    height: 280px;
+    margin: 6px 8px 26px 4px;
+}
+
+.show_brand_header {
+    height: 45px;
+}
+
+.show_brand_header h3{
+    text-align: center;
+    padding-top: 10px;
+    color: black;
+    font-style: oblique;
+    font-family: Monospaced;
+}
+
+.show_brand_header a{
+    text-decoration: none;
+}
+
+.show_brand_img img {
+    width: 100%;
+    height: 190px;
+}
+
+.show_brand_img {
+    height: 190px;
+    margin: 0px 8px 0px 8px;
+    background-color: white;
+
+}
+
+.show_brand_footer {
+    height: 45px;
+}

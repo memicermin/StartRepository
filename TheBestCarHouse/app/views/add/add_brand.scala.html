@@ -1,6 +1,9 @@
 @import models.help_models.Brand
 @(brands: List[Brand], form: Form[Brand])
 @admin.admin("Add Brand") {
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/add/brand.css")">
+
     <div class="container">
         <form class="form-inline" action="@routes.BrandController.saveBrand()" method="post" enctype="multipart/form-data">
             <div class="row">
@@ -22,6 +25,9 @@
                             <div class="form-group">
                                 <input type="text" name="brand" class="form-control" placeholder="Audi">
                             </div>
+                            <hr>
+                            <p>1 = Car Brand, 3 = Tires Brand</p>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -48,26 +54,47 @@
                 </div>
             </div>
         </form>
+        <hr>
+        @*
         <div class="row">
-            <hr>
-            <p>1 = Car Brand, 3 = Tires Brand</p>
-            <hr>
-            @for(brand <- brands) {
-                <div class="row">
-                    <div class="col-md-5">
-                        <p>@brand.getBrand</p>
+        @for(brand <- brands) {
+        <div class="row">
+        <div class="col-md-5">
+        <p>@brand.getBrand</p>
+        </div>
+        <div class="col-md-3">
+        <p>@brand.getPartOfBrand</p>
+        </div>
+        <div class="col-md-2">
+        <a href="@routes.BrandController.deleteBrand(brand.getId)"><i class="glyphicon glyphicon-trash"></i></a>
+        </div>
+        <div class="col-md-2">
+        <a href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+        </div>
+        </div>
+        }
+        </div>
+        *@
+        <div class="container-fluid brand_list">
+        @for(brand <- brands) {
+            <div class="col-lg-3">
+                <div class="show_brand">
+
+                    <div class="show_brand_header">
+                        <a href="@routes.VisitorSaleController.getSalesByBrand(brand.getId)"><h3><strong>@brand.getBrand</strong></h3></a>
                     </div>
-                    <div class="col-md-3">
-                        <p>@brand.getPartOfBrand</p>
+
+                    <div class="show_brand_img">
+                        <img src="@brand.image.image_url">
                     </div>
-                    <div class="col-md-2">
-                        <a href="@routes.BrandController.deleteBrand(brand.getId)"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                    <div class="show_brand_footer">
+
                     </div>
                 </div>
-            }
+            </div>
+        }
+
         </div>
     </div>
 
