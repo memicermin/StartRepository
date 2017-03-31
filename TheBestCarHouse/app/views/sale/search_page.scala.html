@@ -1,0 +1,90 @@
+@import models.help_models.Brand
+@import models.products.Sale
+@(brands: List[Brand])
+@main("") {
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <form action="@routes.VisitorSaleController.carsSearch()">
+                    <div class="form-group">
+                        <h4 class="control-label">Search Cars </h4>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="@resources.FieldNames.BRAND">
+                            <option value="all">ALL</option>
+                            @for(brand <- brands) {
+                                @if(Brand.isActiveCarBrand(brand)) {
+                                    <option value="@brand.getId">@brand.getBrand</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input name="action" type="checkbox"> Action
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input class="form-control" name="price_min" type="number">
+                            </div>
+                            <div class="col-lg-6">
+                                <input class="form-control" name="price_max" type="number">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control btn btn-info" type="submit" value="Search">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-3 col-lg-offset-1">
+                <form action="@routes.VisitorSaleController.carTiresSearch()">
+                    <div class="form-group">
+                        <h4 class="control-label">Search Car Tires </h4>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="@resources.FieldNames.BRAND">
+                            <option value="all">ALL</option>
+                            @for(brand <- brands) {
+                                @if(Brand.isActiveTiresBrand(brand)) {
+                                    <option value="@brand.getId">@brand.getBrand</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input name="action" type="checkbox"> Action
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input class="form-control" name="price_min" type="number">
+                            </div>
+                            <div class="col-lg-6">
+                                <input class="form-control" name="price_max" type="number">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control btn btn-info" type="submit" value="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

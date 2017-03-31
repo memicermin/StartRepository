@@ -3,6 +3,7 @@ package models.help_models;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Enver on 2/22/2017.
@@ -79,4 +80,16 @@ public class Price extends Model{
     }
 
 
+    public static float getMaxPrice() {
+        List<Price> allPrices = find.all();
+        float maxPrice = 0;
+        if(allPrices != null && allPrices.size() > 0){
+            for (Price price : allPrices){
+                if(price.getCurrentPrice() > maxPrice){
+                    maxPrice = price.getCurrentPrice();
+                }
+            }
+        }
+        return maxPrice;
+    }
 }

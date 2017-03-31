@@ -1,12 +1,10 @@
 @import models.help_models.Brand
 @(brands: List[Brand])
 @main("") {
-
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/add/brand.css")">
     <div class="container">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-lg-9">
                     <div class="row">
                     @for(brand <- brands) {
@@ -28,11 +26,9 @@
                                 </div>
                             </div>
                         }
-
                     }
                     </div>
                 </div>
-
                 <div class="col-lg-3">
                     <div class="row">
                     @for(brand <- brands) {
@@ -54,7 +50,6 @@
                                 </div>
                             </div>
                         }
-
                     }
                     </div>
                 </div>

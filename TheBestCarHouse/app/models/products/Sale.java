@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import models.help_models.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -186,4 +187,13 @@ public class Sale extends Model {
     public static Sale getSaleByCarId(Long id) {
         return find.where().eq("car_id", id).findUnique();
     }
+//
+//    public static List<Sale> getSaleByBrandId(Long id) {
+//        Brand brand = Brand.findBrandById(id);
+//        List<Sale> saleList = new ArrayList<>();
+//        if(brand.getPartOfBrand() == Sale.CARS){
+//            saleList = Sale.find.where().
+//        }
+//        return null;
+//    }
 }

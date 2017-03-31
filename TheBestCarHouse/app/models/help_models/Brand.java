@@ -119,4 +119,5 @@ public class Brand extends Model {
         }
         return existBrand;
     }
+
 }
