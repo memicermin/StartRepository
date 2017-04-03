@@ -2,9 +2,11 @@ package models.products;
 
 import com.avaje.ebean.Model;
 import models.help_models.Car;
+import models.help_models.Image;
 import models.help_models.Price;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Enver on 2/24/2017.
@@ -103,4 +105,16 @@ public class RentACar extends Model {
     public RentACar byId(Long id){
         return find.byId(id);
     }
+
+    //
+
+    public Image firstImage(Long id){
+        List<Image> images = Image.find.where().eq("car_id", id).findList();
+        if(images != null){
+            return images.get(0);
+        }else{
+            return  null;
+        }
+    }
+
 }

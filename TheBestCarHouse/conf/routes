@@ -53,6 +53,8 @@ POST        /sale/car/tires/new                     @controllers.SaleController.
 
 GET         /rent/a/car/add/rent/a/car              @controllers.RentACarController.addRentACar()
 POST        /rent/a/car/new/rent/a/car              @controllers.RentACarController.saveRentACar()
+GET         /all/cars/for/rent                      @controllers.VisitorSaleController.getAllRentACars()
+
 
 GET         /background/add                         @controllers.BackgroundController.addBackground()
 POST        /background/save/new                    @controllers.BackgroundController.saveBackground()

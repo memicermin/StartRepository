@@ -5,11 +5,13 @@ import models.help_models.Brand;
 import models.help_models.Car;
 import models.help_models.CarTires;
 import models.help_models.Price;
+import models.products.RentACar;
 import models.products.Sale;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.rent.all_cars_for_rent;
 import views.html.sale.car_tires.all_tires;
 import views.html.sale.car_tires.tires_for_sale;
 import views.html.sale.cars.all_cars;
@@ -235,4 +237,10 @@ public class VisitorSaleController extends Controller {
         return ok(sales_by_brand.render(Brand.getAllBrands()));
     }
 
+
+    //=============== Rent a Car =======================
+
+    public Result getAllRentACars(){
+        return ok(all_cars_for_rent.render(RentACar.find.all()));
+    }
 }

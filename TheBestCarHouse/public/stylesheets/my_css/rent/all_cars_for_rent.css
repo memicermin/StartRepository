@@ -1,0 +1,51 @@
+.announcement {
+    background-color: #5bc0de;
+    padding: 5px;
+}
+
+.announcement_head {
+    height: 40px;
+    background-color: mediumturquoise;
+
+}
+
+.announcement_head_row {
+    margin: 0px 25px 0px 10px;
+}
+
+.announcement_head_row h4{
+    font-weight: bold;
+    color: black;
+}
+
+.announcement_body {
+
+}
+
+.announcement_body img {
+    height: 210px;
+    width: 100%;
+
+}
+
+.announcement_action{
+
+}
+
+.announcement_price{
+    margin-top: -45px;
+    background-color: white;
+    height: 32px;
+}
+
+.announcement_price h4{
+     padding-top: 8px;
+     color: darkblue;
+     text-align: center;
+ }
+
+
+
+.announcement_action_price{
+    background-color: white;
+}

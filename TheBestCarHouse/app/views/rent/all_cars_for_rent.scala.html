@@ -1,0 +1,40 @@
+@import models.products.RentACar
+@(cars: List[RentACar])
+@main("") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my_css/rent/all_cars_for_rent.css")">
+
+    <div class="container">
+        <div class="container-fluid">
+        @for(car <- cars) {
+            <div class="col-lg-4">
+                <div class="announcement">
+
+                    <div class="announcement_head">
+                        <div class="row announcement_head_row">
+                            <div class="navbar-left brand">
+                                <h4>@car.getCar.getBrand.getBrand</h4>
+                            </div>
+                            <div class="navbar-right type">
+                                <h4>@car.getCar.getType</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="announcement_body">
+                        <img src="@car.firstImage(car.getCar.getId).image_url">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 col-lg-offset-7">
+                            <div class="announcement_price">
+                                <h4><strong>@car.getPrice.getCurrentPrice Km/day</strong></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+
+
+}
